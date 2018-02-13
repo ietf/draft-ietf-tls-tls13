@@ -3066,7 +3066,7 @@ TLS-Exporter(label, context_value, key_length) =
 <a href="#rfc.section.9.1">9.1.</a> <a href="#mandatory-to-implement-cipher-suites" id="mandatory-to-implement-cipher-suites">Mandatory-to-Implement Cipher Suites</a>
 </h2>
 <p id="rfc.section.9.1.p.1">In the absence of an application profile standard specifying otherwise, a TLS-compliant application MUST implement the TLS_AES_128_GCM_SHA256 <a href="#GCM" class="xref">[GCM]</a> cipher suite and SHOULD implement the TLS_AES_256_GCM_SHA384 <a href="#GCM" class="xref">[GCM]</a> and TLS_CHACHA20_POLY1305_SHA256 <a href="#RFC7539" class="xref">[RFC7539]</a> cipher suites.  (see <a href="#cipher-suites" class="xref">Appendix B.4</a>)</p>
-<p id="rfc.section.9.1.p.2">A TLS-compliant application MUST support digital signatures with rsa_pkcs1<em>sha256 (for certificates), rsa_pss_rsae_sha256</em> (for CertificateVerify and certificates), and ecdsa_secp256r1_sha256. A TLS-compliant application MUST support key exchange with secp256r1 (NIST P-256) and SHOULD support key exchange with X25519 <a href="#RFC7748" class="xref">[RFC7748]</a>.</p>
+<p id="rfc.section.9.1.p.2">A TLS-compliant application MUST support digital signatures with rsa_pkcs1_sha256 (for certificates), rsa_pss_rsae_sha256 (for CertificateVerify and certificates), and ecdsa_secp256r1_sha256. A TLS-compliant application MUST support key exchange with secp256r1 (NIST P-256) and SHOULD support key exchange with X25519 <a href="#RFC7748" class="xref">[RFC7748]</a>.</p>
 <h2 id="rfc.section.9.2">
 <a href="#rfc.section.9.2">9.2.</a> <a href="#mti-extensions" id="mti-extensions">Mandatory-to-Implement Extensions</a>
 </h2>
