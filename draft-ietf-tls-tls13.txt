@@ -352,7 +352,7 @@ Internet-Draft                     TLS                     February 2018
    -  Add a new extension and new code points to allow negotiating PSS
       separately for certificates and CertificateVerify (*)
 
-   -  Slightly restrict when CCS must be accepted to amke implementation
+   -  Slightly restrict when CCS must be accepted to make implementation
       easier.
 
    -  Document protocol invariants
@@ -7567,11 +7567,11 @@ Internet-Draft                     TLS                     February 2018
       Section 4.1.2.
 
    -  If not offering early data, the client sends a dummy
-      change_cipher_spec record change_cipher_spec record (see the third
-      paragraph of Section 5.1) immediately before its second flight.
-      This may either be before its second ClientHello or before its
-      encrypted handshake flight.  If offering early data, the record is
-      placed immediately after the first ClientHello.
+      change_cipher_spec record (see the third paragraph of Section 5.1)
+      immediately before its second flight.  This may either be before
+      its second ClientHello or before its encrypted handshake flight.
+      If offering early data, the record is placed immediately after the
+      first ClientHello.
 
    -  The server sends a dummy change_cipher_spec record immediately
       after its first handshake message.  This may either be after a
