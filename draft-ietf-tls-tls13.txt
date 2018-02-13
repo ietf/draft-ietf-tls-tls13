@@ -6819,13 +6819,13 @@ Internet-Draft                     TLS                     February 2018
        supported_versions(43),                     /* [[this document]] */
        cookie(44),                                 /* [[this document]] */
        psk_key_exchange_modes(45),                 /* [[this document]] */
+       RESERVED(46),                               /* Used but never assigned */
        certificate_authorities(47),                /* [[this document]] */
        oid_filters(48),                            /* [[this document]] */
        post_handshake_auth(49),                    /* [[this document]] */
        signature_algorithms_cert(50),              /* [[this document]] */
        key_share(51),                              /* [[this document]] */
        (65535)
-   } ExtensionType;
 
 
 
@@ -6833,6 +6833,8 @@ Rescorla                 Expires August 17, 2018              [Page 122]
 
 Internet-Draft                     TLS                     February 2018
 
+
+   } ExtensionType;
 
    struct {
        NamedGroup group;
@@ -6880,8 +6882,6 @@ Internet-Draft                     TLS                     February 2018
 
    opaque PskBinderEntry<32..255>;
 
-   struct {
-       PskIdentity identities<7..2^16-1>;
 
 
 
@@ -6890,6 +6890,8 @@ Rescorla                 Expires August 17, 2018              [Page 123]
 Internet-Draft                     TLS                     February 2018
 
 
+   struct {
+       PskIdentity identities<7..2^16-1>;
        PskBinderEntry binders<33..2^16-1>;
    } OfferedPsks;
 
@@ -6919,8 +6921,6 @@ B.3.1.2.  Cookie Extension
       } Cookie;
 
 B.3.1.3.  Signature Algorithm Extension
-
-
 
 
 
