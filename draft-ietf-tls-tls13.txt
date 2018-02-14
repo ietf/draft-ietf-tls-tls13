@@ -99,7 +99,7 @@ Table of Contents
        4.1.2.  Client Hello  . . . . . . . . . . . . . . . . . . . .  32
        4.1.3.  Server Hello  . . . . . . . . . . . . . . . . . . . .  35
        4.1.4.  Hello Retry Request . . . . . . . . . . . . . . . . .  37
-     4.2.  Extensions  . . . . . . . . . . . . . . . . . . . . . . .  38
+     4.2.  Extensions  . . . . . . . . . . . . . . . . . . . . . . .  39
        4.2.1.  Supported Versions  . . . . . . . . . . . . . . . . .  42
        4.2.2.  Cookie  . . . . . . . . . . . . . . . . . . . . . . .  44
        4.2.3.  Signature Algorithms  . . . . . . . . . . . . . . . .  44
@@ -1983,11 +1983,12 @@ Internet-Draft                     TLS                     February 2018
 
    extensions  A list of extensions.  The ServerHello MUST only include
       extensions which are required to establish the cryptographic
-      context.  Currently the only such extensions are "key_share" and
-      "pre_shared_key".  All current TLS 1.3 ServerHello messages will
-      contain one of these two extensions, or both when using a PSK with
-      (EC)DHE key establishment.  The remaining extensions are sent
-      separately in the EncryptedExtensions message.
+      context and negotiate the protocol version.  All TLS 1.3
+      ServerHello messages MUST contain the "supported_versions"
+      extension.  Current ServerHello messages contain either the
+      "pre_shared_key" or "key_share" extensions, or both when using a
+      PSK with (EC)DHE key establishment.  The remaining extensions are
+      sent separately in the EncryptedExtensions message.
 
    For backward compatibility reasons with middleboxes (see
    Appendix D.4) the HelloRetryRequest message uses the same structure
@@ -2009,7 +2010,6 @@ Internet-Draft                     TLS                     February 2018
    If negotiating TLS 1.2, TLS 1.3 servers MUST set the last eight bytes
    of their Random value to the bytes:
 
-     44 4F 57 4E 47 52 44 01
 
 
 
@@ -2017,6 +2017,8 @@ Rescorla                 Expires August 18, 2018               [Page 36]
 
 Internet-Draft                     TLS                     February 2018
 
+
+     44 4F 57 4E 47 52 44 01
 
    If negotiating TLS 1.1 or below, TLS 1.3 servers MUST and TLS 1.2
    servers SHOULD set the last eight bytes of their Random value to the
@@ -2067,8 +2069,6 @@ Internet-Draft                     TLS                     February 2018
 
 
 
-
-
 Rescorla                 Expires August 18, 2018               [Page 37]
 
 Internet-Draft                     TLS                     February 2018
@@ -2115,10 +2115,10 @@ Internet-Draft                     TLS                     February 2018
    HelloRetryRequest and otherwise abort the handshake with an
    "illegal_parameter" alert.
 
-4.2.  Extensions
-
-   A number of TLS messages contain tag-length-value encoded extensions
-   structures.
+   The value of selected_version in the HelloRetryRequest
+   "supported_versions" extension MUST be retained in the ServerHello,
+   and a client MUST abort the handshake with an "illegal_parameter"
+   alert if the value changes.
 
 
 
@@ -2129,6 +2129,11 @@ Rescorla                 Expires August 18, 2018               [Page 38]
 
 Internet-Draft                     TLS                     February 2018
 
+
+4.2.  Extensions
+
+   A number of TLS messages contain tag-length-value encoded extensions
+   structures.
 
    struct {
        ExtensionType extension_type;
@@ -2173,11 +2178,6 @@ Internet-Draft                     TLS                     February 2018
 
    Extensions are generally structured in a request/response fashion,
    though some extensions are just indications with no corresponding
-   response.  The client sends its extension requests in the ClientHello
-   message and the server sends its extension responses in the
-   ServerHello, EncryptedExtensions, HelloRetryRequest and Certificate
-   messages.  The server sends extension requests in the
-   CertificateRequest message which a client MAY respond to with a
 
 
 
@@ -2186,6 +2186,11 @@ Rescorla                 Expires August 18, 2018               [Page 39]
 Internet-Draft                     TLS                     February 2018
 
 
+   response.  The client sends its extension requests in the ClientHello
+   message and the server sends its extension responses in the
+   ServerHello, EncryptedExtensions, HelloRetryRequest and Certificate
+   messages.  The server sends extension requests in the
+   CertificateRequest message which a client MAY respond to with a
    Certificate message.  The server MAY also send unsolicited extensions
    in the NewSessionTicket, though the client does not respond directly
    to these.
@@ -2204,11 +2209,6 @@ Internet-Draft                     TLS                     February 2018
    which it recognizes and which is not specified for the message in
    which it appears it MUST abort the handshake with an
    "illegal_parameter" alert.
-
-
-
-
-
 
 
 

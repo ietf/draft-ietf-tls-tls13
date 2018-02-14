@@ -1570,7 +1570,7 @@ Subsequent Handshake:
 <dt>legacy_compression_method</dt>
 <dd style="margin-left: 8">A single byte which MUST have the value 0.</dd>
 <dt>extensions</dt>
-<dd style="margin-left: 8">A list of extensions.  The ServerHello MUST only include extensions which are required to establish the cryptographic context. Currently the only such extensions are &#8220;key_share&#8221; and &#8220;pre_shared_key&#8221;.  All current TLS 1.3 ServerHello messages will contain one of these two extensions, or both when using a PSK with (EC)DHE key establishment.  The remaining extensions are sent separately in the EncryptedExtensions message.</dd>
+<dd style="margin-left: 8">A list of extensions.  The ServerHello MUST only include extensions which are required to establish the cryptographic context and negotiate the protocol version. All TLS 1.3 ServerHello messages MUST contain the &#8220;supported_versions&#8221; extension.  Current ServerHello messages contain either the &#8220;pre_shared_key&#8221; or &#8220;key_share&#8221; extensions, or both when using a PSK with (EC)DHE key establishment. The remaining extensions are sent separately in the EncryptedExtensions message.</dd>
 </dl>
 <p id="rfc.section.4.1.3.p.4">For backward compatibility reasons with middleboxes (see <a href="#middlebox" class="xref">Appendix D.4</a>) the HelloRetryRequest message uses the same structure as the ServerHello, but with Random set to the special value of the SHA-256 of &#8220;HelloRetryRequest&#8221;:</p>
 <pre>
@@ -1606,6 +1606,7 @@ Subsequent Handshake:
 <li>key_share (see <a href="#key-share" class="xref">Section 4.2.8</a>)</li>
 </ul>
 <p id="rfc.section.4.1.4.p.6">In addition, in its updated ClientHello, the client SHOULD NOT offer any pre-shared keys associated with a hash other than that of the selected cipher suite. This allows the client to avoid having to compute partial hash transcripts for multiple hashes in the second ClientHello.  A client which receives a cipher suite that was not offered MUST abort the handshake.  Servers MUST ensure that they negotiate the same cipher suite when receiving a conformant updated ClientHello (if the server selects the cipher suite as the first step in the negotiation, then this will happen automatically). Upon receiving the ServerHello, clients MUST check that the cipher suite supplied in the ServerHello is the same as that in the HelloRetryRequest and otherwise abort the handshake with an &#8220;illegal_parameter&#8221; alert.</p>
+<p id="rfc.section.4.1.4.p.7">The value of selected_version in the HelloRetryRequest &#8220;supported_versions&#8221; extension MUST be retained in the ServerHello, and a client MUST abort the handshake with an &#8220;illegal_parameter&#8221; alert if the value changes.</p>
 <h2 id="rfc.section.4.2">
 <a href="#rfc.section.4.2">4.2.</a> <a href="#extensions" id="extensions">Extensions</a>
 </h2>
