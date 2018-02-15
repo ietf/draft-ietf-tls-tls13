@@ -157,7 +157,7 @@ Internet-Draft                     TLS                     February 2018
      9.1.  Mandatory-to-Implement Cipher Suites  . . . . . . . . . . 103
      9.2.  Mandatory-to-Implement Extensions . . . . . . . . . . . . 103
      9.3.  Protocol Invariants . . . . . . . . . . . . . . . . . . . 104
-   10. Security Considerations . . . . . . . . . . . . . . . . . . . 105
+   10. Security Considerations . . . . . . . . . . . . . . . . . . . 106
    11. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 106
    12. References  . . . . . . . . . . . . . . . . . . . . . . . . . 107
      12.1.  Normative References . . . . . . . . . . . . . . . . . . 107
@@ -5774,6 +5774,8 @@ Internet-Draft                     TLS                     February 2018
 
    -  "pre_shared_key" is REQUIRED for PSK key agreement.
 
+   -  "psk_key_exchange_modes" is REQUIRED for PSK key agreement.
+
    A client is considered to be attempting to negotiate using this
    specification if the ClientHello contains a "supported_versions"
    extension with 0x0304 as the highest version number contained in its
@@ -5815,8 +5817,6 @@ Internet-Draft                     TLS                     February 2018
    server MAY continue to support older parameters, which would allow it
    to interoperate with older endpoints.
 
-   For this to work, implementations MUST correctly handle extensible
-   fields:
 
 
 
@@ -5825,6 +5825,9 @@ Rescorla                 Expires August 19, 2018              [Page 104]
 
 Internet-Draft                     TLS                     February 2018
 
+
+   For this to work, implementations MUST correctly handle extensible
+   fields:
 
    -  A client sending a ClientHello MUST support all parameters
       advertised in it.  Otherwise, the server may fail to interoperate
@@ -5868,10 +5871,7 @@ Internet-Draft                     TLS                     February 2018
    relax the invariants.  Those middleboxes continue to be non-
    compliant.
 
-10.  Security Considerations
 
-   Security issues are discussed throughout this memo, especially in
-   Appendix C, Appendix D, and Appendix E.
 
 
 
@@ -5881,6 +5881,11 @@ Rescorla                 Expires August 19, 2018              [Page 105]
 
 Internet-Draft                     TLS                     February 2018
 
+
+10.  Security Considerations
+
+   Security issues are discussed throughout this memo, especially in
+   Appendix C, Appendix D, and Appendix E.
 
 11.  IANA Considerations
 
@@ -5926,11 +5931,6 @@ Internet-Draft                     TLS                     February 2018
       and "signature_algorithms_cert", extensions with the values
       defined in this document and the Recommended value of "Yes".
 
-   -  IANA [SHALL update/has updated] this registry to include a "TLS
-      1.3" column which lists the messages in which the extension may
-      appear.  This column [SHALL be/has been] initially populated from
-
-
 
 
 Rescorla                 Expires August 19, 2018              [Page 106]
@@ -5938,6 +5938,9 @@ Rescorla                 Expires August 19, 2018              [Page 106]
 Internet-Draft                     TLS                     February 2018
 
 
+   -  IANA [SHALL update/has updated] this registry to include a "TLS
+      1.3" column which lists the messages in which the extension may
+      appear.  This column [SHALL be/has been] initially populated from
       the table in Section 4.2 with any extension not listed there
       marked as "-" to indicate that it is not used by TLS 1.3.
 
@@ -5983,9 +5986,6 @@ Internet-Draft                     TLS                     February 2018
               Infrastructure Certificate and Certificate Revocation List
               (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
               <https://www.rfc-editor.org/info/rfc5280>.
-
-
-
 
 
 

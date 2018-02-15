@@ -3099,6 +3099,7 @@ TLS-Exporter(label, context_value, key_length) =
 <li>&#8220;supported_groups&#8221;     is REQUIRED for ClientHello messages using DHE or ECDHE key exchange.</li>
 <li>&#8220;key_share&#8221;            is REQUIRED for DHE or ECDHE key exchange.</li>
 <li>&#8220;pre_shared_key&#8221;       is REQUIRED for PSK key agreement.</li>
+<li>&#8220;psk_key_exchange_modes&#8221; is REQUIRED for PSK key agreement.</li>
 </ul>
 <p id="rfc.section.9.2.p.5">A client is considered to be attempting to negotiate using this specification if the ClientHello contains a &#8220;supported_versions&#8221; extension with 0x0304 as the highest version number contained in its body.  Such a ClientHello message MUST meet the following requirements:</p>
 <p></p>
