@@ -6254,8 +6254,8 @@ Internet-Draft                     TLS                     February 2018
 
    [I-D.ietf-tls-iana-registry-updates]
               Salowey, J. and S. Turner, "IANA Registry Updates for TLS
-              and DTLS", draft-ietf-tls-iana-registry-updates-03 (work
-              in progress), January 2018.
+              and DTLS", draft-ietf-tls-iana-registry-updates-04 (work
+              in progress), February 2018.
 
    [I-D.ietf-tls-tls13-vectors]
               Thomson, M., "Example Handshake Traces for TLS 1.3",
@@ -8337,7 +8337,7 @@ Internet-Draft                     TLS                     February 2018
       Independent
       tim@dierks.org
 
-   -  Taher Elgamal
+   -  Roelof DuToit
 
 
 
@@ -8346,6 +8346,10 @@ Rescorla                 Expires August 19, 2018              [Page 149]
 Internet-Draft                     TLS                     February 2018
 
 
+      Symantec Corporation
+      roelof_dutoit@symantec.com
+
+   -  Taher Elgamal
       Securify
       taher@securify.com
 
@@ -8391,16 +8395,16 @@ Internet-Draft                     TLS                     February 2018
       Sun Microsystems Laboratories
       vipul.gupta@sun.com
 
-   -  Chris Hawk (co-author of [RFC4492])
-      Corriente Networks LLC
-      chris@corriente.net
-
 
 
 Rescorla                 Expires August 19, 2018              [Page 150]
 
 Internet-Draft                     TLS                     February 2018
 
+
+   -  Chris Hawk (co-author of [RFC4492])
+      Corriente Networks LLC
+      chris@corriente.net
 
    -  Kipp Hickman
 
@@ -8447,16 +8451,16 @@ Internet-Draft                     TLS                     February 2018
       Google
       agl@google.com
 
-   -  Olivier Levillain
-      ANSSI
-      olivier.levillain@ssi.gouv.fr
-
 
 
 Rescorla                 Expires August 19, 2018              [Page 151]
 
 Internet-Draft                     TLS                     February 2018
 
+
+   -  Olivier Levillain
+      ANSSI
+      olivier.levillain@ssi.gouv.fr
 
    -  Xiaoyin Liu
       University of North Carolina at Chapel Hill
@@ -8502,10 +8506,6 @@ Internet-Draft                     TLS                     February 2018
       DeNA Co., Ltd.
       kazuhooku@gmail.com
 
-   -  Kenny Paterson
-      Royal Holloway, University of London
-      kenny.paterson@rhul.ac.uk
-
 
 
 
@@ -8513,6 +8513,10 @@ Rescorla                 Expires August 19, 2018              [Page 152]
 
 Internet-Draft                     TLS                     February 2018
 
+
+   -  Kenny Paterson
+      Royal Holloway, University of London
+      kenny.paterson@rhul.ac.uk
 
    -  Alfredo Pironti (co-author of [RFC7627])
       INRIA
@@ -8558,10 +8562,6 @@ Internet-Draft                     TLS                     February 2018
 
    -  Dan Simon
       Microsoft, Inc.
-      dansimon@microsoft.com
-
-   -  Brian Smith
-      Independent
 
 
 
@@ -8570,6 +8570,10 @@ Rescorla                 Expires August 19, 2018              [Page 153]
 Internet-Draft                     TLS                     February 2018
 
 
+      dansimon@microsoft.com
+
+   -  Brian Smith
+      Independent
       brian@briansmith.org
 
    -  Brian Sniffen
@@ -8614,10 +8618,6 @@ Internet-Draft                     TLS                     February 2018
 
    -  Tom Weinstein
 
-   -  Hoeteck Wee
-      Ecole Normale Superieure, Paris
-      hoeteck@alum.mit.edu
-
 
 
 
@@ -8625,6 +8625,10 @@ Rescorla                 Expires August 19, 2018              [Page 154]
 
 Internet-Draft                     TLS                     February 2018
 
+
+   -  Hoeteck Wee
+      Ecole Normale Superieure, Paris
+      hoeteck@alum.mit.edu
 
    -  David Wong
       NCC Group
@@ -8652,10 +8656,6 @@ Author's Address
    RTFM, Inc.
 
    EMail: ekr@rtfm.com
-
-
-
-
 
 
 
