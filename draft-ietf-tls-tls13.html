@@ -406,12 +406,12 @@ address {
 <link href="#rfc.authors" rel="Chapter">
 
 
-  <meta name="generator" content="xml2rfc version 2.9.3 - https://tools.ietf.org/tools/xml2rfc" />
+  <meta name="generator" content="xml2rfc version 2.9.6 - https://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Rescorla, E." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-tls-tls13-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2018-02-15" />
+  <meta name="dct.issued" scheme="ISO8601" content="2018-02-22" />
   <meta name="dct.abstract" content="This document specifies version 1.3 of the Transport Layer Security (TLS) protocol.  TLS allows client/server applications to communicate over the Internet in a way that is designed to prevent eavesdropping, tampering, and message forgery." />
   <meta name="description" content="This document specifies version 1.3 of the Transport Layer Security (TLS) protocol.  TLS allows client/server applications to communicate over the Internet in a way that is designed to prevent eavesdropping, tampering, and message forgery." />
 
@@ -432,7 +432,7 @@ address {
 </tr>
 <tr>
 <td class="left">Obsoletes: 5077, 5246 (if approved)</td>
-<td class="right">February 15, 2018</td>
+<td class="right">February 22, 2018</td>
 </tr>
 <tr>
 <td class="left">Updates: 4492, 5705, 6066, 6961 (if</td>
@@ -447,7 +447,7 @@ address {
 <td class="right"></td>
 </tr>
 <tr>
-<td class="left">Expires: August 19, 2018</td>
+<td class="left">Expires: August 26, 2018</td>
 <td class="right"></td>
 </tr>
 
@@ -464,7 +464,7 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on August 19, 2018.</p>
+<p>This Internet-Draft will expire on August 26, 2018.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2018 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -2410,7 +2410,7 @@ Subsequent Handshake:
        opaque signature&lt;0..2^16-1&gt;;
    } CertificateVerify;
 </pre>
-<p id="rfc.section.4.4.3.p.3">The algorithm field specifies the signature algorithm used (see <a href="#signature-algorithms" class="xref">Section 4.2.3</a> for the definition of this field). The signature is a digital signature using that algorithm. The content that is covered under the signature is the hash output as described in <a href="#authentication-messages" class="xref">Section 4.4</a>, namely:</p>
+<p id="rfc.section.4.4.3.p.3">The algorithm field specifies the signature algorithm used (see <a href="#signature-algorithms" class="xref">Section 4.2.3</a> for the definition of this field). The signature is a digital signature using that algorithm. The content that is covered under the signature is the hash output as described in <a href="#the-transcript-hash" class="xref">Section 4.4.1</a>, namely:</p>
 <pre>
    Transcript-Hash(Handshake Context, Certificate)
 </pre>
@@ -3505,11 +3505,6 @@ TLS-Exporter(label, context_value, key_length) =
 <td class="reference"><b id="RFC4492">[RFC4492]</b></td>
 <td class="top">
 <a>Blake-Wilson, S.</a>, <a>Bolyard, N.</a>, <a>Gupta, V.</a>, <a>Hawk, C.</a> and <a>B. Moeller</a>, "<a href="https://tools.ietf.org/html/rfc4492">Elliptic Curve Cryptography (ECC) Cipher Suites for Transport Layer Security (TLS)</a>", RFC 4492, DOI 10.17487/RFC4492, May 2006.</td>
-</tr>
-<tr>
-<td class="reference"><b id="RFC4681">[RFC4681]</b></td>
-<td class="top">
-<a>Santesson, S.</a>, <a>Medvinsky, A.</a> and <a>J. Ball</a>, "<a href="https://tools.ietf.org/html/rfc4681">TLS User Mapping Extension</a>", RFC 4681, DOI 10.17487/RFC4681, October 2006.</td>
 </tr>
 <tr>
 <td class="reference"><b id="RFC5077">[RFC5077]</b></td>
