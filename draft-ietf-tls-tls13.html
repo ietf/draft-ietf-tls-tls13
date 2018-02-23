@@ -411,7 +411,7 @@ address {
 
   <meta name="dct.creator" content="Rescorla, E." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-tls-tls13-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2018-02-22" />
+  <meta name="dct.issued" scheme="ISO8601" content="2018-02-23" />
   <meta name="dct.abstract" content="This document specifies version 1.3 of the Transport Layer Security (TLS) protocol.  TLS allows client/server applications to communicate over the Internet in a way that is designed to prevent eavesdropping, tampering, and message forgery." />
   <meta name="description" content="This document specifies version 1.3 of the Transport Layer Security (TLS) protocol.  TLS allows client/server applications to communicate over the Internet in a way that is designed to prevent eavesdropping, tampering, and message forgery." />
 
@@ -432,7 +432,7 @@ address {
 </tr>
 <tr>
 <td class="left">Obsoletes: 5077, 5246 (if approved)</td>
-<td class="right">February 22, 2018</td>
+<td class="right">February 23, 2018</td>
 </tr>
 <tr>
 <td class="left">Updates: 4492, 5705, 6066, 6961 (if</td>
@@ -447,7 +447,7 @@ address {
 <td class="right"></td>
 </tr>
 <tr>
-<td class="left">Expires: August 26, 2018</td>
+<td class="left">Expires: August 27, 2018</td>
 <td class="right"></td>
 </tr>
 
@@ -464,7 +464,7 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on August 26, 2018.</p>
+<p>This Internet-Draft will expire on August 27, 2018.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2018 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -1795,7 +1795,7 @@ Subsequent Handshake:
 <p id="rfc.section.4.2.1.p.1">The &#8220;supported_versions&#8221; extension is used by the client to indicate which versions of TLS it supports and by the server to indicate which version it is using. The extension contains a list of supported versions in preference order, with the most preferred version first. Implementations of this specification MUST send this extension containing all versions of TLS which they are prepared to negotiate (for this specification, that means minimally 0x0304, but if previous versions of TLS are allowed to be negotiated, they MUST be present as well).</p>
 <p id="rfc.section.4.2.1.p.2">If this extension is not present, servers which are compliant with this specification MUST negotiate TLS 1.2 or prior as specified in <a href="#RFC5246" class="xref">[RFC5246]</a>, even if ClientHello.legacy_version is 0x0304 or later.  Servers MAY abort the handshake upon receiving a ClientHello with legacy_version 0x0304 or later.</p>
 <p id="rfc.section.4.2.1.p.3">If this extension is present, servers MUST ignore the ClientHello.legacy_version value and MUST use only the &#8220;supported_versions&#8221; extension to determine client preferences. Servers MUST only select a version of TLS present in that extension and MUST ignore any unknown versions that are present in that extension. Note that this mechanism makes it possible to negotiate a version prior to TLS 1.2 if one side supports a sparse range. Implementations of TLS 1.3 which choose to support prior versions of TLS SHOULD support TLS 1.2.  Servers should be prepared to receive ClientHellos that include this extension but do not include 0x0304 in the list of versions.</p>
-<p id="rfc.section.4.2.1.p.4">A server which negotiates TLS 1.3 MUST respond by sending a &#8220;supported_versions&#8221; extension containing the selected version value (0x0304). It MUST set the ServerHello.legacy_version field to 0x0303 (TLS 1.2). Clients MUST check for this extension prior to processing the rest of the ServerHello (although they will have to parse the ServerHello in order to read the extension).  If this extension is present, clients MUST ignore the ServerHello.legacy_version value and MUST use only the &#8220;supported_versions&#8221; extension to determine client preferences. If the &#8220;supported_versions&#8221; extension contains a version not offered by the client, the client MUST abort the handshake with an &#8220;illegal_parameter&#8221; alert.</p>
+<p id="rfc.section.4.2.1.p.4">A server which negotiates TLS 1.3 MUST respond by sending a &#8220;supported_versions&#8221; extension containing the selected version value (0x0304). It MUST set the ServerHello.legacy_version field to 0x0303 (TLS 1.2). Clients MUST check for this extension prior to processing the rest of the ServerHello (although they will have to parse the ServerHello in order to read the extension).  If this extension is present, clients MUST ignore the ServerHello.legacy_version value and MUST use only the &#8220;supported_versions&#8221; extension to determine the selected version. If the &#8220;supported_versions&#8221; extension contains a version not offered by the client, the client MUST abort the handshake with an &#8220;illegal_parameter&#8221; alert.</p>
 <h4 id="rfc.section.4.2.1.1">
 <a href="#rfc.section.4.2.1.1">4.2.1.1.</a> <a href="#draft-version-indicator" id="draft-version-indicator">Draft Version Indicator</a>
 </h4>
