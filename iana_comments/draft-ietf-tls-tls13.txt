@@ -5926,7 +5926,7 @@ Internet-Draft                     TLS                        March 2018
    created in [RFC4366].  IANA has updated it to reference this
    document.  Changes to the registry follow:
 
-   -  IANA [SHALL update/has updated] this registration policy as
+   -  IANA [SHALL update/has updated] the registration policy as
       follows:
 
 
