@@ -411,7 +411,7 @@ address {
 
   <meta name="dct.creator" content="Rescorla, E." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-tls-tls13-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2018-02-28" />
+  <meta name="dct.issued" scheme="ISO8601" content="2018-03-01" />
   <meta name="dct.abstract" content="This document specifies version 1.3 of the Transport Layer Security (TLS) protocol.  TLS allows client/server applications to communicate over the Internet in a way that is designed to prevent eavesdropping, tampering, and message forgery." />
   <meta name="description" content="This document specifies version 1.3 of the Transport Layer Security (TLS) protocol.  TLS allows client/server applications to communicate over the Internet in a way that is designed to prevent eavesdropping, tampering, and message forgery." />
 
@@ -432,7 +432,7 @@ address {
 </tr>
 <tr>
 <td class="left">Obsoletes: 5077, 5246 (if approved)</td>
-<td class="right">February 28, 2018</td>
+<td class="right">March 01, 2018</td>
 </tr>
 <tr>
 <td class="left">Updates: 4492, 5705, 6066, 6961 (if</td>
@@ -447,7 +447,7 @@ address {
 <td class="right"></td>
 </tr>
 <tr>
-<td class="left">Expires: September 1, 2018</td>
+<td class="left">Expires: September 2, 2018</td>
 <td class="right"></td>
 </tr>
 
@@ -464,7 +464,7 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on September 1, 2018.</p>
+<p>This Internet-Draft will expire on September 2, 2018.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2018 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -3141,11 +3141,11 @@ TLS-Exporter(label, context_value, key_length) =
 <li>TLS Alert Registry: Future values are allocated via Standards Action <a href="#RFC8126" class="xref">[RFC8126]</a>. IANA [SHALL update/has updated] this registry to include values for &#8220;missing_extension&#8221; and &#8220;certificate_required&#8221;.  The &#8220;DTLS-OK&#8221; column is marked as &#8220;Yes&#8221; for each new alert.</li>
 <li>TLS HandshakeType Registry: Future values are allocated via Standards Action <a href="#RFC8126" class="xref">[RFC8126]</a>. IANA [SHALL update/has updated] this registry to rename item 4 from &#8220;NewSessionTicket&#8221; to &#8220;new_session_ticket&#8221; and to add the &#8220;hello_retry_request_RESERVED&#8221;, &#8220;encrypted_extensions&#8221;, &#8220;end_of_early_data&#8221;, &#8220;key_update&#8221;, and &#8220;message_hash&#8221; values.  The &#8220;DTLS-OK&#8221; are marked as &#8220;Yes&#8221; for each of these additions.</li>
 </ul>
-<p id="rfc.section.11.p.3">This document also uses the TLS ExtensionType Registry originally created in <a href="#RFC4366" class="xref">[RFC4366]</a>. IANA has updated it to reference this document. The registry and its allocation policy is listed below:</p>
+<p id="rfc.section.11.p.3">This document also uses the TLS ExtensionType Registry originally created in <a href="#RFC4366" class="xref">[RFC4366]</a>. IANA has updated it to reference this document.  Changes to the registry follow:</p>
 <p></p>
 
 <ul>
-<li>IANA [SHALL update/has updated] Values with the first byte in the range 0-254 (decimal) are assigned via Specification Required <a href="#RFC8126" class="xref">[RFC8126]</a>.  Values with the first byte 255 (decimal) are reserved for Private Use <a href="#RFC8126" class="xref">[RFC8126]</a>.</li>
+<li>IANA [SHALL update/has updated] this registration policy as follows:  <br><br> Values with the first byte in the range 0-254 (decimal) are assigned via Specification Required <a href="#RFC8126" class="xref">[RFC8126]</a>.  Values with the first byte 255 (decimal) are reserved for Private Use <a href="#RFC8126" class="xref">[RFC8126]</a>.</li>
 <li>IANA [SHALL update/has updated] this registry to include the &#8220;key_share&#8221;, &#8220;pre_shared_key&#8221;, &#8220;psk_key_exchange_modes&#8221;, &#8220;early_data&#8221;, &#8220;cookie&#8221;, &#8220;supported_versions&#8221;, &#8220;certificate_authorities&#8221;, &#8220;oid_filters&#8221;, &#8220;post_handshake_auth&#8221;, and &#8220;signature_algorithms_cert&#8221;, extensions with the values defined in this document and the Recommended value of &#8220;Yes&#8221;.</li>
 <li>IANA [SHALL update/has updated] this registry to include a &#8220;TLS 1.3&#8221; column which lists the messages in which the extension may appear. This column [SHALL be/has been] initially populated from the table in <a href="#extensions" class="xref">Section 4.2</a> with any extension not listed there marked as &#8220;-&#8220; to indicate that it is not used by TLS 1.3.</li>
 </ul>
