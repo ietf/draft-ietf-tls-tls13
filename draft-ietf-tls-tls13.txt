@@ -3319,12 +3319,15 @@ Internet-Draft                     TLS                        March 2018
    store the SNI with the PSK to fulfill the requirements of
    Section 4.6.1.
 
-   Implementor's note: the most straightforward way to implement the
-   PSK/cipher suite matching requirements is to negotiate the cipher
-   suite first and then exclude any incompatible PSKs.  Any unknown PSKs
-   (e.g., they are not in the PSK database or are encrypted with an
-   unknown key) SHOULD simply be ignored.  If no acceptable PSKs are
-   found, the server SHOULD perform a non-PSK handshake if possible.
+   Implementor's note: when session resumption is the primary use case
+   of PSKs the most straightforward way to implement the PSK/cipher
+   suite matching requirements is to negotiate the cipher suite first
+   and then exclude any incompatible PSKs.  Any unknown PSKs (e.g., they
+   are not in the PSK database or are encrypted with an unknown key)
+   SHOULD simply be ignored.  If no acceptable PSKs are found, the
+   server SHOULD perform a non-PSK handshake if possible.  If backwards
+   compatibility is important, client provided, externally established
+   PSKs SHOULD influence cipher suite selection.
 
    Prior to accepting PSK key establishment, the server MUST validate
    the corresponding binder value (see Section 4.2.11.2 below).  If this
@@ -3351,9 +3354,6 @@ Internet-Draft                     TLS                        March 2018
    facilitates implementation as described below).  Servers MUST check
    that it is the last extension and otherwise fail the handshake with
    an "illegal_parameter" alert.
-
-
-
 
 
 
