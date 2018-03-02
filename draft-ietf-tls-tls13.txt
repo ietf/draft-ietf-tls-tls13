@@ -4,9 +4,9 @@
 
 Network Working Group                                        E. Rescorla
 Internet-Draft                                                RTFM, Inc.
-Obsoletes: 5077, 5246 (if approved)                       March 02, 2018
-Updates: 4492, 5705, 6066, 6961 (if
-         approved)
+Obsoletes: 5077, 5246, 6961 (if                           March 02, 2018
+           approved)
+Updates: 4492, 5705, 6066 (if approved)
 Intended status: Standards Track
 Expires: September 3, 2018
 
