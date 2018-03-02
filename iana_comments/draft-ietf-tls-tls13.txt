@@ -5968,7 +5968,8 @@ Internet-Draft                     TLS                        March 2018
       [shall be/ has been] initially populated with the values described
       in Section 4.2.3.  The following values SHALL be marked as
       "Recommended": ecdsa_secp256r1_sha256, ecdsa_secp384r1_sha384,
-      rsa_pss_rsae_sha256, rsa_pss_rsae_sha384, rsa_pss_rsae_sha512, and
+      rsa_pss_rsae_sha256, rsa_pss_rsae_sha384, rsa_pss_rsae_sha512,
+      rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, and
       ed25519.
 
 12.  References
@@ -5982,7 +5983,6 @@ Internet-Draft                     TLS                        March 2018
    [GCM]      Dworkin, M., "Recommendation for Block Cipher Modes of
               Operation: Galois/Counter Mode (GCM) and GMAC",
               NIST Special Publication 800-38D, November 2007.
-
 
 
 
