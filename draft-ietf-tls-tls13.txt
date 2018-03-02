@@ -2971,9 +2971,10 @@ Internet-Draft                     TLS                        March 2018
 
 
    "supported_groups" extension and MUST NOT send a KeyShareEntry when
-   using the "psk_ke" PskKeyExchangeMode.  If a HelloRetryRequest was
-   received by the client, the client MUST verify that the selected
-   NamedGroup in the ServerHello is the same as that in the
+   using the "psk_ke" PskKeyExchangeMode.  If using (EC)DHE key
+   establishment, and a HelloRetryRequest containing a "key_share"
+   extension was received by the client, the client MUST verify that the
+   selected NamedGroup in the ServerHello is the same as that in the
    HelloRetryRequest.  If this check fails, the client MUST abort the
    handshake with an "illegal_parameter" alert.
 
@@ -3017,7 +3018,6 @@ Internet-Draft                     TLS                        March 2018
    For the curves secp256r1, secp384r1 and secp521r1, peers MUST
    validate each other's public value Y by ensuring that the point is a
    valid point on the elliptic curve.  The appropriate validation
-   procedures are defined in Section 4.3.7 of [X962] and alternatively
 
 
 
@@ -3026,6 +3026,7 @@ Rescorla                Expires September 3, 2018              [Page 54]
 Internet-Draft                     TLS                        March 2018
 
 
+   procedures are defined in Section 4.3.7 of [X962] and alternatively
    in Section 5.6.2.3 of [KEYAGREEMENT].  This process consists of three
    steps: (1) verify that Y is not the point at infinity (O), (2) verify
    that for Y = (x, y) both integers are in the correct interval, (3)
@@ -3073,7 +3074,6 @@ Internet-Draft                     TLS                        March 2018
    psk_dhe_ke  PSK with (EC)DHE key establishment.  In this mode, the
       client and servers MUST supply "key_share" values as described in
       Section 4.2.8.
-
 
 
 
@@ -7769,12 +7769,12 @@ Internet-Draft                     TLS                        March 2018
       the "psk_ke" PskKeyExchangeMode.
 
    Key Compromise Impersonation (KCI) resistance  In a mutually-
-      authenticated connection with certificates, peer authentication
-      should hold even if the local long-term secret was compromised
-      before the connection was established (see [HGFS15]).  For
-      example, if a client's signature key is compromised, it should not
-      be possible to impersonate arbitrary servers to that client in
-      subsequent handshakes.
+      authenticated connection with certificates, compromising the long-
+      term secret of one actor should not break that actor's
+      authentication of their peer in the given connection (see
+      [HGFS15]).  For example, if a client's signature key is
+      compromised, it should not be possible to impersonate arbitrary
+      servers to that client in subsequent handshakes.
 
    Protection of endpoint identities.  The server's identity
       (certificate) should be protected against passive attackers.  The
