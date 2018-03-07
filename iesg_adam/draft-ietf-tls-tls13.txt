@@ -6655,9 +6655,9 @@ A.2.  Server
 
 Appendix B.  Protocol Data Structures and Constant Values
 
-   This section describes protocol types and constants.  Values listed
-   as _RESERVED were used in previous versions of TLS and are listed
-
+   This section provides the normative protocol types and constants
+   definitions.  Values listed as _RESERVED were used in previous
+   versions of TLS and are listed here for completeness.  TLS 1.3
 
 
 
@@ -6666,8 +6666,8 @@ Rescorla                Expires September 8, 2018             [Page 119]
 Internet-Draft                     TLS                        March 2018
 
 
-   here for completeness.  TLS 1.3 implementations MUST NOT send them
-   but might receive them from older TLS implementations.
+   implementations MUST NOT send them but might receive them from older
+   TLS implementations.
 
 B.1.  Record Layer
 
