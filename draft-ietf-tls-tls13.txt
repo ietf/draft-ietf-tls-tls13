@@ -5511,7 +5511,9 @@ Internet-Draft                     TLS                        March 2018
    exporter_master_secret unless explicitly specified by the
    application.  The early_exporter_master_secret is defined for use in
    settings where an exporter is needed for 0-RTT data.  A separate
-   interface for the early exporter is RECOMMENDED.
+   interface for the early exporter is RECOMMENDED; this avoids the
+   exporter user accidentally using an early exporter when a regular one
+   is desired or vice versa.
 
    If no context is provided, the context_value is zero-length.
    Consequently, providing no context computes the same value as
@@ -5536,8 +5538,6 @@ Internet-Draft                     TLS                        March 2018
    -  Network attackers who mount a replay attack by simply duplicating
       a flight of 0-RTT data.
 
-   -  Network attackers who take advantage of client retry behavior to
-      arrange for the server to receive multiple copies of an
 
 
 
@@ -5546,6 +5546,8 @@ Rescorla               Expires September 10, 2018              [Page 99]
 Internet-Draft                     TLS                        March 2018
 
 
+   -  Network attackers who take advantage of client retry behavior to
+      arrange for the server to receive multiple copies of an
       application message.  This threat already exists to some extent
       because clients that value robustness respond to network errors by
       attempting to retry requests.  However, 0-RTT adds an additional
@@ -5590,8 +5592,6 @@ Internet-Draft                     TLS                        March 2018
    MUST be dealt with by any application.  Note that any application
    whose clients implement any kind of retry behavior already needs to
    implement some sort of anti-replay defense.
-
-
 
 
 
