@@ -2996,7 +2996,7 @@ Internet-Draft                     TLS                        March 2018
 
 4.2.8.2.  ECDHE Parameters
 
-   ECDHE parameters for both clients and servers are encoded in the the
+   ECDHE parameters for both clients and servers are encoded in the
    opaque key_exchange field of a KeyShareEntry in a KeyShare structure.
 
    For secp256r1, secp384r1 and secp521r1, the contents are the
@@ -7482,8 +7482,8 @@ Appendix D.  Backward Compatibility
 
    TLS 1.x and SSL 3.0 use compatible ClientHello messages.  Servers can
    also handle clients trying to use future versions of TLS as long as
-   the ClientHello format remains compatible and and there is at least
-   one protocol version supported by both the client and the server.
+   the ClientHello format remains compatible and there is at least one
+   protocol version supported by both the client and the server.
 
    Prior versions of TLS used the record layer version number for
    various purposes.  (TLSPlaintext.legacy_record_version and
@@ -8147,10 +8147,10 @@ E.5.  Replay Attacks on 0-RTT
       to see if the two requests address the same resource.
 
    If data can be replayed a large number of times, additional attacks
-   become possible, such as making repeated measurements of the the
-   speed of cryptographic operations.  In addition, they may be able to
-   overload rate-limiting systems.  For further description of these
-   attacks, see [Mac17].
+   become possible, such as making repeated measurements of the speed of
+   cryptographic operations.  In addition, they may be able to overload
+   rate-limiting systems.  For further description of these attacks, see
+   [Mac17].
 
    Ultimately, servers have the responsibility to protect themselves
    against attacks employing 0-RTT data replication.  The mechanisms
@@ -8419,7 +8419,7 @@ Internet-Draft                     TLS                        March 2018
       mhorvat@mpi-sws.org
 
    -  Jonathan Hoyland
-      Royal Holloway, University of London
+      Royal Holloway, University of London jonathan.hoyland@gmail.com
 
    -  Subodh Iyengar
       Facebook
