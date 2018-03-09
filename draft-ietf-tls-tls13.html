@@ -755,7 +755,7 @@ address {
 <p id="rfc.section.1.1.p.3">client: The endpoint initiating the TLS connection.</p>
 <p id="rfc.section.1.1.p.4">connection: A transport-layer connection between two endpoints.</p>
 <p id="rfc.section.1.1.p.5">endpoint: Either the client or server of the connection.</p>
-<p id="rfc.section.1.1.p.6">handshake: An initial negotiation between client and server that establishes the parameters of their subsequent interactions.</p>
+<p id="rfc.section.1.1.p.6">handshake: An initial negotiation between client and server that establishes the parameters of their subsequent interactions within TLS.</p>
 <p id="rfc.section.1.1.p.7">peer: An endpoint. When discussing a particular endpoint, &#8220;peer&#8221; refers to the endpoint that is not the primary subject of discussion.</p>
 <p id="rfc.section.1.1.p.8">receiver: An endpoint that is receiving records.</p>
 <p id="rfc.section.1.1.p.9">sender: An endpoint that is transmitting records.</p>
@@ -765,41 +765,47 @@ address {
 </h2>
 <p id="rfc.section.1.2.p.1">RFC EDITOR PLEASE DELETE THIS SECTION.</p>
 <p id="rfc.section.1.2.p.2">(*) indicates changes to the wire protocol which may require implementations to update.</p>
-<p id="rfc.section.1.2.p.3">draft-26 - Clarify that you can&#8217;t negotiate pre-TLS 1.3 with supported_versions.</p>
-<p id="rfc.section.1.2.p.4">draft-25 - Add the header to additional data (*)</p>
+<p id="rfc.section.1.2.p.3">draft-26</p>
+<p></p>
+
+<ul><li>Clarify that you can&#8217;t negotiate pre-TLS 1.3 with supported_versions.</li></ul>
+<p id="rfc.section.1.2.p.5">draft-25</p>
 <p></p>
 
 <ul>
+<li>Add the header to additional data (*)</li>
 <li>Minor clarifications.</li>
 <li>IANA cleanup.</li>
 </ul>
-<p id="rfc.section.1.2.p.6">draft-24</p>
+<p id="rfc.section.1.2.p.7">draft-24</p>
 <p></p>
 
 <ul>
 <li>Require that CH2 have version 0303 (*)</li>
 <li>Some clarifications</li>
 </ul>
-<p id="rfc.section.1.2.p.8">draft-23 - Renumber key_share (*)</p>
+<p id="rfc.section.1.2.p.9">draft-23</p>
 <p></p>
 
 <ul>
+<li>Renumber key_share (*)</li>
 <li>Add a new extension and new code points to allow negotiating PSS separately for certificates and CertificateVerify (*)</li>
 <li>Slightly restrict when CCS must be accepted to make implementation easier.</li>
 <li>Document protocol invariants</li>
 <li>Add some text on the security of static RSA.</li>
 </ul>
-<p id="rfc.section.1.2.p.10">draft-22 - Implement changes for improved middlebox penetration (*)</p>
+<p id="rfc.section.1.2.p.11">draft-22</p>
 <p></p>
 
 <ul>
+<li>Implement changes for improved middlebox penetration (*)</li>
 <li>Move server_certificate_type to encrypted extensions (*)</li>
 <li>Allow resumption with a different SNI (*)</li>
 <li>Padding extension can change on HRR (*)</li>
 <li>Allow an empty ticket_nonce (*)</li>
 <li>Remove requirement to immediately respond to close_notify with close_notify (allowing half-close)</li>
 </ul>
-<p id="rfc.section.1.2.p.12">draft-21</p>
+<p id="rfc.section.1.2.p.13">draft-21</p>
 <p></p>
 
 <ul>
@@ -808,7 +814,7 @@ address {
 <li>Update state machine to show rekeying events</li>
 <li>Add discussion of 0-RTT and replay. Recommend that implementations implement some anti-replay mechanism.</li>
 </ul>
-<p id="rfc.section.1.2.p.14">draft-20</p>
+<p id="rfc.section.1.2.p.15">draft-20</p>
 <p></p>
 
 <ul>
@@ -820,7 +826,7 @@ address {
 <li>Added the no_application_protocol alert from <a href="#RFC7301" class="xref">[RFC7301]</a> to the list of extensions.</li>
 <li>Added discussion of traffic analysis and side channel attacks.</li>
 </ul>
-<p id="rfc.section.1.2.p.16">draft-19</p>
+<p id="rfc.section.1.2.p.17">draft-19</p>
 <p></p>
 
 <ul>
@@ -837,7 +843,7 @@ address {
 <li>Require peer public key validation</li>
 <li>Add state machine diagram.</li>
 </ul>
-<p id="rfc.section.1.2.p.18">draft-18</p>
+<p id="rfc.section.1.2.p.19">draft-18</p>
 <p></p>
 
 <ul>
@@ -845,7 +851,7 @@ address {
 <li>Fix signature_algorithms entry in extensions table.</li>
 <li>Restate rule from RFC 6066 that you can&#8217;t resume unless SNI is the same.</li>
 </ul>
-<p id="rfc.section.1.2.p.20">draft-17</p>
+<p id="rfc.section.1.2.p.21">draft-17</p>
 <p></p>
 
 <ul>
@@ -862,7 +868,7 @@ address {
 <li>Explicitly allow predicting client Finished for NST</li>
 <li>Clarify conditions for allowing 0-RTT with PSK</li>
 </ul>
-<p id="rfc.section.1.2.p.22">draft-16</p>
+<p id="rfc.section.1.2.p.23">draft-16</p>
 <p></p>
 
 <ul>
@@ -875,7 +881,7 @@ address {
 <li>Forbid CertificateRequest with 0-RTT and PSK.</li>
 <li>Relax requirement to check SNI for 0-RTT.</li>
 </ul>
-<p id="rfc.section.1.2.p.24">draft-15</p>
+<p id="rfc.section.1.2.p.25">draft-15</p>
 <p></p>
 
 <ul>
@@ -890,7 +896,7 @@ address {
 <li>Remove old PRNG text.</li>
 <li>Explicitly require checking that handshake records not span key changes.</li>
 </ul>
-<p id="rfc.section.1.2.p.26">draft-14</p>
+<p id="rfc.section.1.2.p.27">draft-14</p>
 <p></p>
 
 <ul>
@@ -908,7 +914,7 @@ address {
 <li>Major editorial restructuring.</li>
 <li>Replace the Security Analysis section with a WIP draft.</li>
 </ul>
-<p id="rfc.section.1.2.p.28">draft-13</p>
+<p id="rfc.section.1.2.p.29">draft-13</p>
 <p></p>
 
 <ul>
@@ -924,7 +930,7 @@ address {
 <li>Remove the redundant length fields in KeyShareEntry.</li>
 <li>Define a cookie field for HRR.</li>
 </ul>
-<p id="rfc.section.1.2.p.30">draft-12</p>
+<p id="rfc.section.1.2.p.31">draft-12</p>
 <p></p>
 
 <ul>
@@ -937,7 +943,7 @@ address {
 <li>Define exporters.</li>
 <li>Editorial cleanup</li>
 </ul>
-<p id="rfc.section.1.2.p.32">draft-11</p>
+<p id="rfc.section.1.2.p.33">draft-11</p>
 <p></p>
 
 <ul>
@@ -950,14 +956,14 @@ address {
 <li>Remove early_handshake content type. Terminate 0-RTT data with an alert.</li>
 <li>Reset sequence number upon key change (as proposed by Fournet et al.)</li>
 </ul>
-<p id="rfc.section.1.2.p.34">draft-10</p>
+<p id="rfc.section.1.2.p.35">draft-10</p>
 <p></p>
 
 <ul>
 <li>Remove ClientCertificateTypes field from CertificateRequest and add extensions.</li>
 <li>Merge client and server key shares into a single extension.</li>
 </ul>
-<p id="rfc.section.1.2.p.36">draft-09</p>
+<p id="rfc.section.1.2.p.37">draft-09</p>
 <p></p>
 
 <ul>
@@ -971,7 +977,7 @@ address {
 <li>Deprecate SHA-1 with signatures.</li>
 <li>Add MTI algorithms.</li>
 </ul>
-<p id="rfc.section.1.2.p.38">draft-08</p>
+<p id="rfc.section.1.2.p.39">draft-08</p>
 <p></p>
 
 <ul>
@@ -984,7 +990,7 @@ address {
 <li>Change code point for server_configuration to avoid collision with server_hello_done.</li>
 <li>Relax certificate_list ordering requirement to match current practice.</li>
 </ul>
-<p id="rfc.section.1.2.p.40">draft-07</p>
+<p id="rfc.section.1.2.p.41">draft-07</p>
 <p></p>
 
 <ul>
@@ -994,7 +1000,7 @@ address {
 <li>Move ClientKeyShare into an extension.</li>
 <li>Move to HKDF.</li>
 </ul>
-<p id="rfc.section.1.2.p.42">draft-06</p>
+<p id="rfc.section.1.2.p.43">draft-06</p>
 <p></p>
 
 <ul>
@@ -1003,14 +1009,14 @@ address {
 <li>Update format of signatures with context.</li>
 <li>Remove explicit IV.</li>
 </ul>
-<p id="rfc.section.1.2.p.44">draft-05</p>
+<p id="rfc.section.1.2.p.45">draft-05</p>
 <p></p>
 
 <ul>
 <li>Prohibit SSL negotiation for backwards compatibility.</li>
 <li>Fix which MS is used for exporters.</li>
 </ul>
-<p id="rfc.section.1.2.p.46">draft-04</p>
+<p id="rfc.section.1.2.p.47">draft-04</p>
 <p></p>
 
 <ul>
@@ -1020,7 +1026,7 @@ address {
 <li>Remove renegotiation.</li>
 <li>Remove point format negotiation.</li>
 </ul>
-<p id="rfc.section.1.2.p.48">draft-03</p>
+<p id="rfc.section.1.2.p.49">draft-03</p>
 <p></p>
 
 <ul>
@@ -1030,7 +1036,7 @@ address {
 <li>Rename {Client,Server}KeyExchange to {Client,Server}KeyShare.</li>
 <li>Add an explicit HelloRetryRequest to reject the client&#8217;s.</li>
 </ul>
-<p id="rfc.section.1.2.p.50">draft-02</p>
+<p id="rfc.section.1.2.p.51">draft-02</p>
 <p></p>
 
 <ul>
@@ -1053,10 +1059,10 @@ address {
 <li>Static RSA and Diffie-Hellman cipher suites have been removed; all public-key based key exchange mechanisms now provide forward secrecy.</li>
 <li>All handshake messages after the ServerHello are now encrypted. The newly introduced EncryptedExtension message allows various extensions previously sent in clear in the ServerHello to also enjoy confidentiality protection from active attackers.</li>
 <li>The key derivation functions have been re-designed. The new design allows easier analysis by cryptographers due to their improved key separation properties. The HMAC-based Extract-and-Expand Key Derivation Function (HKDF) is used as an underlying primitive.</li>
-<li>The handshake state machine has been significantly restructured to be more consistent and to remove superfluous messages such as ChangeCipherSpec.</li>
+<li>The handshake state machine has been significantly restructured to be more consistent and to remove superfluous messages such as ChangeCipherSpec (except when needed for middlebox compatibility).</li>
 <li>Elliptic curve algorithms are now in the base spec and new signature algorithms, such as ed25519 and ed448, are included. TLS 1.3 removed point format negotiation in favor of a single point format for each curve.</li>
-<li>Other cryptographic improvements including the removal of compression and custom DHE groups, changing the RSA padding to use PSS, and the removal of DSA.</li>
-<li>The TLS 1.2 version negotiation mechanism has been deprecated in favor of a version list in an extension. This increases compatibility with servers which incorrectly implemented version negotiation.</li>
+<li>Other cryptographic improvements including the removal of compression and custom DHE groups, changing the RSA padding to use RSASSA-PSS, and the removal of DSA.</li>
+<li>The TLS 1.2 version negotiation mechanism has been deprecated in favor of a version list in an extension. This increases compatibility with existing servers that incorrectly implemented version negotiation.</li>
 <li>Session resumption with and without server-side state as well as the PSK-based ciphersuites of earlier TLS versions have been replaced by a single new PSK exchange.</li>
 <li>Updated references to point to the updated versions of RFCs, as appropriate (e.g., RFC 5280 rather than RFC 3280).</li>
 </ul>
@@ -1070,6 +1076,7 @@ address {
 <li>A version downgrade protection mechanism is described in <a href="#server-hello" class="xref">Section 4.1.3</a>.</li>
 <li>RSASSA-PSS signature schemes are defined in <a href="#signature-algorithms" class="xref">Section 4.2.3</a>.</li>
 <li>The &#8220;supported_versions&#8221; ClientHello extension can be used to negotiate the version of TLS to use, in preference to the legacy_version field of the ClientHello.</li>
+<li>The &#8220;signature_algorithms_cert&#8221; extension allows a client to indicate which signature algorithms it can validate in X.509 certificates</li>
 </ul>
 <p id="rfc.section.1.4.p.3">An implementation of TLS 1.3 that also supports TLS 1.2 might need to include changes to support these changes even when TLS 1.3 is not in use.  See the referenced sections for more details.</p>
 <p id="rfc.section.1.4.p.4">Additionally, this document clarifies some compliance requirements for earlier versions of TLS; see <a href="#protocol-invariants" class="xref">Section 9.3</a>.</p>
@@ -1132,7 +1139,7 @@ Auth | {CertificateVerify*}
 <li>Server Parameters: Establish other handshake parameters (whether the client is authenticated, application layer protocol support, etc.).</li>
 <li>Authentication: Authenticate the server (and optionally the client) and provide key confirmation and handshake integrity.</li>
 </ul>
-<p id="rfc.section.2.p.8">In the Key Exchange phase, the client sends the ClientHello (<a href="#client-hello" class="xref">Section 4.1.2</a>) message, which contains a random nonce (ClientHello.random); its offered protocol versions; a list of symmetric cipher/HKDF hash pairs; either a set of Diffie-Hellman key shares (in the &#8220;key_share&#8221; extension <a href="#key-share" class="xref">Section 4.2.8</a>), a set of pre-shared key labels (in the &#8220;pre_shared_key&#8221; extension <a href="#pre-shared-key-extension" class="xref">Section 4.2.11</a>) or both; and potentially additional extensions.</p>
+<p id="rfc.section.2.p.8">In the Key Exchange phase, the client sends the ClientHello (<a href="#client-hello" class="xref">Section 4.1.2</a>) message, which contains a random nonce (ClientHello.random); its offered protocol versions; a list of symmetric cipher/HKDF hash pairs; either a set of Diffie-Hellman key shares (in the &#8220;key_share&#8221; extension <a href="#key-share" class="xref">Section 4.2.8</a>), a set of pre-shared key labels (in the &#8220;pre_shared_key&#8221; extension <a href="#pre-shared-key-extension" class="xref">Section 4.2.11</a>) or both; and potentially additional extensions.  Additional fields and/or messages may also be present for middlebox compatibility.</p>
 <p id="rfc.section.2.p.9">The server processes the ClientHello and determines the appropriate cryptographic parameters for the connection. It then responds with its own ServerHello (<a href="#server-hello" class="xref">Section 4.1.3</a>), which indicates the negotiated connection parameters. The combination of the ClientHello and the ServerHello determines the shared keys. If (EC)DHE key establishment is in use, then the ServerHello contains a &#8220;key_share&#8221; extension with the server&#8217;s ephemeral Diffie-Hellman share which MUST be in the same group as one of the client&#8217;s shares. If PSK key establishment is in use, then the ServerHello contains a &#8220;pre_shared_key&#8221; extension indicating which of the client&#8217;s offered PSKs was selected.  Note that implementations can use (EC)DHE and PSK together, in which case both extensions will be supplied.</p>
 <p id="rfc.section.2.p.10">The server then sends two messages to establish the Server Parameters:</p>
 <p></p>
@@ -1143,7 +1150,7 @@ Auth | {CertificateVerify*}
 <dt>CertificateRequest:</dt>
 <dd style="margin-left: 8">if certificate-based client authentication is desired, the desired parameters for that certificate. This message is omitted if client authentication is not desired. [<a href="#certificate-request" class="xref">Section 4.3.2</a>]</dd>
 </dl>
-<p id="rfc.section.2.p.12">Finally, the client and server exchange Authentication messages. TLS uses the same set of messages every time that authentication is needed.  Specifically:</p>
+<p id="rfc.section.2.p.12">Finally, the client and server exchange Authentication messages. TLS uses the same set of messages every time that certificate-based authentication is needed.  (PSK-based authentication happens as a side effect of key exchange.) Specifically:</p>
 <p></p>
 
 <dl>
@@ -1155,7 +1162,7 @@ Auth | {CertificateVerify*}
 <dd style="margin-left: 8">a MAC (Message Authentication Code) over the entire handshake.  This message provides key confirmation, binds the endpoint&#8217;s identity to the exchanged keys, and in PSK mode also authenticates the handshake. [<a href="#finished" class="xref">Section 4.4.4</a>]</dd>
 </dl>
 <p id="rfc.section.2.p.14">Upon receiving the server&#8217;s messages, the client responds with its Authentication messages, namely Certificate and CertificateVerify (if requested), and Finished.</p>
-<p id="rfc.section.2.p.15">At this point, the handshake is complete, and the client and server derive the keying material required by the record layer to exchange application-layer data protected through authenticated encryption.  Application data MUST NOT be sent prior to sending the Finished message and until the record layer starts using encryption keys.  Note that while the server may send application data prior to receiving the client&#8217;s Authentication messages, any data sent at that point is, of course, being sent to an unauthenticated peer.</p>
+<p id="rfc.section.2.p.15">At this point, the handshake is complete, and the client and server derive the keying material required by the record layer to exchange application-layer data protected through authenticated encryption.  Application data MUST NOT be sent prior to sending the Finished message, except as specified in [<a href="#zero-rtt-data" class="xref">Section 2.3</a>].  Note that while the server may send application data prior to receiving the client&#8217;s Authentication messages, any data sent at that point is, of course, being sent to an unauthenticated peer.</p>
 <h2 id="rfc.section.2.1">
 <a href="#rfc.section.2.1">2.1.</a> <a href="#incorrect-dhe-share" id="incorrect-dhe-share">Incorrect DHE Share</a>
 </h2>
@@ -1186,12 +1193,12 @@ Auth | {CertificateVerify*}
          [Application Data]      &lt;-------&gt;        [Application Data]
 </pre>
 <p class="figure">Figure 2: Message flow for a full handshake with mismatched parameters</p>
-<p id="rfc.section.2.1.p.2">Note: The handshake transcript includes the initial ClientHello/HelloRetryRequest exchange; it is not reset with the new ClientHello.</p>
+<p id="rfc.section.2.1.p.2">Note: The handshake transcript incorporates the initial ClientHello/HelloRetryRequest exchange; it is not reset with the new ClientHello.</p>
 <p id="rfc.section.2.1.p.3">TLS also allows several optimized variants of the basic handshake, as described in the following sections.</p>
 <h2 id="rfc.section.2.2">
 <a href="#rfc.section.2.2">2.2.</a> <a href="#resumption-and-psk" id="resumption-and-psk">Resumption and Pre-Shared Key (PSK)</a>
 </h2>
-<p id="rfc.section.2.2.p.1">Although TLS PSKs can be established out of band, PSKs can also be established in a previous connection and then reused (&#8220;session resumption&#8221;). Once a handshake has completed, the server can send to the client a PSK identity that corresponds to a unique key derived from the initial handshake (see <a href="#NSTMessage" class="xref">Section 4.6.1</a>). The client can then use that PSK identity in future handshakes to negotiate the use of the associated PSK. If the server accepts it, then the security context of the new connection is cryptographically tied to the original connection and the key derived from the initial handshake is used to bootstrap the cryptographic state instead of a full handshake.  In TLS 1.2 and below, this functionality was provided by &#8220;session IDs&#8221; and &#8220;session tickets&#8221; <a href="#RFC5077" class="xref">[RFC5077]</a>. Both mechanisms are obsoleted in TLS 1.3.</p>
+<p id="rfc.section.2.2.p.1">Although TLS PSKs can be established out of band, PSKs can also be established in a previous connection and then used to establish a new session (&#8220;session resumption&#8221;). Once a handshake has completed, the server can send to the client a PSK identity that corresponds to a unique key derived from the initial handshake (see <a href="#NSTMessage" class="xref">Section 4.6.1</a>). The client can then use that PSK identity in future handshakes to negotiate the use of the associated PSK. If the server accepts the PSK, then the security context of the new connection is cryptographically tied to the original connection and the key derived from the initial handshake is used to bootstrap the cryptographic state instead of a full handshake.  In TLS 1.2 and below, this functionality was provided by &#8220;session IDs&#8221; and &#8220;session tickets&#8221; <a href="#RFC5077" class="xref">[RFC5077]</a>. Both mechanisms are obsoleted in TLS 1.3.</p>
 <p id="rfc.section.2.2.p.2">PSKs can be used with (EC)DHE key exchange in order to provide forward secrecy in combination with shared keys, or can be used alone, at the cost of losing forward secrecy for the application data.</p>
 <p><a href="#tls-resumption-psk" class="xref">Figure 3</a> shows a pair of handshakes in which the first establishes a PSK and the second uses it:</p>
 <div id="rfc.figure.3"></div>
@@ -1237,13 +1244,13 @@ Subsequent Handshake:
 
 <dl>
 <dt>Note:</dt>
-<dd style="margin-left: 8">When using an out-of-band provisioned pre-shared secret, a critical consideration is using sufficient entropy during the key generation, as discussed in <a href="#RFC4086" class="xref">[RFC4086]</a>. Deriving a shared secret from a password or other low-entropy sources is not secure. A low-entropy secret, or password, is subject to dictionary attacks based on the PSK binder.  The specified PSK authentication is not a strong password-based authenticated key exchange even when used with Diffie-Hellman key establishment.</dd>
+<dd style="margin-left: 8">When using an out-of-band provisioned pre-shared secret, a critical consideration is using sufficient entropy during the key generation, as discussed in <a href="#RFC4086" class="xref">[RFC4086]</a>. Deriving a shared secret from a password or other low-entropy sources is not secure. A low-entropy secret, or password, is subject to dictionary attacks based on the PSK binder.  The specified PSK authentication is not a strong password-based authenticated key exchange even when used with Diffie-Hellman key establishment.  Specifically, it does not prevent an attacker that can observe the handshake from performing a brute-force attack on the password/pre-shared key.</dd>
 </dl>
 <h2 id="rfc.section.2.3">
 <a href="#rfc.section.2.3">2.3.</a> <a href="#zero-rtt-data" id="zero-rtt-data">0-RTT Data</a>
 </h2>
 <p id="rfc.section.2.3.p.1">When clients and servers share a PSK (either obtained externally or via a previous handshake), TLS 1.3 allows clients to send data on the first flight (&#8220;early data&#8221;). The client uses the PSK to authenticate the server and to encrypt the early data.</p>
-<p id="rfc.section.2.3.p.2">As shown in <a href="#tls-0-rtt" class="xref">Figure 4</a>, the 0-RTT data is just added to the 1-RTT handshake in the first flight. The rest of the handshake uses the same messages as with a 1-RTT handshake with PSK resumption.</p>
+<p id="rfc.section.2.3.p.2">As shown in <a href="#tls-0-rtt" class="xref">Figure 4</a>, the 0-RTT data is just added to the 1-RTT handshake in the first flight. The rest of the handshake uses the same messages as for a 1-RTT handshake with PSK resumption.</p>
 <div id="rfc.figure.4"></div>
 <div id="tls-0-rtt"></div>
 <pre>
@@ -1519,6 +1526,7 @@ Subsequent Handshake:
 <li>Including a &#8220;cookie&#8221; extension if one was provided in the HelloRetryRequest.</li>
 <li>Updating the &#8220;pre_shared_key&#8221; extension if present by recomputing the &#8220;obfuscated_ticket_age&#8221; and binder values and (optionally) removing any PSKs which are incompatible with the server&#8217;s indicated cipher suite.</li>
 <li>Optionally adding, removing, or changing the length of the &#8220;padding&#8221; extension <a href="#RFC7685" class="xref">[RFC7685]</a>.</li>
+<li>Other modifications that may be allowed by an extension defined in the future and present in the HelloRetryRequest.</li>
 </ul>
 <p id="rfc.section.4.1.2.p.3">Because TLS 1.3 forbids renegotiation, if a server has negotiated TLS 1.3 and receives a ClientHello at any other time, it MUST terminate the connection with an &#8220;unexpected_message&#8221; alert.</p>
 <p id="rfc.section.4.1.2.p.4">If a server established a TLS connection with a previous version of TLS and receives a TLS 1.3 ClientHello in a renegotiation, it MUST retain the previous protocol version. In particular, it MUST NOT negotiate TLS 1.3.</p>
@@ -1586,9 +1594,9 @@ Subsequent Handshake:
 <dt>legacy_compression_method</dt>
 <dd style="margin-left: 8">A single byte which MUST have the value 0.</dd>
 <dt>extensions</dt>
-<dd style="margin-left: 8">A list of extensions.  The ServerHello MUST only include extensions which are required to establish the cryptographic context and negotiate the protocol version. All TLS 1.3 ServerHello messages MUST contain the &#8220;supported_versions&#8221; extension.  Current ServerHello messages contain either the &#8220;pre_shared_key&#8221; or &#8220;key_share&#8221; extensions, or both when using a PSK with (EC)DHE key establishment. The remaining extensions are sent separately in the EncryptedExtensions message.</dd>
+<dd style="margin-left: 8">A list of extensions.  The ServerHello MUST only include extensions which are required to establish the cryptographic context and negotiate the protocol version. All TLS 1.3 ServerHello messages MUST contain the &#8220;supported_versions&#8221; extension.  Current ServerHello messages additionally contain either the &#8220;pre_shared_key&#8221; or &#8220;key_share&#8221; extensions, or both when using a PSK with (EC)DHE key establishment. Other extensions are sent separately in the EncryptedExtensions message.</dd>
 </dl>
-<p id="rfc.section.4.1.3.p.4">For backward compatibility reasons with middleboxes (see <a href="#middlebox" class="xref">Appendix D.4</a>) the HelloRetryRequest message uses the same structure as the ServerHello, but with Random set to the special value of the SHA-256 of &#8220;HelloRetryRequest&#8221;:</p>
+<p id="rfc.section.4.1.3.p.4">For reasons of backward compatibility with middleboxes (see <a href="#middlebox" class="xref">Appendix D.4</a>) the HelloRetryRequest message uses the same structure as the ServerHello, but with Random set to the special value of the SHA-256 of &#8220;HelloRetryRequest&#8221;:</p>
 <pre>
   CF 21 AD 74 E5 9A 61 11 BE 1D 8C 02 1E 65 B8 91
   C2 A2 11 16 7A BB 8C 5E 07 9E 09 E2 C8 A8 33 9C
@@ -1801,10 +1809,10 @@ Subsequent Handshake:
        };
    } SupportedVersions;
 </pre>
-<p id="rfc.section.4.2.1.p.1">The &#8220;supported_versions&#8221; extension is used by the client to indicate which versions of TLS it supports and by the server to indicate which version it is using. The extension contains a list of supported versions in preference order, with the most preferred version first. Implementations of this specification MUST send this extension containing all versions of TLS which they are prepared to negotiate (for this specification, that means minimally 0x0304, but if previous versions of TLS are allowed to be negotiated, they MUST be present as well).</p>
+<p id="rfc.section.4.2.1.p.1">The &#8220;supported_versions&#8221; extension is used by the client to indicate which versions of TLS it supports and by the server to indicate which version it is using. The extension contains a list of supported versions in preference order, with the most preferred version first. Implementations of this specification MUST send this extension in the ClientHello containing all versions of TLS which they are prepared to negotiate (for this specification, that means minimally 0x0304, but if previous versions of TLS are allowed to be negotiated, they MUST be present as well).</p>
 <p id="rfc.section.4.2.1.p.2">If this extension is not present, servers which are compliant with this specification MUST negotiate TLS 1.2 or prior as specified in <a href="#RFC5246" class="xref">[RFC5246]</a>, even if ClientHello.legacy_version is 0x0304 or later.  Servers MAY abort the handshake upon receiving a ClientHello with legacy_version 0x0304 or later.</p>
-<p id="rfc.section.4.2.1.p.3">If this extension is present, servers MUST ignore the ClientHello.legacy_version value and MUST use only the &#8220;supported_versions&#8221; extension to determine client preferences. Servers MUST only select a version of TLS present in that extension and MUST ignore any unknown versions that are present in that extension. Note that this mechanism makes it possible to negotiate a version prior to TLS 1.2 if one side supports a sparse range. Implementations of TLS 1.3 which choose to support prior versions of TLS SHOULD support TLS 1.2.  Servers MUST be prepared to receive ClientHellos that include this extension but do not include 0x0304 in the list of versions.</p>
-<p id="rfc.section.4.2.1.p.4">A server which negotiates a version of TLS prior to TLS 1.3 MUST set ServerHello.version and MUST NOT send the &#8220;supported_versions&#8221; extension.  A server which negotiates TLS 1.3 MUST respond by sending a &#8220;supported_versions&#8221; extension containing the selected version value (0x0304). It MUST set the ServerHello.legacy_version field to 0x0303 (TLS 1.2). Clients MUST check for this extension prior to processing the rest of the ServerHello (although they will have to parse the ServerHello in order to read the extension).  If this extension is present, clients MUST ignore the ServerHello.legacy_version value and MUST use only the &#8220;supported_versions&#8221; extension to determine the selected version. If the &#8220;supported_versions&#8221; extension contains a version not offered by the client or contains a version prior to TLS 1.3, the client MUST abort the handshake with an &#8220;illegal_parameter&#8221; alert.</p>
+<p id="rfc.section.4.2.1.p.3">If this extension is present in the ClientHello, servers MUST NOT use the ClientHello.legacy_version value for version negotiation and MUST use only the &#8220;supported_versions&#8221; extension to determine client preferences. Servers MUST only select a version of TLS present in that extension and MUST ignore any unknown versions that are present in that extension. Note that this mechanism makes it possible to negotiate a version prior to TLS 1.2 if one side supports a sparse range. Implementations of TLS 1.3 which choose to support prior versions of TLS SHOULD support TLS 1.2.  Servers MUST be prepared to receive ClientHellos that include this extension but do not include 0x0304 in the list of versions.</p>
+<p id="rfc.section.4.2.1.p.4">A server which negotiates a version of TLS prior to TLS 1.3 MUST set ServerHello.version and MUST NOT send the &#8220;supported_versions&#8221; extension.  A server which negotiates TLS 1.3 MUST respond by sending a &#8220;supported_versions&#8221; extension containing the selected version value (0x0304). It MUST set the ServerHello.legacy_version field to 0x0303 (TLS 1.2). Clients MUST check for this extension prior to processing the rest of the ServerHello (although they will have to parse the ServerHello in order to read the extension).  If this extension is present, clients MUST ignore the ServerHello.legacy_version value and MUST use only the &#8220;supported_versions&#8221; extension to determine the selected version. If the &#8220;supported_versions&#8221; extension in the ServerHello contains a version not offered by the client or contains a version prior to TLS 1.3, the client MUST abort the handshake with an &#8220;illegal_parameter&#8221; alert.</p>
 <h4 id="rfc.section.4.2.1.1">
 <a href="#rfc.section.4.2.1.1">4.2.1.1.</a> <a href="#draft-version-indicator" id="draft-version-indicator">Draft Version Indicator</a>
 </h4>
@@ -1888,7 +1896,7 @@ Subsequent Handshake:
 <dt>RSASSA-PSS PSS algorithms</dt>
 <dd style="margin-left: 8">Indicates a signature algorithm using RSASSA-PSS <a href="#RFC8017" class="xref">[RFC8017]</a> with mask generation function 1. The digest used in the mask generation function and the digest being signed are both the corresponding hash algorithm as defined in <a href="#SHS" class="xref">[SHS]</a>.  The length of the salt MUST be equal to the length of the digest algorithm. If the public key is carried in an X.509 certificate, it MUST use the RSASSA-PSS OID  <a href="#RFC5756" class="xref">[RFC5756]</a>. When used in certificate signatures, the algorithm parameters MUST be DER encoded. If the corresponding public key&#8217;s parameters are present, then the parameters in the signature MUST be identical to those in the public key.</dd>
 <dt>Legacy algorithms</dt>
-<dd style="margin-left: 8">Indicates algorithms which are being deprecated because they use algorithms with known weaknesses, specifically SHA-1 which is used in this context with either with RSA using RSASSA-PKCS1-v1_5 or ECDSA.  These values refer solely to signatures which appear in certificates (see <a href="#server-certificate-selection" class="xref">Section 4.4.2.2</a>) and are not defined for use in signed TLS handshake messages, even if they appear in the &#8220;signature_algorithms&#8221; list (this is necessary for backward compatibility with TLS 1.2).  Endpoints SHOULD NOT negotiate these algorithms but are permitted to do so solely for backward compatibility. Clients offering these values MUST list them as the lowest priority (listed after all other algorithms in SignatureSchemeList). TLS 1.3 servers MUST NOT offer a SHA-1 signed certificate unless no valid certificate chain can be produced without it (see <a href="#server-certificate-selection" class="xref">Section 4.4.2.2</a>).</dd>
+<dd style="margin-left: 8">Indicates algorithms which are being deprecated because they use algorithms with known weaknesses, specifically SHA-1 which is used in this context with either with RSA using RSASSA-PKCS1-v1_5 or ECDSA.  These values refer solely to signatures which appear in certificates (see <a href="#server-certificate-selection" class="xref">Section 4.4.2.2</a>) and are not defined for use in signed TLS handshake messages, although they MAY appear in &#8220;signature_algorithms&#8221; and &#8220;signature_algorithms_cert&#8221; for backward compatibility with TLS 1.2, Endpoints SHOULD NOT negotiate these algorithms but are permitted to do so solely for backward compatibility. Clients offering these values MUST list them as the lowest priority (listed after all other algorithms in SignatureSchemeList). TLS 1.3 servers MUST NOT offer a SHA-1 signed certificate unless no valid certificate chain can be produced without it (see <a href="#server-certificate-selection" class="xref">Section 4.4.2.2</a>).</dd>
 </dl>
 <p id="rfc.section.4.2.3.p.7">The signatures on certificates that are self-signed or certificates that are trust anchors are not validated since they begin a certification path (see <a href="#RFC5280" class="xref">[RFC5280]</a>, Section 3.2).  A certificate that begins a certification path MAY use a signature algorithm that is not advertised as being supported in the &#8220;signature_algorithms&#8221; extension.</p>
 <p id="rfc.section.4.2.3.p.8">Note that TLS 1.2 defines this extension differently. TLS 1.3 implementations willing to negotiate TLS 1.2 MUST behave in accordance with the requirements of <a href="#RFC5246" class="xref">[RFC5246]</a> when negotiating that version. In particular:</p>
@@ -1938,7 +1946,7 @@ Subsequent Handshake:
 
 <dl>
 <dt>filters</dt>
-<dd style="margin-left: 8">A list of certificate extension OIDs <a href="#RFC5280" class="xref">[RFC5280]</a> with their allowed values and represented in DER-encoded <a href="#X690" class="xref">[X690]</a> format. Some certificate extension OIDs allow multiple values (e.g., Extended Key Usage).  If the server has included a non-empty filters list, the client certificate included in the response MUST contain all of the specified extension OIDs that the client recognizes. For each extension OID recognized by the client, all of the specified values MUST be present in the client certificate (but the certificate MAY have other values as well). However, the client MUST ignore and skip any unrecognized certificate extension OIDs. If the client ignored some of the required certificate extension OIDs and supplied a certificate that does not satisfy the request, the server MAY at its discretion either continue the connection without client authentication, or abort the handshake with an &#8220;unsupported_certificate&#8221; alert.</dd>
+<dd style="margin-left: 8">A list of certificate extension OIDs <a href="#RFC5280" class="xref">[RFC5280]</a> with their allowed value(s) and represented in DER-encoded <a href="#X690" class="xref">[X690]</a> format. Some certificate extension OIDs allow multiple values (e.g., Extended Key Usage).  If the server has included a non-empty filters list, the client certificate included in the response MUST contain all of the specified extension OIDs that the client recognizes. For each extension OID recognized by the client, all of the specified values MUST be present in the client certificate (but the certificate MAY have other values as well). However, the client MUST ignore and skip any unrecognized certificate extension OIDs. If the client ignored some of the required certificate extension OIDs and supplied a certificate that does not satisfy the request, the server MAY at its discretion either continue the connection without client authentication, or abort the handshake with an &#8220;unsupported_certificate&#8221; alert.</dd>
 </dl>
 <p id="rfc.section.4.2.5.p.3">PKIX RFCs define a variety of certificate extension OIDs and their corresponding value types. Depending on the type, matching certificate extension values are not necessarily bitwise-equal. It is expected that TLS implementations will rely on their PKI libraries to perform certificate selection using certificate extension OIDs.</p>
 <p id="rfc.section.4.2.5.p.4">This document defines matching rules for two standard certificate extensions defined in <a href="#RFC5280" class="xref">[RFC5280]</a>:</p>
@@ -2026,7 +2034,7 @@ Subsequent Handshake:
 <dd style="margin-left: 8">A list of offered KeyShareEntry values in descending order of client preference.</dd>
 </dl>
 <p id="rfc.section.4.2.8.p.6">This vector MAY be empty if the client is requesting a HelloRetryRequest.  Each KeyShareEntry value MUST correspond to a group offered in the &#8220;supported_groups&#8221; extension and MUST appear in the same order.  However, the values MAY be a non-contiguous subset of the &#8220;supported_groups&#8221; extension and MAY omit the most preferred groups. Such a situation could arise if the most preferred groups are new and unlikely to be supported in enough places to make pregenerating key shares for them efficient.</p>
-<p id="rfc.section.4.2.8.p.7">Clients can offer an arbitrary number of KeyShareEntry values, each representing a single set of key exchange parameters. For instance, a client might offer shares for several elliptic curves or multiple FFDHE groups.  The key_exchange values for each KeyShareEntry MUST be generated independently.  Clients MUST NOT offer multiple KeyShareEntry values for the same group.  Clients MUST NOT offer any KeyShareEntry values for groups not listed in the client&#8217;s &#8220;supported_groups&#8221; extension.  Servers MAY check for violations of these rules and abort the handshake with an &#8220;illegal_parameter&#8221; alert if one is violated.</p>
+<p id="rfc.section.4.2.8.p.7">Clients can offer as many KeyShareEntry values as the number of supported groups it is offering, each representing a single set of key exchange parameters. For instance, a client might offer shares for several elliptic curves or multiple FFDHE groups.  The key_exchange values for each KeyShareEntry MUST be generated independently.  Clients MUST NOT offer multiple KeyShareEntry values for the same group.  Clients MUST NOT offer any KeyShareEntry values for groups not listed in the client&#8217;s &#8220;supported_groups&#8221; extension.  Servers MAY check for violations of these rules and abort the handshake with an &#8220;illegal_parameter&#8221; alert if one is violated.</p>
 <p id="rfc.section.4.2.8.p.8">In a HelloRetryRequest message, the &#8220;extension_data&#8221; field of this extension contains a KeyShareHelloRetryRequest value:</p>
 <pre>
    struct {
@@ -2096,10 +2104,11 @@ Subsequent Handshake:
 <dt>psk_dhe_ke</dt>
 <dd style="margin-left: 8">PSK with (EC)DHE key establishment. In this mode, the client and servers MUST supply &#8220;key_share&#8221; values as described in <a href="#key-share" class="xref">Section 4.2.8</a>.</dd>
 </dl>
+<p id="rfc.section.4.2.9.p.5">Any future values that are allocated must ensure that the transmitted protocol messages unambiguously identify which mode was selected by the server; at present, this is indicated by the presence of the &#8220;key_share&#8221; in the ServerHello.</p>
 <h3 id="rfc.section.4.2.10">
 <a href="#rfc.section.4.2.10">4.2.10.</a> <a href="#early-data-indication" id="early-data-indication">Early Data Indication</a>
 </h3>
-<p id="rfc.section.4.2.10.p.1">When a PSK is used, the client can send application data in its first flight of messages. If the client opts to do so, it MUST supply both the &#8220;early_data&#8221; extension as well as the &#8220;pre_shared_key&#8221; extension.</p>
+<p id="rfc.section.4.2.10.p.1">When a PSK is used and early data is allowed for that PSK, the client can send application data in its first flight of messages. If the client opts to do so, it MUST supply both the &#8220;early_data&#8221; extension as well as the &#8220;pre_shared_key&#8221; extension.</p>
 <p id="rfc.section.4.2.10.p.2">The &#8220;extension_data&#8221; field of this extension contains an &#8220;EarlyDataIndication&#8221; value.</p>
 <pre>
    struct {} Empty;
@@ -2121,7 +2130,7 @@ Subsequent Handshake:
 
 <ul>
 <li>Ignore the extension and return a regular 1-RTT response.  The server then ignores early data by attempting to decrypt received records in the handshake traffic keys until it is able to receive the client&#8217;s second flight and complete an ordinary 1-RTT handshake, skipping records that fail to decrypt, up to the configured max_early_data_size.</li>
-<li>Request that the client send another ClientHello by responding with a HelloRetryRequest.  A client MUST NOT include the &#8220;early_data&#8221; extension in its followup ClientHello.  The server then ignores early data by skipping all records with external content type of &#8220;application_data&#8221; (indicating that they are encrypted).</li>
+<li>Request that the client send another ClientHello by responding with a HelloRetryRequest.  A client MUST NOT include the &#8220;early_data&#8221; extension in its followup ClientHello.  The server then ignores early data by skipping all records with external content type of &#8220;application_data&#8221; (indicating that they are encrypted), up to the configured max_early_data_size.</li>
 <li>Return its own extension in EncryptedExtensions, indicating that it intends to process the early data. It is not possible for the server to accept only a subset of the early data messages.  Even though the server sends a message accepting early data, the actual early data itself may already be in flight by the time the server generates this message.</li>
 </ul>
 <p id="rfc.section.4.2.10.p.9">In order to accept early data, the server MUST have accepted a PSK cipher suite and selected the first key offered in the client&#8217;s &#8220;pre_shared_key&#8221; extension. In addition, it MUST verify that the following values are consistent with those associated with the selected PSK:</p>
@@ -2180,7 +2189,7 @@ Subsequent Handshake:
 <p id="rfc.section.4.2.11.p.4">Each PSK is associated with a single Hash algorithm. For PSKs established via the ticket mechanism (<a href="#NSTMessage" class="xref">Section 4.6.1</a>), this is the KDF Hash algorithm on the connection where the ticket was established.  For externally established PSKs, the Hash algorithm MUST be set when the PSK is established, or default to SHA-256 if no such algorithm is defined. The server MUST ensure that it selects a compatible PSK (if any) and cipher suite.</p>
 <p id="rfc.section.4.2.11.p.5">In TLS versions prior to TLS 1.3, the Server Name Identification (SNI) value was intended to be associated with the session (Section 3 of <a href="#RFC6066" class="xref">[RFC6066]</a>), with the server being required to enforce that the SNI value associated with the session matches the one specified in the resumption handshake.  However, in reality the implementations were not consistent on which of two supplied SNI values they would use, leading to the consistency requirement being de-facto enforced by the clients.  In TLS 1.3, the SNI value is always explicitly specified in the resumption handshake, and there is no need for the server to associate an SNI value with the ticket. Clients, however, SHOULD store the SNI with the PSK to fulfill the requirements of <a href="#NSTMessage" class="xref">Section 4.6.1</a>.</p>
 <p id="rfc.section.4.2.11.p.6">Implementor&#8217;s note: when session resumption is the primary use case of PSKs the most straightforward way to implement the PSK/cipher suite matching requirements is to negotiate the cipher suite first and then exclude any incompatible PSKs. Any unknown PSKs (e.g., they are not in the PSK database or are encrypted with an unknown key) SHOULD simply be ignored. If no acceptable PSKs are found, the server SHOULD perform a non-PSK handshake if possible.  If backwards compatibility is important, client provided, externally established PSKs SHOULD influence cipher suite selection.</p>
-<p id="rfc.section.4.2.11.p.7">Prior to accepting PSK key establishment, the server MUST validate the corresponding binder value (see <a href="#psk-binder" class="xref">Section 4.2.11.2</a> below). If this value is not present or does not validate, the server MUST abort the handshake.  Servers SHOULD NOT attempt to validate multiple binders; rather they SHOULD select a single PSK and validate solely the binder that corresponds to that PSK. In order to accept PSK key establishment, the server sends a &#8220;pre_shared_key&#8221; extension indicating the selected identity.</p>
+<p id="rfc.section.4.2.11.p.7">Prior to accepting PSK key establishment, the server MUST validate the corresponding binder value (see <a href="#psk-binder" class="xref">Section 4.2.11.2</a> below). If this value is not present or does not validate, the server MUST abort the handshake.  Servers SHOULD NOT attempt to validate multiple binders; rather they SHOULD select a single PSK and validate solely the binder that corresponds to that PSK.  See [<a href="#client-hello-recording" class="xref">Section 8.2</a>] for the security rationale for this requirement.  In order to accept PSK key establishment, the server sends a &#8220;pre_shared_key&#8221; extension indicating the selected identity.</p>
 <p id="rfc.section.4.2.11.p.8">Clients MUST verify that the server&#8217;s selected_identity is within the range supplied by the client, that the server selected a cipher suite indicating a Hash associated with the PSK and that a server &#8220;key_share&#8221; extension is present if required by the ClientHello &#8220;psk_key_exchange_modes&#8221;. If these values are not consistent the client MUST abort the handshake with an &#8220;illegal_parameter&#8221; alert.</p>
 <p id="rfc.section.4.2.11.p.9">If the server supplies an &#8220;early_data&#8221; extension, the client MUST verify that the server&#8217;s selected_identity is 0. If any other value is returned, the client MUST abort the handshake with an &#8220;illegal_parameter&#8221; alert.</p>
 <p id="rfc.section.4.2.11.p.10">This extension MUST be the last extension in the ClientHello (this facilitates implementation as described below). Servers MUST check that it is the last extension and otherwise fail the handshake with an &#8220;illegal_parameter&#8221; alert.</p>
@@ -2191,7 +2200,7 @@ Subsequent Handshake:
 <h4 id="rfc.section.4.2.11.2">
 <a href="#rfc.section.4.2.11.2">4.2.11.2.</a> <a href="#psk-binder" id="psk-binder">PSK Binder</a>
 </h4>
-<p id="rfc.section.4.2.11.2.p.1">The PSK binder value forms a binding between a PSK and the current handshake, as well as between the handshake in which the PSK was generated (if via a NewSessionTicket message) and the handshake where it was used.  Each entry in the binders list is computed as an HMAC over a transcript hash (see <a href="#the-transcript-hash" class="xref">Section 4.4.1</a>) containing a partial ClientHello up to and including the PreSharedKeyExtension.identities field. That is, it includes all of the ClientHello but not the binders list itself. The length fields for the message (including the overall length, the length of the extensions block, and the length of the &#8220;pre_shared_key&#8221; extension) are all set as if binders of the correct lengths were present.</p>
+<p id="rfc.section.4.2.11.2.p.1">The PSK binder value forms a binding between a PSK and the current handshake, as well as a binding between the handshake in which the PSK was generated (if via a NewSessionTicket message) and the current handshake.  Each entry in the binders list is computed as an HMAC over a transcript hash (see <a href="#the-transcript-hash" class="xref">Section 4.4.1</a>) containing a partial ClientHello up to and including the PreSharedKeyExtension.identities field. That is, it includes all of the ClientHello but not the binders list itself. The length fields for the message (including the overall length, the length of the extensions block, and the length of the &#8220;pre_shared_key&#8221; extension) are all set as if binders of the correct lengths were present.</p>
 <p id="rfc.section.4.2.11.2.p.2">The PskBinderEntry is computed in the same way as the Finished message (<a href="#finished" class="xref">Section 4.4.4</a>) but with the BaseKey being the binder_key derived via the key schedule from the corresponding PSK which is being offered (see <a href="#key-schedule" class="xref">Section 7.1</a>).</p>
 <p id="rfc.section.4.2.11.2.p.3">If the handshake includes a HelloRetryRequest, the initial ClientHello and HelloRetryRequest are included in the transcript along with the new ClientHello.  For instance, if the client sends ClientHello1, its binder will be computed over:</p>
 <pre>
@@ -2208,7 +2217,7 @@ Subsequent Handshake:
 <h4 id="rfc.section.4.2.11.3">
 <a href="#rfc.section.4.2.11.3">4.2.11.3.</a> <a href="#processing-order" id="processing-order">Processing Order</a>
 </h4>
-<p id="rfc.section.4.2.11.3.p.1">Clients are permitted to &#8220;stream&#8221; 0-RTT data until they receive the server&#8217;s Finished, only then sending the EndOfEarlyData message, followed by the rest of the handshake.  In order to avoid deadlocks, when accepting &#8220;early_data&#8221;, servers MUST process the client&#8217;s ClientHello and then immediately send the ServerHello, rather than waiting for the client&#8217;s EndOfEarlyData message.</p>
+<p id="rfc.section.4.2.11.3.p.1">Clients are permitted to &#8220;stream&#8221; 0-RTT data until they receive the server&#8217;s Finished, only then sending the EndOfEarlyData message, followed by the rest of the handshake.  In order to avoid deadlocks, when accepting &#8220;early_data&#8221;, the server MUST process the client&#8217;s ClientHello and then immediately send its ServerHello, rather than waiting for the client&#8217;s EndOfEarlyData message before sending its ServerHello.</p>
 <h2 id="rfc.section.4.3">
 <a href="#rfc.section.4.3">4.3.</a> <a href="#server-parameters" id="server-parameters">Server Parameters</a>
 </h2>
@@ -2249,7 +2258,7 @@ Subsequent Handshake:
 <dt>extensions</dt>
 <dd style="margin-left: 8">A set of extensions describing the parameters of the certificate being requested. The &#8220;signature_algorithms&#8221; extension MUST be specified, and other extensions may optionally be included if defined for this message.  Clients MUST ignore unrecognized extensions.</dd>
 </dl>
-<p id="rfc.section.4.3.2.p.4">In prior versions of TLS, the CertificateRequest message carried a list of signature algorithms and certificate authorities which the server would accept. In TLS 1.3 the former is expressed by sending the &#8220;signature_algorithms&#8221; and &#8220;signature_algorithms_cert&#8221; extensions. The latter is expressed by sending the &#8220;certificate_authorities&#8221; extension (see <a href="#certificate-authorities" class="xref">Section 4.2.4</a>).</p>
+<p id="rfc.section.4.3.2.p.4">In prior versions of TLS, the CertificateRequest message carried a list of signature algorithms and certificate authorities which the server would accept. In TLS 1.3 the former is expressed by sending the &#8220;signature_algorithms&#8221; and optionally &#8220;signature_algorithms_cert&#8221; extensions. The latter is expressed by sending the &#8220;certificate_authorities&#8221; extension (see <a href="#certificate-authorities" class="xref">Section 4.2.4</a>).</p>
 <p id="rfc.section.4.3.2.p.5">Servers which are authenticating with a PSK MUST NOT send the CertificateRequest message in the main handshake, though they MAY send it in post-handshake authentication (see <a href="#post-handshake-authentication" class="xref">Section 4.6.2</a>) provided that the client has sent the &#8220;post_handshake_auth&#8221; extension (see <a href="#post_handshake_auth" class="xref">Section 4.2.6</a>).</p>
 <h2 id="rfc.section.4.4">
 <a href="#rfc.section.4.4">4.4.</a> <a href="#authentication-messages" id="authentication-messages">Authentication Messages</a>
@@ -2268,7 +2277,7 @@ Subsequent Handshake:
 
 <dl>
 <dt>Certificate</dt>
-<dd style="margin-left: 8">The certificate to be used for authentication, and any supporting certificates in the chain. Note that certificate-based client authentication is not available in 0-RTT mode.</dd>
+<dd style="margin-left: 8">The certificate to be used for authentication, and any supporting certificates in the chain. Note that certificate-based client authentication is not available in PSK (including 0-RTT) flows.</dd>
 <dt>CertificateVerify</dt>
 <dd style="margin-left: 8">A signature over the value Transcript-Hash(Handshake Context, Certificate)</dd>
 <dt>Finished</dt>
@@ -2322,9 +2331,10 @@ Subsequent Handshake:
 </h3>
 <p id="rfc.section.4.4.2.p.1">This message conveys the endpoint&#8217;s certificate chain to the peer.</p>
 <p id="rfc.section.4.4.2.p.2">The server MUST send a Certificate message whenever the agreed-upon key exchange method uses certificates for authentication (this includes all key exchange methods defined in this document except PSK).</p>
-<p id="rfc.section.4.4.2.p.3">The client MUST send a Certificate message if and only if the server has requested client authentication via a CertificateRequest message (<a href="#certificate-request" class="xref">Section 4.3.2</a>). If the server requests client authentication but no suitable certificate is available, the client MUST send a Certificate message containing no certificates (i.e., with the &#8220;certificate_list&#8221; field having length 0).</p>
+<p id="rfc.section.4.4.2.p.3">The client MUST send a Certificate message if and only if the server has requested client authentication via a CertificateRequest message (<a href="#certificate-request" class="xref">Section 4.3.2</a>). If the server requests client authentication but no suitable certificate is available, the client MUST send a Certificate message containing no certificates (i.e., with the &#8220;certificate_list&#8221; field having length 0).  A Finished message MUST be sent regardless of whether the Certificate message is empty.</p>
 <p id="rfc.section.4.4.2.p.4">Structure of this message:</p>
 <pre>
+   /* Managed by IANA */
    enum {
        X509(0),
        RawPublicKey(2),
@@ -2356,7 +2366,7 @@ Subsequent Handshake:
 <dt>certificate_list</dt>
 <dd style="margin-left: 8">This is a sequence (chain) of CertificateEntry structures, each containing a single certificate and set of extensions.</dd>
 <dt>extensions:</dt>
-<dd style="margin-left: 8">A set of extension values for the CertificateEntry. The &#8220;Extension&#8221; format is defined in <a href="#extensions" class="xref">Section 4.2</a>. Valid extensions for server certificates include OCSP Status extension (<a href="#RFC6066" class="xref">[RFC6066]</a>) and SignedCertificateTimestamps (<a href="#RFC6962" class="xref">[RFC6962]</a>). Extensions in the Certificate message from the server MUST correspond to one from the ClientHello message.  Extensions in the Certificate from the client MUST correspond with an extension in the CertificateRequest message from the server.  If an extension applies to the entire chain, it SHOULD be included in the first CertificateEntry.</dd>
+<dd style="margin-left: 8">A set of extension values for the CertificateEntry. The &#8220;Extension&#8221; format is defined in <a href="#extensions" class="xref">Section 4.2</a>. Valid extensions for server certificates at present include OCSP Status extension (<a href="#RFC6066" class="xref">[RFC6066]</a>) and SignedCertificateTimestamps (<a href="#RFC6962" class="xref">[RFC6962]</a>); future extensions may be defined for this message as well. Extensions in the Certificate message from the server MUST correspond to ones from the ClientHello message.  Extensions in the Certificate from the client MUST correspond with extensions in the CertificateRequest message from the server.  If an extension applies to the entire chain, it SHOULD be included in the first CertificateEntry.</dd>
 </dl>
 <p id="rfc.section.4.4.2.p.6">If the corresponding certificate type extension (&#8220;server_certificate_type&#8221; or &#8220;client_certificate_type&#8221;) was not negotiated in Encrypted Extensions, or the X.509 certificate type was negotiated, then each CertificateEntry contains a DER-encoded X.509 certificate. The sender&#8217;s certificate MUST come in the first CertificateEntry in the list.  Each following certificate SHOULD directly certify one preceding it.  Because certificate validation requires that trust anchors be distributed independently, a certificate that specifies a trust anchor MAY be omitted from the chain, provided that supported peers are known to possess any omitted certificates.</p>
 <p id="rfc.section.4.4.2.p.7">Note: Prior to TLS 1.3, &#8220;certificate_list&#8221; ordering required each certificate to certify the one immediately preceding it; however, some implementations allowed some flexibility. Servers sometimes send both a current and deprecated intermediate for transitional purposes, and others are simply configured incorrectly, but these cases can nonetheless be validated properly. For maximum compatibility, all implementations SHOULD be prepared to handle potentially extraneous certificates and arbitrary orderings from any TLS version, with the exception of the end-entity certificate which MUST be first.</p>
@@ -2378,7 +2388,7 @@ Subsequent Handshake:
 
 <ul>
 <li>The certificate type MUST be X.509v3 <a href="#RFC5280" class="xref">[RFC5280]</a>, unless explicitly negotiated otherwise (e.g., <a href="#RFC7250" class="xref">[RFC7250]</a>).</li>
-<li>The server&#8217;s end-entity certificate&#8217;s public key (and associated restrictions) MUST be compatible with the selected authentication algorithm (currently RSA, ECDSA, or EdDSA).</li>
+<li>The server&#8217;s end-entity certificate&#8217;s public key (and associated restrictions) MUST be compatible with the selected authentication algorithm from the client&#8217;s &#8220;signature_algorithms&#8221; extension (currently RSA, ECDSA, or EdDSA).</li>
 <li>The certificate MUST allow the key to be used for signing (i.e., the digitalSignature bit MUST be set if the Key Usage extension is present) with a signature scheme indicated in the client&#8217;s &#8220;signature_algorithms&#8221;/&#8221;signature_algorithms_cert&#8221; extensions (see <a href="#signature-algorithms" class="xref">Section 4.2.3</a>).</li>
 <li>The &#8220;server_name&#8221; <a href="#RFC6066" class="xref">[RFC6066]</a> and &#8220;certificate_authorities&#8221; extensions are used to guide certificate selection. As servers MAY require the presence of the &#8220;server_name&#8221; extension, clients SHOULD send this extension, when applicable.</li>
 </ul>
@@ -2404,7 +2414,7 @@ Subsequent Handshake:
 </h4>
 <p id="rfc.section.4.4.2.4.p.1">In general, detailed certificate validation procedures are out of scope for TLS (see <a href="#RFC5280" class="xref">[RFC5280]</a>). This section provides TLS-specific requirements.</p>
 <p id="rfc.section.4.4.2.4.p.2">If the server supplies an empty Certificate message, the client MUST abort the handshake with a &#8220;decode_error&#8221; alert.</p>
-<p id="rfc.section.4.4.2.4.p.3">If the client does not send any certificates, the server MAY at its discretion either continue the handshake without client authentication, or abort the handshake with a &#8220;certificate_required&#8221; alert. Also, if some aspect of the certificate chain was unacceptable (e.g., it was not signed by a known, trusted CA), the server MAY at its discretion either continue the handshake (considering the client unauthenticated) or abort the handshake.</p>
+<p id="rfc.section.4.4.2.4.p.3">If the client does not send any certificates (i.e., it sends an empty Certificate message), the server MAY at its discretion either continue the handshake without client authentication, or abort the handshake with a &#8220;certificate_required&#8221; alert. Also, if some aspect of the certificate chain was unacceptable (e.g., it was not signed by a known, trusted CA), the server MAY at its discretion either continue the handshake (considering the client unauthenticated) or abort the handshake.</p>
 <p id="rfc.section.4.4.2.4.p.4">Any endpoint receiving any certificate which it would need to validate using any signature algorithm using an MD5 hash MUST abort the handshake with a &#8220;bad_certificate&#8221; alert.  SHA-1 is deprecated and it is RECOMMENDED that any endpoint receiving any certificate which it would need to validate using any signature algorithm using a SHA-1 hash abort the handshake with a &#8220;bad_certificate&#8221; alert. For clarity, this means that endpoints MAY accept these algorithms for certificates that are self-signed or are trust anchors.</p>
 <p id="rfc.section.4.4.2.4.p.5">All endpoints are RECOMMENDED to transition to SHA-256 or better as soon as possible to maintain interoperability with implementations currently in the process of phasing out SHA-1 support.</p>
 <p id="rfc.section.4.4.2.4.p.6">Note that a certificate containing a key for one signature algorithm MAY be signed using a different signature algorithm (for instance, an RSA key signed with an ECDSA key).</p>
@@ -2537,7 +2547,7 @@ finished_key =
 
 <dl>
 <dt>ticket_lifetime</dt>
-<dd style="margin-left: 8">Indicates the lifetime in seconds as a 32-bit unsigned integer in network byte order from the time of ticket issuance.  Servers MUST NOT use any value greater than 604800 seconds (7 days).  The value of zero indicates that the ticket should be discarded immediately. Clients MUST NOT cache tickets for longer than 7 days, regardless of the ticket_lifetime, and MAY delete the ticket earlier based on local policy. A server MAY treat a ticket as valid for a shorter period of time than what is stated in the ticket_lifetime.</dd>
+<dd style="margin-left: 8">Indicates the lifetime in seconds as a 32-bit unsigned integer in network byte order from the time of ticket issuance.  Servers MUST NOT use any value greater than 604800 seconds (7 days).  The value of zero indicates that the ticket should be discarded immediately. Clients MUST NOT cache tickets for longer than 7 days, regardless of the ticket_lifetime, and MAY delete tickets earlier based on local policy. A server MAY treat a ticket as valid for a shorter period of time than what is stated in the ticket_lifetime.</dd>
 <dt>ticket_age_add</dt>
 <dd style="margin-left: 8">A securely generated, random 32-bit value that is used to obscure the age of the ticket that the client includes in the &#8220;pre_shared_key&#8221; extension.  The client-side ticket age is added to this value modulo 2^32 to obtain the value that is transmitted by the client.  The server MUST generate a fresh value for each ticket it sends.</dd>
 <dt>ticket_nonce</dt>
@@ -2594,7 +2604,7 @@ finished_key =
 </h1>
 <p id="rfc.section.5.p.1">The TLS record protocol takes messages to be transmitted, fragments the data into manageable blocks, protects the records, and transmits the result. Received data is verified, decrypted, reassembled, and then delivered to higher-level clients.</p>
 <p id="rfc.section.5.p.2">TLS records are typed, which allows multiple higher-level protocols to be multiplexed over the same record layer. This document specifies four content types: handshake, application data, alert, and change_cipher_spec.  The change_cipher_spec record is used only for compatibility purposes (see <a href="#middlebox" class="xref">Appendix D.4</a>).</p>
-<p id="rfc.section.5.p.3">An implementation may receive an unencrypted record of type change_cipher_spec consisting of the single byte value 0x01 at any time after the first ClientHello message has been sent or received and before the peer&#8217;s Finished message has been received and MUST simply drop it without further processing.  Note that this record may appear at a point at the handshake where the implementation is expecting protected records and so it is necessary to detect this condition prior to attempting to deprotect the record. An implementation which receives any other change_cipher_spec value or which receives a protected change_cipher_spec record MUST abort the handshake with an &#8220;unexpected_message&#8221; alert. A change_cipher_spec record received before the first ClientHello message or after the peer&#8217;s Finished message MUST be treated as an unexpected record type.</p>
+<p id="rfc.section.5.p.3">An implementation may receive an unencrypted record of type change_cipher_spec consisting of the single byte value 0x01 at any time after the first ClientHello message has been sent or received and before the peer&#8217;s Finished message has been received and MUST simply drop it without further processing.  Note that this record may appear at a point at the handshake where the implementation is expecting protected records and so it is necessary to detect this condition prior to attempting to deprotect the record. An implementation which receives any other change_cipher_spec value or which receives a protected change_cipher_spec record MUST abort the handshake with an &#8220;unexpected_message&#8221; alert. A change_cipher_spec record received before the first ClientHello message or after the peer&#8217;s Finished message MUST be treated as an unexpected record type (though stateless servers may not be able to distinguish these cases from allowed cases).</p>
 <p id="rfc.section.5.p.4">Implementations MUST NOT send record types not defined in this document unless negotiated by some extension.  If a TLS implementation receives an unexpected record type, it MUST terminate the connection with an &#8220;unexpected_message&#8221; alert.  New record content type values are assigned by IANA in the TLS Content Type Registry as described in <a href="#iana-considerations" class="xref">Section 11</a>.</p>
 <h2 id="rfc.section.5.1">
 <a href="#rfc.section.5.1">5.1.</a> <a href="#record-layer" id="record-layer">Record Layer</a>
@@ -2761,10 +2771,8 @@ finished_key =
        user_canceled(90),
        missing_extension(109),
        unsupported_extension(110),
-       certificate_unobtainable(111),
        unrecognized_name(112),
        bad_certificate_status_response(113),
-       bad_certificate_hash_value(114),
        unknown_psk_identity(115),
        certificate_required(116),
        no_application_protocol(120),
@@ -2789,7 +2797,7 @@ finished_key =
 <dd style="margin-left: 8">This alert notifies the recipient that the sender is canceling the handshake for some reason unrelated to a protocol failure. If a user cancels an operation after the handshake is complete, just closing the connection by sending a &#8220;close_notify&#8221; is more appropriate. This alert SHOULD be followed by a &#8220;close_notify&#8221;. This alert is generally a warning.</dd>
 </dl>
 <p id="rfc.section.6.1.p.3">Either party MAY initiate a close of its write side of the connection by sending a &#8220;close_notify&#8221; alert. Any data received after a closure alert has been received MUST be ignored. If a transport-level close is received prior to a &#8220;close_notify&#8221;, the receiver cannot know that all the data that was sent has been received.</p>
-<p id="rfc.section.6.1.p.4">Each party MUST send a &#8220;close_notify&#8221; alert before closing its write side of the connection, unless it has already sent some other fatal alert. This does not have any effect on its read side of the connection. Note that this is a change from versions of TLS prior to TLS 1.3 in which implementations were required to react to a &#8220;close_notify&#8221; by discarding pending writes and sending an immediate &#8220;close_notify&#8221; alert of their own. That previous requirement could cause truncation in the read side. Both parties need not wait to receive a &#8220;close_notify&#8221; alert before closing their read side of the connection.</p>
+<p id="rfc.section.6.1.p.4">Each party MUST send a &#8220;close_notify&#8221; alert before closing its write side of the connection, unless it has already sent some other fatal alert. This does not have any effect on its read side of the connection. Note that this is a change from versions of TLS prior to TLS 1.3 in which implementations were required to react to a &#8220;close_notify&#8221; by discarding pending writes and sending an immediate &#8220;close_notify&#8221; alert of their own. That previous requirement could cause truncation in the read side. Both parties need not wait to receive a &#8220;close_notify&#8221; alert before closing their read side of the connection, though doing so would introduce the possibility of truncation.</p>
 <p id="rfc.section.6.1.p.5">If the application protocol using TLS provides that any data may be carried over the underlying transport after the TLS connection is closed, the TLS implementation MUST receive a &#8220;close_notify&#8221; alert before indicating end-of-data to the application-layer. No part of this standard should be taken to dictate the manner in which a usage profile for TLS manages its data transport, including when connections are opened or closed.</p>
 <p id="rfc.section.6.1.p.6">Note: It is assumed that closing the write side of a connection reliably delivers pending data before destroying the transport.</p>
 <h2 id="rfc.section.6.2">
@@ -2806,7 +2814,7 @@ finished_key =
 <dt>bad_record_mac</dt>
 <dd style="margin-left: 8">This alert is returned if a record is received which cannot be deprotected. Because AEAD algorithms combine decryption and verification, and also to avoid side channel attacks, this alert is used for all deprotection failures.  This alert should never be observed in communication between proper implementations, except when messages were corrupted in the network.</dd>
 <dt>record_overflow</dt>
-<dd style="margin-left: 8">A TLSCiphertext record was received that had a length more than 2^14 + 256 bytes, or a record decrypted to a TLSPlaintext record with more than 2^14 bytes.  This alert should never be observed in communication between proper implementations, except when messages were corrupted in the network.</dd>
+<dd style="margin-left: 8">A TLSCiphertext record was received that had a length more than 2^14 + 256 bytes, or a record decrypted to a TLSPlaintext record with more than 2^14 bytes (or some other negotiated limit).  This alert should never be observed in communication between proper implementations, except when messages were corrupted in the network.</dd>
 <dt>handshake_failure</dt>
 <dd style="margin-left: 8">Receipt of a &#8220;handshake_failure&#8221; alert message indicates that the sender was unable to negotiate an acceptable set of security parameters given the options available.</dd>
 <dt>bad_certificate</dt>
@@ -2838,17 +2846,13 @@ finished_key =
 <dt>inappropriate_fallback</dt>
 <dd style="margin-left: 8">Sent by a server in response to an invalid connection retry attempt from a client (see <a href="#RFC7507" class="xref">[RFC7507]</a>).</dd>
 <dt>missing_extension</dt>
-<dd style="margin-left: 8">Sent by endpoints that receive a hello message not containing an extension that is mandatory to send for the offered TLS version or other negotiated parameters.</dd>
+<dd style="margin-left: 8">Sent by endpoints that receive a handshake message not containing an extension that is mandatory to send for the offered TLS version or other negotiated parameters.</dd>
 <dt>unsupported_extension</dt>
-<dd style="margin-left: 8">Sent by endpoints receiving any hello message containing an extension known to be prohibited for inclusion in the given hello message, or including any extensions in a ServerHello or Certificate not first offered in the corresponding ClientHello.</dd>
-<dt>certificate_unobtainable</dt>
-<dd style="margin-left: 8">Sent by servers when unable to obtain a certificate from a URL provided by the client via the &#8220;client_certificate_url&#8221; extension (see <a href="#RFC6066" class="xref">[RFC6066]</a>).</dd>
+<dd style="margin-left: 8">Sent by endpoints receiving any handshake message containing an extension known to be prohibited for inclusion in the given handshake message, or including any extensions in a ServerHello or Certificate not first offered in the corresponding ClientHello.</dd>
 <dt>unrecognized_name</dt>
 <dd style="margin-left: 8">Sent by servers when no server exists identified by the name provided by the client via the &#8220;server_name&#8221; extension (see <a href="#RFC6066" class="xref">[RFC6066]</a>).</dd>
 <dt>bad_certificate_status_response</dt>
 <dd style="margin-left: 8">Sent by clients when an invalid or unacceptable OCSP response is provided by the server via the &#8220;status_request&#8221; extension (see <a href="#RFC6066" class="xref">[RFC6066]</a>).</dd>
-<dt>bad_certificate_hash_value</dt>
-<dd style="margin-left: 8">Sent by servers when a retrieved object does not have the correct hash provided by the client via the &#8220;client_certificate_url&#8221; extension (see <a href="#RFC6066" class="xref">[RFC6066]</a>).</dd>
 <dt>unknown_psk_identity</dt>
 <dd style="margin-left: 8">Sent by servers when PSK key establishment is desired but no acceptable PSK identity is provided by the client. Sending this alert is OPTIONAL; servers MAY instead choose to send a &#8220;decrypt_error&#8221; alert to merely indicate an invalid PSK identity.</dd>
 <dt>certificate_required</dt>
@@ -2975,7 +2979,7 @@ finished_key =
 <ul>
 <li>A secret value</li>
 <li>A purpose value indicating the specific value being generated</li>
-<li>The length of the key</li>
+<li>The length of the key being generated</li>
 </ul>
 <p id="rfc.section.7.3.p.3">The traffic keying material is generated from an input traffic secret value using:</p>
 <pre>
@@ -3035,7 +3039,7 @@ TLS-Exporter(label, context_value, key_length) =
     HKDF-Expand-Label(Derive-Secret(Secret, label, ""),
                       "exporter", Hash(context_value), key_length)
 </pre>
-<p id="rfc.section.7.5.p.3">Where Secret is either the early_exporter_master_secret or the exporter_master_secret.  Implementations MUST use the exporter_master_secret unless explicitly specified by the application. The early_exporter_master_secret is defined for use in settings where an exporter is needed for 0-RTT data.  A separate interface for the early exporter is RECOMMENDED, especially on a server where a single interface can make the early exporter inaccessible.</p>
+<p id="rfc.section.7.5.p.3">Where Secret is either the early_exporter_master_secret or the exporter_master_secret.  Implementations MUST use the exporter_master_secret unless explicitly specified by the application. The early_exporter_master_secret is defined for use in settings where an exporter is needed for 0-RTT data.  A separate interface for the early exporter is RECOMMENDED.</p>
 <p id="rfc.section.7.5.p.4">If no context is provided, the context_value is zero-length. Consequently, providing no context computes the same value as providing an empty context.  This is a change from previous versions of TLS where an empty context produced a different output to an absent context. As of this document&#8217;s publication, no allocated exporter label is used both with and without a context. Future specifications MUST NOT define a use of exporters that permit both an empty context and no context with the same label. New uses of exporters SHOULD provide a context in all exporter computations, though the value could be empty.</p>
 <p id="rfc.section.7.5.p.5">Requirements for the format of exporter labels are defined in section 4 of <a href="#RFC5705" class="xref">[RFC5705]</a>.</p>
 <h1 id="rfc.section.8">
@@ -3070,7 +3074,7 @@ TLS-Exporter(label, context_value, key_length) =
 <h2 id="rfc.section.8.3">
 <a href="#rfc.section.8.3">8.3.</a> <a href="#freshness-checks" id="freshness-checks">Freshness Checks</a>
 </h2>
-<p id="rfc.section.8.3.p.1">Because the ClientHello indicates the time at which the client sent it, it is possible to efficiently determine whether a ClientHello was likely sent reasonably recently and only accept 0-RTT for such a ClientHello, otherwise falling back to a 1-RTT handshake.  This is necessary for the ClientHello storage mechanism described in <a href="#client-hello-recording" class="xref">Section 8.2</a> because otherwise the server needs to store an unlimited number of ClientHellos and is a useful optimization for single-use tickets because it allows efficient rejection of ClientHellos which cannot be used for 0-RTT.</p>
+<p id="rfc.section.8.3.p.1">Because the ClientHello indicates the time at which the client sent it, it is possible to efficiently determine whether a ClientHello was likely sent reasonably recently and only accept 0-RTT for such a ClientHello, otherwise falling back to a 1-RTT handshake.  This is necessary for the ClientHello storage mechanism described in <a href="#client-hello-recording" class="xref">Section 8.2</a> because otherwise the server needs to store an unlimited number of ClientHellos and is a useful optimization for self-contained single-use tickets because it allows efficient rejection of ClientHellos which cannot be used for 0-RTT.</p>
 <p id="rfc.section.8.3.p.2">In order to implement this mechanism, a server needs to store the time that the server generated the session ticket, offset by an estimate of the round trip time between client and server. I.e.,</p>
 <pre>
     adjusted_creation_time = creation_time + estimated_RTT
@@ -3116,7 +3120,7 @@ TLS-Exporter(label, context_value, key_length) =
 <li>&#8220;pre_shared_key&#8221;       is REQUIRED for PSK key agreement.</li>
 <li>&#8220;psk_key_exchange_modes&#8221; is REQUIRED for PSK key agreement.</li>
 </ul>
-<p id="rfc.section.9.2.p.5">A client is considered to be attempting to negotiate using this specification if the ClientHello contains a &#8220;supported_versions&#8221; extension with 0x0304 as the highest version number contained in its body.  Such a ClientHello message MUST meet the following requirements:</p>
+<p id="rfc.section.9.2.p.5">A client is considered to be attempting to negotiate using this specification if the ClientHello contains a &#8220;supported_versions&#8221; extension with 0x0304 contained in its body.  Such a ClientHello message MUST meet the following requirements:</p>
 <p></p>
 
 <ul>
@@ -3806,10 +3810,10 @@ here                  +--------+--------+
        no_renegotiation_RESERVED(100),
        missing_extension(109),
        unsupported_extension(110),
-       certificate_unobtainable(111),
+       certificate_unobtainable_RESERVED(111),
        unrecognized_name(112),
        bad_certificate_status_response(113),
-       bad_certificate_hash_value(114),
+       bad_certificate_hash_value_RESERVED(114),
        unknown_psk_identity(115),
        certificate_required(116),
        no_application_protocol(120),
@@ -4117,6 +4121,7 @@ here                  +--------+--------+
 <a href="#rfc.appendix.B.3.3">B.3.3.</a> <a href="#authentication-messages-1" id="authentication-messages-1">Authentication Messages</a>
 </h3>
 <pre>
+   /* Managed by IANA */
    enum {
        X509(0),
        OpenPGP_RESERVED(1),
@@ -4301,7 +4306,7 @@ here                  +--------+--------+
 </h1>
 <p id="rfc.section.D.p.1">The TLS protocol provides a built-in mechanism for version negotiation between endpoints potentially supporting different versions of TLS.</p>
 <p id="rfc.section.D.p.2">TLS 1.x and SSL 3.0 use compatible ClientHello messages. Servers can also handle clients trying to use future versions of TLS as long as the ClientHello format remains compatible and there is at least one protocol version supported by both the client and the server.</p>
-<p id="rfc.section.D.p.3">Prior versions of TLS used the record layer version number for various purposes. (TLSPlaintext.legacy_record_version and TLSCiphertext.legacy_record_version) As of TLS 1.3, this field is deprecated. The value of TLSPlaintext.legacy_record_version MUST be ignored by all implementations.  The value of TLSCiphertext.legacy_record_version is included in the additional data for deprotection but MAY otherwise be ignored or MAY be validated to match the fixed constant value.  Version negotiation is performed using only the handshake versions (ClientHello.legacy_version, ServerHello.legacy_version, as well as the ClientHello, HelloRetryRequest and ServerHello &#8220;supported_versions&#8221; extensions).  In order to maximize interoperability with older endpoints, implementations that negotiate the use of TLS 1.0-1.2 SHOULD set the record layer version number to the negotiated version for the ServerHello and all records thereafter.</p>
+<p id="rfc.section.D.p.3">Prior versions of TLS used the record layer version number for various purposes (TLSPlaintext.legacy_record_version and TLSCiphertext.legacy_record_version).  As of TLS 1.3, this field is deprecated. The value of TLSPlaintext.legacy_record_version MUST be ignored by all implementations.  The value of TLSCiphertext.legacy_record_version is included in the additional data for deprotection but MAY otherwise be ignored or MAY be validated to match the fixed constant value.  Version negotiation is performed using only the handshake versions (ClientHello.legacy_version, ServerHello.legacy_version, as well as the ClientHello, HelloRetryRequest and ServerHello &#8220;supported_versions&#8221; extensions).  In order to maximize interoperability with older endpoints, implementations that negotiate the use of TLS 1.0-1.2 SHOULD set the record layer version number to the negotiated version for the ServerHello and all records thereafter.</p>
 <p id="rfc.section.D.p.4">For maximum compatibility with previously non-standard behavior and misconfigured deployments, all implementations SHOULD support validation of certification paths based on the expectations in this document, even when handling prior TLS versions&#8217; handshakes. (see <a href="#server-certificate-selection" class="xref">Section 4.4.2.2</a>)</p>
 <p id="rfc.section.D.p.5">TLS 1.2 and prior supported an &#8220;Extended Master Secret&#8221; <a href="#RFC7627" class="xref">[RFC7627]</a> extension which digested large parts of the handshake transcript into the master secret.  Because TLS 1.3 always hashes in the transcript up to the server CertificateVerify, implementations which support both TLS 1.3 and earlier versions SHOULD indicate the use of the Extended Master Secret extension in their APIs whenever TLS 1.3 is used.</p>
 <h2 id="rfc.appendix.D.1">
@@ -4385,7 +4390,7 @@ here                  +--------+--------+
 </dl>
 <p id="rfc.section.E.1.p.5">Informally, the signature-based modes of TLS 1.3 provide for the establishment of a unique, secret, shared key established by an (EC)DHE key exchange and authenticated by the server&#8217;s signature over the handshake transcript, as well as tied to the server&#8217;s identity by a MAC. If the client is authenticated by a certificate, it also signs over the handshake transcript and provides a MAC tied to both identities. <a href="#SIGMA" class="xref">[SIGMA]</a> describes the design and analysis of this type of key exchange protocol. If fresh (EC)DHE keys are used for each connection, then the output keys are forward secret.</p>
 <p id="rfc.section.E.1.p.6">The external PSK and resumption PSK bootstrap from a long-term shared secret into a unique per-connection set of short-term session keys. This secret may have been established in a previous handshake. If PSK with (EC)DHE key establishment is used, these session keys will also be forward secret. The resumption PSK has been designed so that the resumption master secret computed by connection N and needed to form connection N+1 is separate from the traffic keys used by connection N, thus providing forward secrecy between the connections.  In addition, if multiple tickets are established on the same connection, they are associated with different keys, so compromise of the PSK associated with one ticket does not lead to the compromise of connections established with PSKs associated with other tickets.  This property is most interesting if tickets are stored in a database (and so can be deleted) rather than if they are self-encrypted.</p>
-<p id="rfc.section.E.1.p.7">The PSK binder value forms a binding between a PSK and the current handshake, as well as between the session where the PSK was established and the session where it was used. This binding transitively includes the original handshake transcript, because that transcript is digested into the values which produce the Resumption Master Secret. This requires that both the KDF used to produce the resumption master secret and the MAC used to compute the binder be collision resistant. See <a href="#key-derivation-and-hkdf" class="xref">Appendix E.1.1</a> for more on this.  Note: The binder does not cover the binder values from other PSKs, though they are included in the Finished MAC.</p>
+<p id="rfc.section.E.1.p.7">The PSK binder value forms a binding between a PSK and the current handshake, as well as between the session where the PSK was established and the current session. This binding transitively includes the original handshake transcript, because that transcript is digested into the values which produce the Resumption Master Secret. This requires that both the KDF used to produce the resumption master secret and the MAC used to compute the binder be collision resistant. See <a href="#key-derivation-and-hkdf" class="xref">Appendix E.1.1</a> for more on this.  Note: The binder does not cover the binder values from other PSKs, though they are included in the Finished MAC.</p>
 <p id="rfc.section.E.1.p.8">Note: TLS does not currently permit the server to send a certificate_request message in non-certificate-based handshakes (e.g., PSK).  If this restriction were to be relaxed in future, the client&#8217;s signature would not cover the server&#8217;s certificate directly.  However, if the PSK was established through a NewSessionTicket, the client&#8217;s signature would transitively cover the server&#8217;s certificate through the PSK binder. <a href="#PSK-FINISHED" class="xref">[PSK-FINISHED]</a> describes a concrete attack on constructions that do not bind to the server&#8217;s certificate (see also <a href="#Kraw16" class="xref">[Kraw16]</a>). It is unsafe to use certificate-based client authentication when the client might potentially share the same PSK/key-id pair with two different endpoints.  Implementations MUST NOT combine external PSKs with certificate-based authentication of either the client or the server unless negotiated by some extension.</p>
 <p id="rfc.section.E.1.p.9">If an exporter is used, then it produces values which are unique and secret (because they are generated from a unique session key).  Exporters computed with different labels and contexts are computationally independent, so it is not feasible to compute one from another or the session secret from the exported value. Note: exporters can produce arbitrary-length values. If exporters are to be used as channel bindings, the exported value MUST be large enough to provide collision resistance. The exporters provided in TLS 1.3 are derived from the same handshake contexts as the early traffic keys and the application traffic keys respectively, and thus have similar security properties. Note that they do not include the client&#8217;s certificate; future applications which wish to bind to the client&#8217;s certificate may need to define a new exporter that includes the full handshake transcript.</p>
 <p id="rfc.section.E.1.p.10">For all handshake modes, the Finished MAC (and where present, the signature), prevents downgrade attacks. In addition, the use of certain bytes in the random nonces as described in <a href="#server-hello" class="xref">Section 4.1.3</a> allows the detection of downgrade to previous TLS versions.  See <a href="#BBFKZG16" class="xref">[BBFKZG16]</a> for more detail on TLS 1.3 and downgrade.</p>
