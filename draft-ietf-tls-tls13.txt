@@ -90,8 +90,8 @@ Table of Contents
    3.  Presentation Language . . . . . . . . . . . . . . . . . . . .  26
      3.1.  Basic Block Size  . . . . . . . . . . . . . . . . . . . .  26
      3.2.  Miscellaneous . . . . . . . . . . . . . . . . . . . . . .  26
-     3.3.  Vectors . . . . . . . . . . . . . . . . . . . . . . . . .  27
-     3.4.  Numbers . . . . . . . . . . . . . . . . . . . . . . . . .  28
+     3.3.  Numbers . . . . . . . . . . . . . . . . . . . . . . . . .  27
+     3.4.  Vectors . . . . . . . . . . . . . . . . . . . . . . . . .  27
      3.5.  Enumerateds . . . . . . . . . . . . . . . . . . . . . . .  28
      3.6.  Constructed Types . . . . . . . . . . . . . . . . . . . .  29
      3.7.  Constants . . . . . . . . . . . . . . . . . . . . . . . .  29
@@ -130,10 +130,10 @@ Internet-Draft                     TLS                        March 2018
        4.4.2.  Certificate . . . . . . . . . . . . . . . . . . . . .  67
        4.4.3.  Certificate Verify  . . . . . . . . . . . . . . . . .  72
        4.4.4.  Finished  . . . . . . . . . . . . . . . . . . . . . .  74
-     4.5.  End of Early Data . . . . . . . . . . . . . . . . . . . .  76
+     4.5.  End of Early Data . . . . . . . . . . . . . . . . . . . .  75
      4.6.  Post-Handshake Messages . . . . . . . . . . . . . . . . .  76
        4.6.1.  New Session Ticket Message  . . . . . . . . . . . . .  76
-       4.6.2.  Post-Handshake Authentication . . . . . . . . . . . .  79
+       4.6.2.  Post-Handshake Authentication . . . . . . . . . . . .  78
        4.6.3.  Key and IV Update . . . . . . . . . . . . . . . . . .  79
    5.  Record Protocol . . . . . . . . . . . . . . . . . . . . . . .  80
      5.1.  Record Layer  . . . . . . . . . . . . . . . . . . . . . .  81
@@ -146,9 +146,9 @@ Internet-Draft                     TLS                        March 2018
      6.2.  Error Alerts  . . . . . . . . . . . . . . . . . . . . . .  90
    7.  Cryptographic Computations  . . . . . . . . . . . . . . . . .  93
      7.1.  Key Schedule  . . . . . . . . . . . . . . . . . . . . . .  93
-     7.2.  Updating Traffic Keys and IVs . . . . . . . . . . . . . .  96
+     7.2.  Updating Traffic Secrets  . . . . . . . . . . . . . . . .  96
      7.3.  Traffic Key Calculation . . . . . . . . . . . . . . . . .  97
-     7.4.  (EC)DHE Shared Secret Calculation . . . . . . . . . . . .  97
+     7.4.  (EC)DHE Shared Secret Calculation . . . . . . . . . . . .  98
        7.4.1.  Finite Field Diffie-Hellman . . . . . . . . . . . . .  98
        7.4.2.  Elliptic Curve Diffie-Hellman . . . . . . . . . . . .  98
      7.5.  Exporters . . . . . . . . . . . . . . . . . . . . . . . .  99
@@ -1213,17 +1213,17 @@ Internet-Draft                     TLS                        March 2018
 
    Although TLS PSKs can be established out of band, PSKs can also be
    established in a previous connection and then used to establish a new
-   session ("session resumption").  Once a handshake has completed, the
-   server can send to the client a PSK identity that corresponds to a
-   unique key derived from the initial handshake (see Section 4.6.1).
-   The client can then use that PSK identity in future handshakes to
-   negotiate the use of the associated PSK.  If the server accepts the
-   PSK, then the security context of the new connection is
-   cryptographically tied to the original connection and the key derived
-   from the initial handshake is used to bootstrap the cryptographic
-   state instead of a full handshake.  In TLS 1.2 and below, this
-   functionality was provided by "session IDs" and "session tickets"
-   [RFC5077].  Both mechanisms are obsoleted in TLS 1.3.
+   connection ("session resumption" or "resuming" with a PSK).  Once a
+   handshake has completed, the server can send to the client a PSK
+   identity that corresponds to a unique key derived from the initial
+   handshake (see Section 4.6.1).  The client can then use that PSK
+   identity in future handshakes to negotiate the use of the associated
+   PSK.  If the server accepts the PSK, then the security context of the
+   new connection is cryptographically tied to the original connection
+   and the key derived from the initial handshake is used to bootstrap
+   the cryptographic state instead of a full handshake.  In TLS 1.2 and
+   below, this functionality was provided by "session IDs" and "session
+   tickets" [RFC5077].  Both mechanisms are obsoleted in TLS 1.3.
 
 
 
@@ -1458,7 +1458,23 @@ Rescorla               Expires September 10, 2018              [Page 26]
 Internet-Draft                     TLS                        March 2018
 
 
-3.3.  Vectors
+3.3.  Numbers
+
+   The basic numeric data type is an unsigned byte (uint8).  All larger
+   numeric data types are formed from fixed-length series of bytes
+   concatenated as described in Section 3.1 and are also unsigned.  The
+   following numeric types are predefined.
+
+      uint8 uint16[2];
+      uint8 uint24[3];
+      uint8 uint32[4];
+      uint8 uint64[8];
+
+   All values, here and elsewhere in the specification, are transmitted
+   in network byte (big-endian) order; the uint32 represented by the hex
+   bytes 01 02 03 04 is equivalent to the decimal value 16909060.
+
+3.4.  Vectors
 
    A vector (single-dimensioned array) is a stream of homogeneous data
    elements.  The size of the vector may be specified at documentation
@@ -1490,10 +1506,18 @@ Internet-Draft                     TLS                        March 2018
 
       T T'<floor..ceiling>;
 
+
+
+
+Rescorla               Expires September 10, 2018              [Page 27]
+
+Internet-Draft                     TLS                        March 2018
+
+
    In the following example, mandatory is a vector that must contain
    between 300 and 400 bytes of type opaque.  It can never be empty.
    The actual length field consumes two bytes, a uint16, which is
-   sufficient to represent the value 400 (see Section 3.4).  Similarly,
+   sufficient to represent the value 400 (see Section 3.3).  Similarly,
    longer can represent up to 800 bytes of data, or 400 uint16 elements,
    and it may be empty.  Its encoding will include a two-byte actual
    length field prepended to the vector.  The length of an encoded
@@ -1505,39 +1529,14 @@ Internet-Draft                     TLS                        March 2018
       uint16 longer<0..800>;
             /* zero to 400 16-bit unsigned integers */
 
-
-
-
-
-Rescorla               Expires September 10, 2018              [Page 27]
-
-Internet-Draft                     TLS                        March 2018
-
-
-3.4.  Numbers
-
-   The basic numeric data type is an unsigned byte (uint8).  All larger
-   numeric data types are formed from fixed-length series of bytes
-   concatenated as described in Section 3.1 and are also unsigned.  The
-   following numeric types are predefined.
-
-      uint8 uint16[2];
-      uint8 uint24[3];
-      uint8 uint32[4];
-      uint8 uint64[8];
-
-   All values, here and elsewhere in the specification, are transmitted
-   in network byte (big-endian) order; the uint32 represented by the hex
-   bytes 01 02 03 04 is equivalent to the decimal value 16909060.
-
 3.5.  Enumerateds
 
-   An additional sparse data type is available called enum.  Each
-   definition is a different type.  Only enumerateds of the same type
-   may be assigned or compared.  Every element of an enumerated must be
-   assigned a value, as demonstrated in the following example.  Since
-   the elements of the enumerated are not ordered, they can be assigned
-   any unique value, in any order.
+   An additional sparse data type is available called enum or
+   enumerated.  Each definition is a different type.  Only enumerateds
+   of the same type may be assigned or compared.  Every element of an
+   enumerated must be assigned a value, as demonstrated in the following
+   example.  Since the elements of the enumerated are not ordered, they
+   can be assigned any unique value, in any order.
 
       enum { e1(v1), e2(v2), ... , en(vn) [[, (n)]] } Te;
 
@@ -1562,6 +1561,7 @@ Internet-Draft                     TLS                        March 2018
 
    The names of the elements of an enumeration are scoped within the
    defined type.  In the first example, a fully qualified reference to
+   the second element of the enumeration would be Color.blue.  Such
 
 
 
@@ -1570,7 +1570,6 @@ Rescorla               Expires September 10, 2018              [Page 28]
 Internet-Draft                     TLS                        March 2018
 
 
-   the second element of the enumeration would be Color.blue.  Such
    qualification is not required if the target of the assignment is well
    specified.
 
@@ -1614,6 +1613,7 @@ Internet-Draft                     TLS                        March 2018
           T1 f1 = 8;  /* T.f1 must always be 8 */
           T2 f2;
       } T;
+
 
 
 
@@ -1824,7 +1824,7 @@ Internet-Draft                     TLS                        March 2018
    ClientHello as its first TLS message.  The client will also send a
    ClientHello when the server has responded to its ClientHello with a
    HelloRetryRequest.  In that case, the client MUST send the same
-   ClientHello (without modification) except:
+   ClientHello without modification, except:
 
    -  If a "key_share" extension was supplied in the HelloRetryRequest,
       replacing the list of shares with a list containing a single
@@ -1930,7 +1930,7 @@ Internet-Draft                     TLS                        March 2018
    legacy_compression_methods  Versions of TLS before 1.3 supported
       compression with the list of supported compression methods being
       sent in this field.  For every TLS 1.3 ClientHello, this vector
-      MUST contain exactly one byte set to zero, which corresponds to
+      MUST contain exactly one byte, set to zero, which corresponds to
       the "null" compression method in prior versions of TLS.  If a TLS
       1.3 ClientHello is received with any other value in this field,
       the server MUST abort the handshake with an "illegal_parameter"
@@ -2548,7 +2548,7 @@ Internet-Draft                     TLS                        March 2018
    Implementations which have the same policy in both cases MAY omit the
    "signature_algorithms_cert" extension.
 
-   The "extension_data" field of these extension contains a
+   The "extension_data" field of these extensions contains a
    SignatureSchemeList value:
 
 
@@ -2943,14 +2943,13 @@ Internet-Draft                     TLS                        March 2018
           opaque key_exchange<1..2^16-1>;
       } KeyShareEntry;
 
-   group  The named group for the key being exchanged.  Finite Field
-      Diffie-Hellman [DH] parameters are described in Section 4.2.8.1;
-      Elliptic Curve Diffie-Hellman parameters are described in
-      Section 4.2.8.2.
+   group  The named group for the key being exchanged.
 
    key_exchange  Key exchange information.  The contents of this field
       are determined by the specified group and its corresponding
-      definition.
+      definition.  Finite Field Diffie-Hellman [DH] parameters are
+      described in Section 4.2.8.1; Elliptic Curve Diffie-Hellman
+      parameters are described in Section 4.2.8.2.
 
    In the ClientHello message, the "extension_data" field of this
    extension contains a "KeyShareClientHello" value:
@@ -2961,6 +2960,7 @@ Internet-Draft                     TLS                        March 2018
 
    client_shares  A list of offered KeyShareEntry values in descending
       order of client preference.
+
 
 
 
@@ -3092,11 +3092,11 @@ Internet-Draft                     TLS                        March 2018
    valid point on the elliptic curve.  The appropriate validation
    procedures are defined in Section 4.3.7 of [X962] and alternatively
    in Section 5.6.2.3 of [KEYAGREEMENT].  This process consists of three
-   steps: (1) verify that Y is not the point at infinity (O), (2) verify
-   that for Y = (x, y) both integers are in the correct interval, (3)
-   ensure that (x, y) is a correct solution to the elliptic curve
-   equation.  For these curves, implementors do not need to verify
-   membership in the correct subgroup.
+   steps: (1) verify that the point (X, Y) is not the point at infinity
+   (O), (2) verify that both X and Y are integers in the correct
+   interval, (3) ensure that (X, Y) is a correct solution to the
+   elliptic curve equation.  For these curves, implementors do not need
+   to verify membership in the correct subgroup.
 
    For X25519 and X448, the contents of the public value are the byte
    string inputs and outputs of the corresponding functions defined in
@@ -3148,7 +3148,7 @@ Internet-Draft                     TLS                        March 2018
       NOT supply a "key_share" value.
 
    psk_dhe_ke  PSK with (EC)DHE key establishment.  In this mode, the
-      client and servers MUST supply "key_share" values as described in
+      client and server MUST supply "key_share" values as described in
       Section 4.2.8.
 
    Any future values that are allocated must ensure that the transmitted
@@ -3180,7 +3180,7 @@ Internet-Draft                     TLS                        March 2018
 
    The parameters for the 0-RTT data (version, symmetric cipher suite,
    ALPN protocol, etc.) are those associated with the PSK in use.  For
-   externally established PSKs, the associated values are those
+   externally provisioned PSKs, the associated values are those
    provisioned along with the key.  For PSKs established via a
    NewSessionTicket message, the associated values are those which were
    negotiated in the connection which established the PSK.  The PSK used
@@ -3203,7 +3203,7 @@ Internet-Draft                     TLS                        March 2018
    action that assumes that this ClientHello is fresh.
 
    0-RTT messages sent in the first flight have the same (encrypted)
-   content types as their corresponding messages sent in other flights
+   content types as messages of the same type sent in other flights
    (handshake and application_data) but are protected under different
    keys.  After receiving the server's Finished message, if the server
    has accepted early data, an EndOfEarlyData message will be sent to
@@ -3227,18 +3227,18 @@ Internet-Draft                     TLS                        March 2018
       content type of "application_data" (indicating that they are
       encrypted), up to the configured max_early_data_size.
 
-   -  Return its own extension in EncryptedExtensions, indicating that
-      it intends to process the early data.  It is not possible for the
-      server to accept only a subset of the early data messages.  Even
-      though the server sends a message accepting early data, the actual
-      early data itself may already be in flight by the time the server
-      generates this message.
+   -  Return its own "early_data" extension in EncryptedExtensions,
+      indicating that it intends to process the early data.  It is not
+      possible for the server to accept only a subset of the early data
+      messages.  Even though the server sends a message accepting early
+      data, the actual early data itself may already be in flight by the
+      time the server generates this message.
 
    In order to accept early data, the server MUST have accepted a PSK
    cipher suite and selected the first key offered in the client's
    "pre_shared_key" extension.  In addition, it MUST verify that the
-   following values are consistent with those associated with the
-   selected PSK:
+   following values are the same as those associated with the selected
+   PSK:
 
    -  The TLS version number
 
@@ -3275,26 +3275,26 @@ Internet-Draft                     TLS                        March 2018
    If the server chooses to accept the "early_data" extension, then it
    MUST comply with the same error handling requirements specified for
    all records when processing early data records.  Specifically, if the
-   server fails to decrypt any 0-RTT record following an accepted
+   server fails to decrypt a 0-RTT record following an accepted
    "early_data" extension it MUST terminate the connection with a
    "bad_record_mac" alert as per Section 5.2.
 
    If the server rejects the "early_data" extension, the client
-   application MAY opt to retransmit early data once the handshake has
-   been completed.  Note that automatic re-transmission of early data
-   could result in assumptions about the status of the connection being
-   incorrect.  For instance, when the negotiated connection selects a
-   different ALPN protocol from what was used for the early data, an
-   application might need to construct different messages.  Similarly,
-   if early data assumes anything about the connection state, it might
-   be sent in error after the handshake completes.
+   application MAY opt to retransmit the application data previously
+   sent in early data once the handshake has been completed.  Note that
+   automatic re-transmission of early data could result in assumptions
+   about the status of the connection being incorrect.  For instance,
+   when the negotiated connection selects a different ALPN protocol from
+   what was used for the early data, an application might need to
+   construct different messages.  Similarly, if early data assumes
+   anything about the connection state, it might be sent in error after
+   the handshake completes.
 
    A TLS implementation SHOULD NOT automatically re-send early data;
    applications are in a better position to decide when re-transmission
    is appropriate.  A TLS implementation MUST NOT automatically re-send
    early data unless the negotiated connection selects the same ALPN
    protocol.
-
 
 
 
@@ -3308,7 +3308,7 @@ Internet-Draft                     TLS                        March 2018
 
 4.2.11.  Pre-Shared Key Extension
 
-   The "pre_shared_key" extension is used to indicate the identity of
+   The "pre_shared_key" extension is used to negotiate the identity of
    the pre-shared key to be used with a given handshake in association
    with PSK key establishment.
 
@@ -3426,10 +3426,10 @@ Internet-Draft                     TLS                        March 2018
    is returned, the client MUST abort the handshake with an
    "illegal_parameter" alert.
 
-   This extension MUST be the last extension in the ClientHello (this
-   facilitates implementation as described below).  Servers MUST check
-   that it is the last extension and otherwise fail the handshake with
-   an "illegal_parameter" alert.
+   The "pre_shared_key" extension MUST be the last extension in the
+   ClientHello (this facilitates implementation as described below).
+   Servers MUST check that it is the last extension and otherwise fail
+   the handshake with an "illegal_parameter" alert.
 
 4.2.11.1.  Ticket Age
 
@@ -3501,10 +3501,10 @@ Internet-Draft                     TLS                        March 2018
    Clients are permitted to "stream" 0-RTT data until they receive the
    server's Finished, only then sending the EndOfEarlyData message,
    followed by the rest of the handshake.  In order to avoid deadlocks,
-   when accepting "early_data", the server MUST process the client's
-   ClientHello and then immediately send its ServerHello, rather than
-   waiting for the client's EndOfEarlyData message before sending its
-   ServerHello.
+   when accepting "early_data", servers MUST process the client's
+   ClientHello and then immediately send their flight of messages,
+   rather than waiting for the client's EndOfEarlyData message before
+   sending its ServerHello.
 
 4.3.  Server Parameters
 
@@ -3669,18 +3669,18 @@ Internet-Draft                     TLS                        March 2018
    header carrying the handshake message type and length fields, but not
    including record layer headers.  I.e.,
 
-    Transcript-Hash(M1, M2, ... MN) = Hash(M1 || M2 ... MN)
+    Transcript-Hash(M1, M2, ... Mn) = Hash(M1 || M2 || ... || Mn)
 
    As an exception to this general rule, when the server responds to a
    ClientHello with a HelloRetryRequest, the value of ClientHello1 is
    replaced with a special synthetic handshake message of handshake type
    "message_hash" containing Hash(ClientHello1).  I.e.,
 
-  Transcript-Hash(ClientHello1, HelloRetryRequest, ... MN) =
+  Transcript-Hash(ClientHello1, HelloRetryRequest, ... Mn) =
       Hash(message_hash ||        /* Handshake type */
            00 00 Hash.length ||   /* Handshake message length (bytes) */
            Hash(ClientHello1) ||  /* Hash of ClientHello1 */
-           HelloRetryRequest ... MN)
+           HelloRetryRequest || ... || Mn)
 
    The reason for this construction is to allow the server to do a
    stateless HelloRetryRequest by storing just the hash of ClientHello1
@@ -3813,11 +3813,11 @@ Internet-Draft                     TLS                        March 2018
    negotiated, then each CertificateEntry contains a DER-encoded X.509
    certificate.  The sender's certificate MUST come in the first
    CertificateEntry in the list.  Each following certificate SHOULD
-   directly certify one preceding it.  Because certificate validation
-   requires that trust anchors be distributed independently, a
-   certificate that specifies a trust anchor MAY be omitted from the
-   chain, provided that supported peers are known to possess any omitted
-   certificates.
+   directly certify the one immediately preceding it.  Because
+   certificate validation requires that trust anchors be distributed
+   independently, a certificate that specifies a trust anchor MAY be
+   omitted from the chain, provided that supported peers are known to
+   possess any omitted certificates.
 
    Note: Prior to TLS 1.3, "certificate_list" ordering required each
    certificate to certify the one immediately preceding it; however,
@@ -3906,8 +3906,8 @@ Internet-Draft                     TLS                        March 2018
       SHOULD send this extension, when applicable.
 
    All certificates provided by the server MUST be signed by a signature
-   algorithm advertised by the client, if they are able to provide such
-   a chain (see Section 4.2.3).  Certificates that are self-signed or
+   algorithm advertised by the client, if it is able to provide such a
+   chain (see Section 4.2.3).  Certificates that are self-signed or
    certificates that are expected to be trust anchors are not validated
    as part of the chain and therefore MAY be signed with any algorithm.
 
@@ -3955,7 +3955,7 @@ Internet-Draft                     TLS                        March 2018
 
    -  If the CertificateRequest message contained a non-empty
       "oid_filters" extension, the end-entity certificate MUST match the
-      extension OIDs recognized by the client, as described in
+      extension OIDs that are recognized by the client, as described in
       Section 4.2.5.
 
    Note that, as with the server certificate, there are certificates
@@ -4151,7 +4151,7 @@ Internet-Draft                     TLS                        March 2018
        of either the peer's identity or of its liveness (i.e., the
        ClientHello might have been replayed).
 
-   The key used to compute the finished message is computed from the
+   The key used to compute the Finished message is computed from the
    Base key defined in Section 4.4 using HKDF (see Section 7.1).
    Specifically:
 
@@ -4184,14 +4184,14 @@ Internet-Draft                     TLS                        March 2018
    Note: Alerts and any other record types are not handshake messages
    and are not included in the hash computations.
 
-   Any records following a 1-RTT Finished message MUST be encrypted
-   under the appropriate application traffic key as described in
-   Section 7.2.  In particular, this includes any alerts sent by the
-   server in response to client Certificate and CertificateVerify
-   messages.
+   Any records following a Finished message MUST be encrypted under the
+   appropriate application traffic key as described in Section 7.2.  In
+   particular, this includes any alerts sent by the server in response
+   to client Certificate and CertificateVerify messages.
 
+4.5.  End of Early Data
 
-
+      struct {} EndOfEarlyData;
 
 
 
@@ -4201,10 +4201,6 @@ Rescorla               Expires September 10, 2018              [Page 75]
 
 Internet-Draft                     TLS                        March 2018
 
-
-4.5.  End of Early Data
-
-      struct {} EndOfEarlyData;
 
    If the server sent an "early_data" extension, the client MUST send an
    EndOfEarlyData message after receiving the server Finished.  If the
@@ -4228,7 +4224,7 @@ Internet-Draft                     TLS                        March 2018
    At any time after the server has received the client Finished
    message, it MAY send a NewSessionTicket message.  This message
    creates a unique association between the ticket value and a secret
-   PSK derived from the resumption master secret.
+   PSK derived from the resumption master secret (see Section 7.
 
    The client MAY use this PSK for future handshakes by including the
    ticket value in the "pre_shared_key" extension in its ClientHello
@@ -4250,6 +4246,10 @@ Internet-Draft                     TLS                        March 2018
 
    Clients MUST only resume if the new SNI value is valid for the server
    certificate presented in the original session, and SHOULD only resume
+   if the SNI value matches the one used in the original session.  The
+   latter is a performance optimization: normally, there is no reason to
+   expect that different servers covered by a single certificate would
+   be able to accept each other's tickets, hence attempting resumption
 
 
 
@@ -4258,10 +4258,6 @@ Rescorla               Expires September 10, 2018              [Page 76]
 Internet-Draft                     TLS                        March 2018
 
 
-   if the SNI value matches the one used in the original session.  The
-   latter is a performance optimization: normally, there is no reason to
-   expect that different servers covered by a single certificate would
-   be able to accept each other's tickets, hence attempting resumption
    in that case would waste a single-use ticket.  If such an indication
    is provided (externally or by any other means), clients MAY resume
    with a different SNI value.
@@ -4306,6 +4302,10 @@ Internet-Draft                     TLS                        March 2018
       transmitted by the client.  The server MUST generate a fresh value
       for each ticket it sends.
 
+   ticket_nonce  A per-ticket value that is unique across all tickets
+      issued on this connection.
+
+
 
 
 
@@ -4313,9 +4313,6 @@ Rescorla               Expires September 10, 2018              [Page 77]
 
 Internet-Draft                     TLS                        March 2018
 
-
-   ticket_nonce  A per-ticket value that is unique across all tickets
-      issued on this connection.
 
    ticket  The value of the ticket to be used as the PSK identity.  The
       ticket itself is an opaque label.  It MAY either be a database
@@ -4359,9 +4356,12 @@ Internet-Draft                     TLS                        March 2018
    peer's certificate, the likelihood of intervening revocation, and the
    time since the peer's online CertificateVerify signature.
 
+4.6.2.  Post-Handshake Authentication
 
-
-
+   When the client has sent the "post_handshake_auth" extension (see
+   Section 4.2.6), a server MAY request client authentication at any
+   time after the handshake has completed by sending a
+   CertificateRequest message.  The client MUST respond with the
 
 
 
@@ -4370,12 +4370,6 @@ Rescorla               Expires September 10, 2018              [Page 78]
 Internet-Draft                     TLS                        March 2018
 
 
-4.6.2.  Post-Handshake Authentication
-
-   When the client has sent the "post_handshake_auth" extension (see
-   Section 4.2.6), a server MAY request client authentication at any
-   time after the handshake has completed by sending a
-   CertificateRequest message.  The client MUST respond with the
    appropriate Authentication messages (see Section 4.4).  If the client
    chooses to authenticate, it MUST send Certificate, CertificateVerify,
    and Finished.  If it declines, it MUST send a Certificate message
@@ -4418,6 +4412,12 @@ Internet-Draft                     TLS                        March 2018
    message MUST terminate the connection with an "unexpected_message"
    alert.  After sending a KeyUpdate message, the sender SHALL send all
    its traffic using the next generation of keys, computed as described
+   in Section 7.2.  Upon receiving a KeyUpdate, the receiver MUST update
+   its receiving keys.
+
+   If the request_update field is set to "update_requested" then the
+   receiver MUST send a KeyUpdate of its own with request_update set to
+   "update_not_requested" prior to sending its next application data
 
 
 
@@ -4426,12 +4426,6 @@ Rescorla               Expires September 10, 2018              [Page 79]
 Internet-Draft                     TLS                        March 2018
 
 
-   in Section 7.2.  Upon receiving a KeyUpdate, the receiver MUST update
-   its receiving keys.
-
-   If the request_update field is set to "update_requested" then the
-   receiver MUST send a KeyUpdate of its own with request_update set to
-   "update_not_requested" prior to sending its next application data
    record.  This mechanism allows either side to force an update to the
    entire connection, but causes an implementation which receives
    multiple KeyUpdates while it is silent to respond with a single
@@ -4474,6 +4468,12 @@ Internet-Draft                     TLS                        March 2018
    simply drop it without further processing.  Note that this record may
    appear at a point at the handshake where the implementation is
    expecting protected records and so it is necessary to detect this
+   condition prior to attempting to deprotect the record.  An
+   implementation which receives any other change_cipher_spec value or
+   which receives a protected change_cipher_spec record MUST abort the
+   handshake with an "unexpected_message" alert.  A change_cipher_spec
+   record received before the first ClientHello message or after the
+   peer's Finished message MUST be treated as an unexpected record type
 
 
 
@@ -4482,12 +4482,6 @@ Rescorla               Expires September 10, 2018              [Page 80]
 Internet-Draft                     TLS                        March 2018
 
 
-   condition prior to attempting to deprotect the record.  An
-   implementation which receives any other change_cipher_spec value or
-   which receives a protected change_cipher_spec record MUST abort the
-   handshake with an "unexpected_message" alert.  A change_cipher_spec
-   record received before the first ClientHello message or after the
-   peer's Finished message MUST be treated as an unexpected record type
    (though stateless servers may not be able to distinguish these cases
    from allowed cases).
 
@@ -4530,6 +4524,12 @@ Internet-Draft                     TLS                        March 2018
    TLSPlaintext record.  In other words, a record with an Alert type
    MUST contain exactly one message.
 
+   Application Data messages contain data that is opaque to TLS.
+   Application Data messages are always protected.  Zero-length
+   fragments of Application Data MAY be sent as they are potentially
+   useful as a traffic analysis countermeasure.  Application Data
+   fragments MAY be split across multiple records or coalesced into a
+   single record.
 
 
 
@@ -4537,13 +4537,6 @@ Rescorla               Expires September 10, 2018              [Page 81]
 
 Internet-Draft                     TLS                        March 2018
 
-
-   Application Data messages contain data that is opaque to TLS.
-   Application Data messages are always protected.  Zero-length
-   fragments of Application Data MAY be sent as they are potentially
-   useful as a traffic analysis countermeasure.  Application Data
-   fragments MAY be split across multiple records or coalesced into a
-   single record.
 
       enum {
           invalid(0),
@@ -4586,6 +4579,13 @@ Internet-Draft                     TLS                        March 2018
    1.0 and 0x0300 for SSL 3.0.  In order to maximize backwards
    compatibility, records containing an initial ClientHello SHOULD have
    version 0x0301 and a record containing a second ClientHello or a
+   ServerHello MUST have version 0x0303, reflecting TLS 1.0 and TLS 1.2
+   respectively.  When negotiating prior versions of TLS, endpoints
+   follow the procedure and requirements in Appendix D.
+
+   When record protection has not yet been engaged, TLSPlaintext
+   structures are written directly onto the wire.  Once record
+
 
 
 
@@ -4594,12 +4594,6 @@ Rescorla               Expires September 10, 2018              [Page 82]
 Internet-Draft                     TLS                        March 2018
 
 
-   ServerHello MUST have version 0x0303, reflecting TLS 1.0 and TLS 1.2
-   respectively.  When negotiating prior versions of TLS, endpoints
-   follow the procedure and requirements in Appendix D.
-
-   When record protection has not yet been engaged, TLSPlaintext
-   structures are written directly onto the wire.  Once record
    protection has started, TLSPlaintext records are protected and sent
    as described in the following section.
 
@@ -4628,10 +4622,12 @@ Internet-Draft                     TLS                        March 2018
           opaque encrypted_record[TLSCiphertext.length];
       } TLSCiphertext;
 
-   content  The byte encoding of a handshake or an alert message, or the
-      raw bytes of the application's data to send.
+   content  The TLSPLaintext.fragment value, containing the byte
+      encoding of a handshake or an alert message, or the raw bytes of
+      the application's data to send.
 
-   type  The content type of the record.
+   type  The TLSPlaintext.type value containing the content type of the
+      record.
 
    zeros  An arbitrary-length run of zero-valued bytes may appear in the
       cleartext after the type field.  This provides an opportunity for
@@ -4642,6 +4638,10 @@ Internet-Draft                     TLS                        March 2018
    opaque_type  The outer opaque_type field of a TLSCiphertext record is
       always set to the value 23 (application_data) for outward
       compatibility with middleboxes accustomed to parsing previous
+      versions of TLS.  The actual content type of the record is found
+      in TLSInnerPlaintext.type after decryption.
+
+
 
 
 
@@ -4649,9 +4649,6 @@ Rescorla               Expires September 10, 2018              [Page 83]
 
 Internet-Draft                     TLS                        March 2018
 
-
-      versions of TLS.  The actual content type of the record is found
-      in TLSInnerPlaintext.type after decryption.
 
    legacy_record_version  The legacy_record_version field is always
       0x0303.  TLS 1.3 TLSCiphertexts are not generated until after TLS
@@ -4676,8 +4673,8 @@ Internet-Draft                     TLS                        March 2018
    "additional data" to be included in the authentication check, as
    described in Section 2.1 of [RFC5116].  The key is either the
    client_write_key or the server_write_key, the nonce is derived from
-   the sequence number (see Section 5.3) and the client_write_iv or
-   server_write_iv, and the additional data input is the record header.
+   the sequence number and the client_write_iv or server_write_iv (see
+   Section 5.3), and the additional data input is the record header.
    I.e.,
 
       additional_data = TLSCiphertext.opaque_type ||
@@ -4697,6 +4694,9 @@ Internet-Draft                     TLS                        March 2018
    Since the ciphers might incorporate padding, the amount of overhead
    could vary with different lengths of plaintext.  Symbolically,
 
+      AEADEncrypted =
+          AEAD-Encrypt(write_key, nonce, additional_data, plaintext)
+
 
 
 
@@ -4705,9 +4705,6 @@ Rescorla               Expires September 10, 2018              [Page 84]
 
 Internet-Draft                     TLS                        March 2018
 
-
-      AEADEncrypted =
-          AEAD-Encrypt(write_key, nonce, additional_data, plaintext)
 
    Then the encrypted_record field of TLSCiphertext is set to
    AEADEncrypted.
@@ -4727,18 +4724,17 @@ Internet-Draft                     TLS                        March 2018
    greater than 255 octets.  An endpoint that receives a record from its
    peer with TLSCiphertext.length larger than 2^14 + 256 octets MUST
    terminate the connection with a "record_overflow" alert.  This limit
-   is derived from the maximum TLSPlaintext length of 2^14 octets + 1
-   octet for ContentType + the maximum AEAD expansion of 255 octets.
+   is derived from the maximum TLSInnerPlaintext length of 2^14 octets +
+   1 octet for ContentType + the maximum AEAD expansion of 255 octets.
 
 5.3.  Per-Record Nonce
 
    A 64-bit sequence number is maintained separately for reading and
-   writing records.  Each sequence number is set to zero at the
-   beginning of a connection and whenever the key is changed.
-
-   The appropriate sequence number is incremented by one after reading
-   or writing each record.  The first record transmitted under a
-   particular traffic key MUST use sequence number 0.
+   writing records.  The appropriate sequence number is incremented by
+   one after reading or writing each record.  Each sequence number is
+   set to zero at the beginning of a connection and whenever the key is
+   changed; the first record transmitted under a particular traffic key
+   MUST use sequence number 0.
 
    Because the size of sequence numbers is 64-bit, they should not wrap.
    If a TLS implementation would need to wrap a sequence number, it MUST
@@ -4755,15 +4751,16 @@ Internet-Draft                     TLS                        March 2018
    1.  The 64-bit record sequence number is encoded in network byte
        order and padded to the left with zeros to iv_length.
 
+   2.  The padded sequence number is XORed with the static
+       client_write_iv or server_write_iv, depending on the role.
+
+
 
 
 Rescorla               Expires September 10, 2018              [Page 85]
 
 Internet-Draft                     TLS                        March 2018
 
-
-   2.  The padded sequence number is XORed with the static
-       client_write_iv or server_write_iv, depending on the role.
 
    The resulting quantity (of length iv_length) is used as the per-
    record nonce.
@@ -4810,6 +4807,9 @@ Internet-Draft                     TLS                        March 2018
 
    The presence of padding does not change the overall record size
    limitations - the full encoded TLSInnerPlaintext MUST NOT exceed 2^14
+   + 1 octets.  If the maximum fragment length is reduced, as for
+   example by the max_fragment_length extension from [RFC6066], then the
+
 
 
 
@@ -4818,8 +4818,6 @@ Rescorla               Expires September 10, 2018              [Page 86]
 Internet-Draft                     TLS                        March 2018
 
 
-   + 1 octets.  If the maximum fragment length is reduced, as for
-   example by the max_fragment_length extension from [RFC6066], then the
    reduced limit applies to the full plaintext, including the content
    type and padding.
 
@@ -4855,8 +4853,9 @@ Internet-Draft                     TLS                        March 2018
 
    Alert messages convey a description of the alert and a legacy field
    that conveyed the severity of the message in previous versions of
-   TLS.  In TLS 1.3, the severity is implicit in the type of alert being
-   sent, and the 'level' field can safely be ignored.  The
+   TLS.  Alerts are divided into two classes: closure alerts and error
+   alerts.  In TLS 1.3, the severity is implicit in the type of alert
+   being sent, and the 'level' field can safely be ignored.  The
    "close_notify" alert is used to indicate orderly closure of one
    direction of the connection.  Upon receiving such an alert, the TLS
    implementation SHOULD indicate end-of-data to the application.
@@ -4865,7 +4864,8 @@ Internet-Draft                     TLS                        March 2018
    Section 6.2).  Upon receiving an error alert, the TLS implementation
    SHOULD indicate an error to the application and MUST NOT allow any
    further data to be sent or received on the connection.  Servers and
-   clients MUST forget keys and secrets associated with a failed
+   clients MUST forget the secret values and keys established in failed
+
 
 
 
@@ -4874,12 +4874,13 @@ Rescorla               Expires September 10, 2018              [Page 87]
 Internet-Draft                     TLS                        March 2018
 
 
-   connection.  Stateful implementations of tickets (as in many clients)
-   SHOULD discard tickets associated with failed connections.
+   connections, with the exception of the PSKs associated with session
+   tickets, which SHOULD be discarded if possible.
 
-   All the alerts listed in Section 6.2 MUST be sent as fatal and MUST
-   be treated as fatal regardless of the AlertLevel in the message.
-   Unknown alert types MUST be treated as fatal.
+   All the alerts listed in Section 6.2 MUST be sent with
+   AlertLevel=fatal and MUST be treated as error alerts regardless of
+   the AlertLevel in the message.  Unknown alert types MUST be treated
+   as error alerts.
 
    Note: TLS defines two generic alerts (see Section 6) to use upon
    failure to parse a message.  Peers which receive a message which
@@ -4889,7 +4890,6 @@ Internet-Draft                     TLS                        March 2018
    Peers which receive a message which is syntactically correct but
    semantically invalid (e.g., a DHE share of p - 1, or an invalid enum)
    MUST terminate the connection with an "illegal_parameter" alert.
-
 
 
 
@@ -4991,7 +4991,7 @@ Internet-Draft                     TLS                        March 2018
       failure.  If a user cancels an operation after the handshake is
       complete, just closing the connection by sending a "close_notify"
       is more appropriate.  This alert SHOULD be followed by a
-      "close_notify".  This alert is generally a warning.
+      "close_notify".  This alert generally has AlertLevel=warning.
 
    Either party MAY initiate a close of its write side of the connection
    by sending a "close_notify" alert.  Any data received after a closure
@@ -5000,14 +5000,14 @@ Internet-Draft                     TLS                        March 2018
    all the data that was sent has been received.
 
    Each party MUST send a "close_notify" alert before closing its write
-   side of the connection, unless it has already sent some other fatal
-   alert.  This does not have any effect on its read side of the
-   connection.  Note that this is a change from versions of TLS prior to
-   TLS 1.3 in which implementations were required to react to a
-   "close_notify" by discarding pending writes and sending an immediate
-   "close_notify" alert of their own.  That previous requirement could
-   cause truncation in the read side.  Both parties need not wait to
-   receive a "close_notify" alert before closing their read side of the
+   side of the connection, unless it has already sent some error alert.
+   This does not have any effect on its read side of the connection.
+   Note that this is a change from versions of TLS prior to TLS 1.3 in
+   which implementations were required to react to a "close_notify" by
+   discarding pending writes and sending an immediate "close_notify"
+   alert of their own.  That previous requirement could cause truncation
+   in the read side.  Both parties need not wait to receive a
+   "close_notify" alert before closing their read side of the
    connection, though doing so would introduce the possibility of
    truncation.
 
@@ -5227,7 +5227,7 @@ Internet-Draft                     TLS                        March 2018
 
    The Hash function used by Transcript-Hash and HKDF is the cipher
    suite hash algorithm.  Hash.length is its output length in bytes.
-   Messages are the concatenation of the indicated handshake messages,
+   Messages is the concatenation of the indicated handshake messages,
    including the handshake message type and length fields, but not
    including record layer headers.  Note that in some cases a zero-
    length Context (indicated by "") is passed to HKDF-Expand-Label.  The
@@ -5239,11 +5239,11 @@ Internet-Draft                     TLS                        March 2018
    The labels in this specification have all been chosen to fit within
    this limit.
 
-   Given a set of n InputSecrets, the final "master secret" is computed
-   by iteratively invoking HKDF-Extract with InputSecret_1,
-   InputSecret_2, etc.  The initial secret is simply a string of
-   Hash.length bytes set to zeros.  Concretely, for the present version
-   of TLS 1.3, secrets are added in the following order:
+   Keys are derived from two input secrets using the HKDF-Extract and
+   Derive-Secret functions.  The general pattern for adding a new secret
+   is to use HKDF-Extract with the salt being the current secret state
+   and the IKM being the new secret to be added.  In this version of TLS
+   1.3, the two input secrets are:
 
    -  PSK (a pre-shared key established externally or derived from the
       resumption_master_secret value from a previous connection)
@@ -5254,8 +5254,8 @@ Internet-Draft                     TLS                        March 2018
    below.  In this diagram, the following formatting conventions apply:
 
    -  HKDF-Extract is drawn as taking the Salt argument from the top and
-      the IKM argument from the left.
-
+      the IKM argument from the left, with its output to the bottom and
+      the name of the output on the right.
 
 
 
@@ -5269,6 +5269,8 @@ Internet-Draft                     TLS                        March 2018
    -  Derive-Secret's Secret argument is indicated by the incoming
       arrow.  For instance, the Early Secret is the Secret for
       generating the client_early_traffic_secret.
+
+   -  "0" indicates a string of Hash-lengths bytes set to 0.
 
                  0
                  |
@@ -5312,8 +5314,6 @@ Internet-Draft                     TLS                        March 2018
                  |                     = client_application_traffic_secret_0
                  |
                  +-----> Derive-Secret(., "s ap traffic",
-                 |                     ClientHello...server Finished)
-                 |                     = server_application_traffic_secret_0
 
 
 
@@ -5322,6 +5322,8 @@ Rescorla               Expires September 10, 2018              [Page 95]
 Internet-Draft                     TLS                        March 2018
 
 
+                 |                     ClientHello...server Finished)
+                 |                     = server_application_traffic_secret_0
                  |
                  +-----> Derive-Secret(., "exp master",
                  |                     ClientHello...server Finished)
@@ -5358,7 +5360,7 @@ Internet-Draft                     TLS                        March 2018
    Once all the values which are to be derived from a given secret have
    been computed, that secret SHOULD be erased.
 
-7.2.  Updating Traffic Keys and IVs
+7.2.  Updating Traffic Secrets
 
    Once the handshake is complete, it is possible for either side to
    update its sending traffic keys using the KeyUpdate handshake message
@@ -5368,8 +5370,6 @@ Internet-Draft                     TLS                        March 2018
    section then re-deriving the traffic keys as described in
    Section 7.3.
 
-   The next-generation application_traffic_secret is computed as:
-
 
 
 
@@ -5377,6 +5377,8 @@ Rescorla               Expires September 10, 2018              [Page 96]
 
 Internet-Draft                     TLS                        March 2018
 
+
+   The next-generation application_traffic_secret is computed as:
 
        application_traffic_secret_N+1 =
            HKDF-Expand-Label(application_traffic_secret_N,
@@ -5421,8 +5423,6 @@ Internet-Draft                     TLS                        March 2018
    Secret changes (e.g., when changing from the handshake to application
    data keys or upon a key update).
 
-7.4.  (EC)DHE Shared Secret Calculation
-
 
 
 
@@ -5434,13 +5434,15 @@ Rescorla               Expires September 10, 2018              [Page 97]
 Internet-Draft                     TLS                        March 2018
 
 
+7.4.  (EC)DHE Shared Secret Calculation
+
 7.4.1.  Finite Field Diffie-Hellman
 
-   For finite field groups, a conventional Diffie-Hellman computation is
-   performed.  The negotiated key (Z) is converted to a byte string by
-   encoding in big-endian and left padded with zeros up to the size of
-   the prime.  This byte string is used as the shared secret in the key
-   schedule as specified above.
+   For finite field groups, a conventional Diffie-Hellman [DH76]
+   computation is performed.  The negotiated key (Z) is converted to a
+   byte string by encoding in big-endian and left padded with zeros up
+   to the size of the prime.  This byte string is used as the shared
+   secret in the key schedule as specified above.
 
    Note that this construction differs from previous versions of TLS
    which remove leading zeros.
@@ -5480,8 +5482,6 @@ Internet-Draft                     TLS                        March 2018
    specified in [RFC7748] to calculate the Diffie-Hellman shared secret.
    Implementations MUST check whether the computed Diffie-Hellman shared
    secret is the all-zero value and abort if so, as described in
-   Section 6 of [RFC7748].  If implementors use an alternative
-
 
 
 
@@ -5490,6 +5490,7 @@ Rescorla               Expires September 10, 2018              [Page 98]
 Internet-Draft                     TLS                        March 2018
 
 
+   Section 6 of [RFC7748].  If implementors use an alternative
    implementation of these elliptic curves, they SHOULD perform the
    additional checks specified in Section 7 of [RFC7748].
 
@@ -5537,7 +5538,6 @@ Internet-Draft                     TLS                        March 2018
 
    -  Network attackers who mount a replay attack by simply duplicating
       a flight of 0-RTT data.
-
 
 
 
@@ -5612,9 +5612,8 @@ Internet-Draft                     TLS                        March 2018
 
    If the tickets are not self-contained but rather are database keys,
    and the corresponding PSKs are deleted upon use, then connections
-   established using one PSK enjoy forward secrecy.  This improves
-   security for all 0-RTT data and PSK usage when PSK is used without
-   (EC)DHE.
+   established using PSKs enjoy forward secrecy.  This improves security
+   for all 0-RTT data and PSK usage when PSK is used without (EC)DHE.
 
    Because this mechanism requires sharing the session database between
    server nodes in environments with multiple distributed servers, it
@@ -5653,6 +5652,7 @@ Internet-Draft                     TLS                        March 2018
 
 
 
+
 Rescorla               Expires September 10, 2018             [Page 101]
 
 Internet-Draft                     TLS                        March 2018
@@ -5665,12 +5665,13 @@ Internet-Draft                     TLS                        March 2018
    assumption that the server will not verify it, as recommended by
    Section 4.2.11.  I.e., if the client sends PSKs A and B but the
    server prefers A, then the attacker can change the binder for B
-   without affecting the binder for A.  This will cause the ClientHello
-   to be accepted, and may cause side effects such as replay cache
-   pollution, although any 0-RTT data will not be decryptable because it
-   will use different keys.  If the validated binder or the
-   ClientHello.random are used as the storage key, then this attack is
-   not possible.
+   without affecting the binder for A.  If the binder for B is part of
+   the storage key, then this ClientHello will not appear as a
+   duplicate, which will cause the ClientHello to be accepted, and may
+   cause side effects such as replay cache pollution, although any 0-RTT
+   data will not be decryptable because it will use different keys.  If
+   the validated binder or the ClientHello.random are used as the
+   storage key, then this attack is not possible.
 
    Because this mechanism does not require storing all outstanding
    tickets, it may be easier to implement in distributed systems with
@@ -5705,7 +5706,6 @@ Internet-Draft                     TLS                        March 2018
    likely sent reasonably recently and only accept 0-RTT for such a
    ClientHello, otherwise falling back to a 1-RTT handshake.  This is
    necessary for the ClientHello storage mechanism described in
-   Section 8.2 because otherwise the server needs to store an unlimited
 
 
 
@@ -5714,6 +5714,7 @@ Rescorla               Expires September 10, 2018             [Page 102]
 Internet-Draft                     TLS                        March 2018
 
 
+   Section 8.2 because otherwise the server needs to store an unlimited
    number of ClientHellos and is a useful optimization for self-
    contained single-use tickets because it allows efficient rejection of
    ClientHellos which cannot be used for 0-RTT.
@@ -5741,15 +5742,16 @@ Internet-Draft                     TLS                        March 2018
    There are several potential sources of error that might cause
    mismatches between the expected arrival time and the measured time.
    Variations in client and server clock rates are likely to be minimal,
-   though potentially with gross time corrections.  Network propagation
-   delays are the most likely causes of a mismatch in legitimate values
-   for elapsed time.  Both the NewSessionTicket and ClientHello messages
-   might be retransmitted and therefore delayed, which might be hidden
-   by TCP.  For clients on the Internet, this implies windows on the
-   order of ten seconds to account for errors in clocks and variations
-   in measurements; other deployment scenarios may have different needs.
-   Clock skew distributions are not symmetric, so the optimal tradeoff
-   may involve an asymmetric range of permissible mismatch values.
+   though potentially the absolute times may be off by large values.
+   Network propagation delays are the most likely causes of a mismatch
+   in legitimate values for elapsed time.  Both the NewSessionTicket and
+   ClientHello messages might be retransmitted and therefore delayed,
+   which might be hidden by TCP.  For clients on the Internet, this
+   implies windows on the order of ten seconds to account for errors in
+   clocks and variations in measurements; other deployment scenarios may
+   have different needs.  Clock skew distributions are not symmetric, so
+   the optimal tradeoff may involve an asymmetric range of permissible
+   mismatch values.
 
    Note that freshness checking alone is not sufficient to prevent
    replays because it does not detect them during the error window,
@@ -5759,8 +5761,6 @@ Internet-Draft                     TLS                        March 2018
    received, and not when later early application data records are
    received.  After early data is accepted, records may continue to be
    streamed to the server over a longer time period.
-
-
 
 
 
@@ -6038,10 +6038,10 @@ Internet-Draft                     TLS                        March 2018
               Cryptography", IEEE Transactions on Information Theory,
               V.IT-22 n.6 , June 1977.
 
-   [GCM]      Dworkin, M., "Recommendation for Block Cipher Modes of
-              Operation: Galois/Counter Mode (GCM) and GMAC",
-              NIST Special Publication 800-38D, November 2007.
-
+   [DH76]     Diffie, W. and M. Hellman, "New directions in
+              cryptography", IEEE Transactions on Information
+              Theory Vol. 22, pp. 644-654, DOI 10.1109/tit.1976.1055638,
+              November 1976.
 
 
 
@@ -6049,6 +6049,10 @@ Rescorla               Expires September 10, 2018             [Page 108]
 
 Internet-Draft                     TLS                        March 2018
 
+
+   [GCM]      Dworkin, M., "Recommendation for Block Cipher Modes of
+              Operation: Galois/Counter Mode (GCM) and GMAC",
+              NIST Special Publication 800-38D, November 2007.
 
    [RFC2104]  Krawczyk, H., Bellare, M., and R. Canetti, "HMAC: Keyed-
               Hashing for Message Authentication", RFC 2104,
@@ -6090,11 +6094,7 @@ Internet-Draft                     TLS                        March 2018
               DOI 10.17487/RFC6655, July 2012,
               <https://www.rfc-editor.org/info/rfc6655>.
 
-   [RFC6960]  Santesson, S., Myers, M., Ankney, R., Malpani, A.,
-              Galperin, S., and C. Adams, "X.509 Internet Public Key
-              Infrastructure Online Certificate Status Protocol - OCSP",
-              RFC 6960, DOI 10.17487/RFC6960, June 2013,
-              <https://www.rfc-editor.org/info/rfc6960>.
+
 
 
 
@@ -6105,6 +6105,12 @@ Rescorla               Expires September 10, 2018             [Page 109]
 
 Internet-Draft                     TLS                        March 2018
 
+
+   [RFC6960]  Santesson, S., Myers, M., Ankney, R., Malpani, A.,
+              Galperin, S., and C. Adams, "X.509 Internet Public Key
+              Infrastructure Online Certificate Status Protocol - OCSP",
+              RFC 6960, DOI 10.17487/RFC6960, June 2013,
+              <https://www.rfc-editor.org/info/rfc6960>.
 
    [RFC6961]  Pettersen, Y., "The Transport Layer Security (TLS)
               Multiple Certificate Status Request Extension", RFC 6961,
@@ -6148,12 +6154,6 @@ Internet-Draft                     TLS                        March 2018
               RFC 8017, DOI 10.17487/RFC8017, November 2016,
               <https://www.rfc-editor.org/info/rfc8017>.
 
-   [RFC8032]  Josefsson, S. and I. Liusvaara, "Edwards-Curve Digital
-              Signature Algorithm (EdDSA)", RFC 8032,
-              DOI 10.17487/RFC8032, January 2017,
-              <https://www.rfc-editor.org/info/rfc8032>.
-
-
 
 
 
@@ -6161,6 +6161,11 @@ Rescorla               Expires September 10, 2018             [Page 110]
 
 Internet-Draft                     TLS                        March 2018
 
+
+   [RFC8032]  Josefsson, S. and I. Liusvaara, "Edwards-Curve Digital
+              Signature Algorithm (EdDSA)", RFC 8032,
+              DOI 10.17487/RFC8032, January 2017,
+              <https://www.rfc-editor.org/info/rfc8032>.
 
    [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
               Writing an IANA Considerations Section in RFCs", BCP 26,
@@ -6203,11 +6208,6 @@ Internet-Draft                     TLS                        March 2018
               in Key-Exchange Protocols", Proceedings of IEEE Symposium
               on Security and Privacy (Oakland) 2016 , 2016.
 
-   [BBK17]    Bhargavan, K., Blanchet, B., and N. Kobeissi, "Verified
-              Models and Reference Implementations for the TLS 1.3
-              Standard Candidate", Proceedings of IEEE Symposium on
-              Security and Privacy (Oakland) 2017 , 2017.
-
 
 
 
@@ -6217,6 +6217,11 @@ Rescorla               Expires September 10, 2018             [Page 111]
 
 Internet-Draft                     TLS                        March 2018
 
+
+   [BBK17]    Bhargavan, K., Blanchet, B., and N. Kobeissi, "Verified
+              Models and Reference Implementations for the TLS 1.3
+              Standard Candidate", Proceedings of IEEE Symposium on
+              Security and Privacy (Oakland) 2017 , 2017.
 
    [BDFKPPRSZZ16]
               Bhargavan, K., Delignat-Lavaud, A., Fournet, C.,
@@ -6257,12 +6262,7 @@ Internet-Draft                     TLS                        March 2018
               Conference on Computer and Communications Security
               - CCS'16, DOI 10.1145/2976749.2978395, 2016.
 
-   [CHHSV17]  Cremers, C., Horvat, M., Hoyland, J., van der Merwe, T.,
-              and S. Scott, "Awkward Handshake: Possible mismatch of
-              client/server view on client authentication in post-
-              handshake mode in Revision 18", 2017,
-              <https://www.ietf.org/mail-archive/web/tls/current/
-              msg22382.html>.
+
 
 
 
@@ -6273,6 +6273,13 @@ Rescorla               Expires September 10, 2018             [Page 112]
 
 Internet-Draft                     TLS                        March 2018
 
+
+   [CHHSV17]  Cremers, C., Horvat, M., Hoyland, J., van der Merwe, T.,
+              and S. Scott, "Awkward Handshake: Possible mismatch of
+              client/server view on client authentication in post-
+              handshake mode in Revision 18", 2017,
+              <https://www.ietf.org/mail-archive/web/tls/current/
+              msg22382.html>.
 
    [CHSV16]   Cremers, C., Horvat, M., Scott, S., and T. van der Merwe,
               "Automated Analysis and Verification of TLS 1.3: 0-RTT,
@@ -6312,6 +6319,17 @@ Internet-Draft                     TLS                        March 2018
               Elliptic Curve Digital Signature Algorithm (ECDSA)",
               ANSI ANS X9.62-2005, November 2005.
 
+
+
+
+
+
+
+Rescorla               Expires September 10, 2018             [Page 113]
+
+Internet-Draft                     TLS                        March 2018
+
+
    [FG17]     Fischlin, M. and F. Guenther, "Replay Attacks on Zero
               Round-Trip Time: The Case of the TLS 1.3 Handshake
               Candidates", Proceedings of Euro S"P 2017 , 2017,
@@ -6322,13 +6340,6 @@ Internet-Draft                     TLS                        March 2018
               Implications for TLS 1.3", Proceedings of IEEE Symposium
               on Security and Privacy (Oakland) 2016 , 2016,
               <http://ieeexplore.ieee.org/document/7546517/>.
-
-
-
-Rescorla               Expires September 10, 2018             [Page 113]
-
-Internet-Draft                     TLS                        March 2018
-
 
    [FW15]     Florian Weimer, ., "Factoring RSA Keys With TLS Perfect
               Forward Secrecy", September 2015.
@@ -6364,17 +6375,6 @@ Internet-Draft                     TLS                        March 2018
               <https://www.nds.rub.de/media/nds/
               veroeffentlichungen/2015/08/21/Tls13QuicAttacks.pdf>.
 
-   [KEYAGREEMENT]
-              Barker, E., Chen, L., Roginsky, A., and M. Smid,
-              "Recommendation for Pair-Wise Key Establishment Schemes
-              Using Discrete Logarithm Cryptography", National Institute
-              of Standards and Technology report,
-              DOI 10.6028/nist.sp.800-56ar2, May 2013.
-
-   [Kraw10]   Krawczyk, H., "Cryptographic Extraction and Key
-              Derivation: The HKDF Scheme", Proceedings of CRYPTO 2010 ,
-              2010, <https://eprint.iacr.org/2010/264>.
-
 
 
 
@@ -6385,6 +6385,17 @@ Rescorla               Expires September 10, 2018             [Page 114]
 
 Internet-Draft                     TLS                        March 2018
 
+
+   [KEYAGREEMENT]
+              Barker, E., Chen, L., Roginsky, A., and M. Smid,
+              "Recommendation for Pair-Wise Key Establishment Schemes
+              Using Discrete Logarithm Cryptography", National Institute
+              of Standards and Technology report,
+              DOI 10.6028/nist.sp.800-56ar2, May 2013.
+
+   [Kraw10]   Krawczyk, H., "Cryptographic Extraction and Key
+              Derivation: The HKDF Scheme", Proceedings of CRYPTO 2010 ,
+              2010, <https://eprint.iacr.org/2010/264>.
 
    [Kraw16]   Krawczyk, H., "A Unilateral-to-Mutual Authentication
               Compiler for Key Exchange (with Applications to Client
@@ -6421,17 +6432,6 @@ Internet-Draft                     TLS                        March 2018
               2017, <https://www.ietf.org/mail-archive/web/tls/current/
               msg25179.html>.
 
-   [RFC3552]  Rescorla, E. and B. Korver, "Guidelines for Writing RFC
-              Text on Security Considerations", BCP 72, RFC 3552,
-              DOI 10.17487/RFC3552, July 2003,
-              <https://www.rfc-editor.org/info/rfc3552>.
-
-   [RFC4086]  Eastlake 3rd, D., Schiller, J., and S. Crocker,
-              "Randomness Requirements for Security", BCP 106, RFC 4086,
-              DOI 10.17487/RFC4086, June 2005,
-              <https://www.rfc-editor.org/info/rfc4086>.
-
-
 
 
 
@@ -6441,6 +6441,16 @@ Rescorla               Expires September 10, 2018             [Page 115]
 
 Internet-Draft                     TLS                        March 2018
 
+
+   [RFC3552]  Rescorla, E. and B. Korver, "Guidelines for Writing RFC
+              Text on Security Considerations", BCP 72, RFC 3552,
+              DOI 10.17487/RFC3552, July 2003,
+              <https://www.rfc-editor.org/info/rfc3552>.
+
+   [RFC4086]  Eastlake 3rd, D., Schiller, J., and S. Crocker,
+              "Randomness Requirements for Security", BCP 106, RFC 4086,
+              DOI 10.17487/RFC4086, June 2005,
+              <https://www.rfc-editor.org/info/rfc4086>.
 
    [RFC4346]  Dierks, T. and E. Rescorla, "The Transport Layer Security
               (TLS) Protocol Version 1.1", RFC 4346,
@@ -6478,6 +6488,16 @@ Internet-Draft                     TLS                        March 2018
               DOI 10.17487/RFC5764, May 2010,
               <https://www.rfc-editor.org/info/rfc5764>.
 
+
+
+
+
+
+Rescorla               Expires September 10, 2018             [Page 116]
+
+Internet-Draft                     TLS                        March 2018
+
+
    [RFC5929]  Altman, J., Williams, N., and L. Zhu, "Channel Bindings
               for TLS", RFC 5929, DOI 10.17487/RFC5929, July 2010,
               <https://www.rfc-editor.org/info/rfc5929>.
@@ -6490,13 +6510,6 @@ Internet-Draft                     TLS                        March 2018
    [RFC6176]  Turner, S. and T. Polk, "Prohibiting Secure Sockets Layer
               (SSL) Version 2.0", RFC 6176, DOI 10.17487/RFC6176, March
               2011, <https://www.rfc-editor.org/info/rfc6176>.
-
-
-
-Rescorla               Expires September 10, 2018             [Page 116]
-
-Internet-Draft                     TLS                        March 2018
-
 
    [RFC6347]  Rescorla, E. and N. Modadugu, "Datagram Transport Layer
               Security Version 1.2", RFC 6347, DOI 10.17487/RFC6347,
@@ -6534,6 +6547,13 @@ Internet-Draft                     TLS                        March 2018
               RFC 7627, DOI 10.17487/RFC7627, September 2015,
               <https://www.rfc-editor.org/info/rfc7627>.
 
+
+
+Rescorla               Expires September 10, 2018             [Page 117]
+
+Internet-Draft                     TLS                        March 2018
+
+
    [RFC7685]  Langley, A., "A Transport Layer Security (TLS) ClientHello
               Padding Extension", RFC 7685, DOI 10.17487/RFC7685,
               October 2015, <https://www.rfc-editor.org/info/rfc7685>.
@@ -6542,17 +6562,6 @@ Internet-Draft                     TLS                        March 2018
               (TLS) Cached Information Extension", RFC 7924,
               DOI 10.17487/RFC7924, July 2016,
               <https://www.rfc-editor.org/info/rfc7924>.
-
-
-
-
-
-
-
-Rescorla               Expires September 10, 2018             [Page 117]
-
-Internet-Draft                     TLS                        March 2018
-
 
    [RFC8305]  Schinazi, D. and T. Pauly, "Happy Eyeballs Version 2:
               Better Connectivity Using Concurrency", RFC 8305,
@@ -6591,15 +6600,6 @@ Internet-Draft                     TLS                        March 2018
    [2] https://www.ietf.org/mailman/listinfo/tls
 
    [3] https://www.ietf.org/mail-archive/web/tls/current/index.html
-
-
-
-
-
-
-
-
-
 
 
 
@@ -7541,15 +7541,15 @@ Appendix D.  Backward Compatibility
    the ClientHello format remains compatible and there is at least one
    protocol version supported by both the client and the server.
 
-   Prior versions of TLS used the record layer version number for
-   various purposes (TLSPlaintext.legacy_record_version and
-   TLSCiphertext.legacy_record_version).  As of TLS 1.3, this field is
-   deprecated.  The value of TLSPlaintext.legacy_record_version MUST be
-   ignored by all implementations.  The value of
-   TLSCiphertext.legacy_record_version is included in the additional
-   data for deprotection but MAY otherwise be ignored or MAY be
-   validated to match the fixed constant value.  Version negotiation is
-   performed using only the handshake versions
+   Prior versions of TLS used the record layer version number
+   (TLSPlaintext.legacy_record_version and
+   TLSCiphertext.legacy_record_version) for various purposes.  As of TLS
+   1.3, this field is deprecated.  The value of
+   TLSPlaintext.legacy_record_version MUST be ignored by all
+   implementations.  The value of TLSCiphertext.legacy_record_version is
+   included in the additional data for deprotection but MAY otherwise be
+   ignored or MAY be validated to match the fixed constant value.
+   Version negotiation is performed using only the handshake versions
    (ClientHello.legacy_version, ServerHello.legacy_version, as well as
    the ClientHello, HelloRetryRequest and ServerHello
    "supported_versions" extensions).  In order to maximize
@@ -7713,12 +7713,12 @@ D.5.  Backwards Compatibility Security Restrictions
    negotiated for any version of TLS for any reason.
 
    The security of SSL 3.0 [SSL3] is considered insufficient for the
-   reasons enumerated in [RFC7568], and MUST NOT be negotiated for any
-   reason.
+   reasons enumerated in [RFC7568], and it MUST NOT be negotiated for
+   any reason.
 
    The security of SSL 2.0 [SSL2] is considered insufficient for the
-   reasons enumerated in [RFC6176], and MUST NOT be negotiated for any
-   reason.
+   reasons enumerated in [RFC6176], and it MUST NOT be negotiated for
+   any reason.
 
    Implementations MUST NOT send an SSL version 2.0 compatible CLIENT-
    HELLO.  Implementations MUST NOT negotiate TLS 1.3 or later using an
@@ -7808,7 +7808,7 @@ Internet-Draft                     TLS                        March 2018
 
    Uniqueness of the session keys:  Any two distinct handshakes should
       produce distinct, unrelated session keys.  Individual session keys
-      produced by a handshake should also be distinct and unrelated.
+      produced by a handshake should also be distinct and independent.
 
    Downgrade protection.  The cryptographic parameters should be the
       same on both sides and should be the same as if the peers had been
@@ -7991,7 +7991,7 @@ E.1.3.  0-RTT
    encryption keys do not provide full forward secrecy and that the
    server is not able to guarantee uniqueness of the handshake (non-
    replayability) without keeping potentially undue amounts of state.
-   See Section 4.2.10 for one mechanism to limit the exposure to replay.
+   See Section 8 for mechanisms to limit the exposure to replay.
 
 E.1.4.  Exporter Independence
 
