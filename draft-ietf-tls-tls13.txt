@@ -105,7 +105,7 @@ Table of Contents
      4.2.  Extensions  . . . . . . . . . . . . . . . . . . . . . . .  40
        4.2.1.  Supported Versions  . . . . . . . . . . . . . . . . .  43
        4.2.2.  Cookie  . . . . . . . . . . . . . . . . . . . . . . .  45
-       4.2.3.  Signature Algorithms  . . . . . . . . . . . . . . . .  45
+       4.2.3.  Signature Algorithms  . . . . . . . . . . . . . . . .  46
 
 
 
@@ -2372,9 +2372,10 @@ Internet-Draft                     TLS                        March 2018
    extensions:
 
    -  Some cases where a server does not agree to an extension are error
-      conditions, and some are simply refusals to support particular
-      features.  In general, error alerts should be used for the former
-      and a field in the server extension response for the latter.
+      conditions (e.g., the handshake cannot continue), and some are
+      simply refusals to support particular features.  In general, error
+      alerts should be used for the former and a field in the server
+      extension response for the latter.
 
    -  Extensions should, as far as possible, be designed to prevent any
       attack that forces use (or non-use) of a particular feature by
@@ -2400,8 +2401,7 @@ Internet-Draft                     TLS                        March 2018
           };
       } SupportedVersions;
 
-   The "supported_versions" extension is used by the client to indicate
-   which versions of TLS it supports and by the server to indicate which
+
 
 
 
@@ -2410,6 +2410,8 @@ Rescorla               Expires September 10, 2018              [Page 43]
 Internet-Draft                     TLS                        March 2018
 
 
+   The "supported_versions" extension is used by the client to indicate
+   which versions of TLS it supports and by the server to indicate which
    version it is using.  The extension contains a list of supported
    versions in preference order, with the most preferred version first.
    Implementations of this specification MUST send this extension in the
@@ -2453,9 +2455,7 @@ Internet-Draft                     TLS                        March 2018
    1.3, the client MUST abort the handshake with an "illegal_parameter"
    alert.
 
-4.2.1.1.  Draft Version Indicator
 
-   RFC EDITOR: PLEASE REMOVE THIS SECTION
 
 
 
@@ -2465,6 +2465,10 @@ Rescorla               Expires September 10, 2018              [Page 44]
 
 Internet-Draft                     TLS                        March 2018
 
+
+4.2.1.1.  Draft Version Indicator
+
+   RFC EDITOR: PLEASE REMOVE THIS SECTION
 
    While the eventual version indicator for the RFC version of TLS 1.3
    will be 0x0304, implementations of draft versions of this
@@ -2508,12 +2512,8 @@ Internet-Draft                     TLS                        March 2018
    state this will appear as if it were the first message to be
    received.  Servers operating statelessly MUST ignore these records.
 
-4.2.3.  Signature Algorithms
 
-   TLS 1.3 provides two extensions for indicating which signature
-   algorithms may be used in digital signatures.  The
-   "signature_algorithms_cert" extension applies to signatures in
-   certificates and the "signature_algorithms" extension, which
+
 
 
 
@@ -2522,6 +2522,12 @@ Rescorla               Expires September 10, 2018              [Page 45]
 Internet-Draft                     TLS                        March 2018
 
 
+4.2.3.  Signature Algorithms
+
+   TLS 1.3 provides two extensions for indicating which signature
+   algorithms may be used in digital signatures.  The
+   "signature_algorithms_cert" extension applies to signatures in
+   certificates and the "signature_algorithms" extension, which
    originally appeared in TLS 1.2, applies to signatures in
    CertificateVerify messages.  The keys found in certificates MUST also
    be of appropriate type for the signature algorithms they are used
@@ -2544,12 +2550,6 @@ Internet-Draft                     TLS                        March 2018
 
    The "extension_data" field of these extension contains a
    SignatureSchemeList value:
-
-
-
-
-
-
 
 
 
