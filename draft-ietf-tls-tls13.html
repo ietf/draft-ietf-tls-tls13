@@ -460,7 +460,7 @@ address {
   
   <h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1>
 <p>This document specifies version 1.3 of the Transport Layer Security (TLS) protocol.  TLS allows client/server applications to communicate over the Internet in a way that is designed to prevent eavesdropping, tampering, and message forgery.</p>
-<p>This document updates RFCs 4492, 5705, and 6066 and it obsoletes RFCs 5077, 5246, and 6961.</p>
+<p>This document updates RFCs 4492, 5705, and 6066 and it obsoletes RFCs 5077, 5246, and 6961. This document also specifies new requirements for TLS 1.2 implementations.</p>
 <h1 id="rfc.status"><a href="#rfc.status">Status of This Memo</a></h1>
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
@@ -1069,7 +1069,7 @@ address {
 <h2 id="rfc.section.1.4">
 <a href="#rfc.section.1.4">1.4.</a> <a href="#updates-affecting-tls-12" id="updates-affecting-tls-12">Updates Affecting TLS 1.2</a>
 </h2>
-<p id="rfc.section.1.4.p.1">This document defines several changes that optionally affect implementations of TLS 1.2:</p>
+<p id="rfc.section.1.4.p.1">This document defines several changes that optionally affect implementations of TLS 1.2, including those which do not also support TLS 1.3:</p>
 <p></p>
 
 <ul>
@@ -1078,8 +1078,7 @@ address {
 <li>The &#8220;supported_versions&#8221; ClientHello extension can be used to negotiate the version of TLS to use, in preference to the legacy_version field of the ClientHello.</li>
 <li>The &#8220;signature_algorithms_cert&#8221; extension allows a client to indicate which signature algorithms it can validate in X.509 certificates</li>
 </ul>
-<p id="rfc.section.1.4.p.3">An implementation of TLS 1.3 that also supports TLS 1.2 might need to include changes to support these changes even when TLS 1.3 is not in use.  See the referenced sections for more details.</p>
-<p id="rfc.section.1.4.p.4">Additionally, this document clarifies some compliance requirements for earlier versions of TLS; see <a href="#protocol-invariants" class="xref">Section 9.3</a>.</p>
+<p id="rfc.section.1.4.p.3">Additionally, this document clarifies some compliance requirements for earlier versions of TLS; see <a href="#protocol-invariants" class="xref">Section 9.3</a>.</p>
 <h1 id="rfc.section.2">
 <a href="#rfc.section.2">2.</a> <a href="#protocol-overview" id="protocol-overview">Protocol Overview</a>
 </h1>
@@ -1890,7 +1889,7 @@ Subsequent Handshake:
 <dt>ECDSA algorithms</dt>
 <dd style="margin-left: 8">Indicates a signature algorithm using ECDSA <a href="#ECDSA" class="xref">[ECDSA]</a>, the corresponding curve as defined in ANSI X9.62 <a href="#X962" class="xref">[X962]</a> and FIPS 186-4 <a href="#DSS" class="xref">[DSS]</a>, and the corresponding hash algorithm as defined in <a href="#SHS" class="xref">[SHS]</a>. The signature is represented as a DER-encoded <a href="#X690" class="xref">[X690]</a> ECDSA-Sig-Value structure.</dd>
 <dt>RSASSA-PSS RSAE algorithms</dt>
-<dd style="margin-left: 8">Indicates a signature algorithm using RSASSA-PSS <a href="#RFC8017" class="xref">[RFC8017]</a> with mask generation function 1. The digest used in the mask generation function and the digest being signed are both the corresponding hash algorithm as defined in <a href="#SHS" class="xref">[SHS]</a>.  The length of the salt MUST be equal to the length of the digest algorithm. If the public key is carried in an X.509 certificate, it MUST use the rsaEncryption OID <a href="#RFC5280" class="xref">[RFC5280]</a>.</dd>
+<dd style="margin-left: 8">Indicates a signature algorithm using RSASSA-PSS <a href="#RFC8017" class="xref">[RFC8017]</a> with mask generation function 1. The digest used in the mask generation function and the digest being signed are both the corresponding hash algorithm as defined in <a href="#SHS" class="xref">[SHS]</a>.  The length of the salt MUST be equal to the length of the output of the digest algorithm. If the public key is carried in an X.509 certificate, it MUST use the rsaEncryption OID <a href="#RFC5280" class="xref">[RFC5280]</a>.</dd>
 <dt>EdDSA algorithms</dt>
 <dd style="margin-left: 8">Indicates a signature algorithm using EdDSA as defined in <a href="#RFC8032" class="xref">[RFC8032]</a> or its successors. Note that these correspond to the &#8220;PureEdDSA&#8221; algorithms and not the &#8220;prehash&#8221; variants.</dd>
 <dt>RSASSA-PSS PSS algorithms</dt>
@@ -2129,7 +2128,7 @@ Subsequent Handshake:
 <p></p>
 
 <ul>
-<li>Ignore the extension and return a regular 1-RTT response.  The server then ignores early data by attempting to decrypt received records in the handshake traffic keys until it is able to receive the client&#8217;s second flight and complete an ordinary 1-RTT handshake, skipping records that fail to decrypt, up to the configured max_early_data_size.</li>
+<li>Ignore the extension and return a regular 1-RTT response.  The server then skips past early data by attempting to deprotect received records using the handshake traffic key, discarding records which fail deprotection (up to the configured max_early_data_size).  Once a record is deprotected successfully, it is treated as the start of the client&#8217;s second flight and the the server proceeds as with an ordinary 1-RTT handshake.</li>
 <li>Request that the client send another ClientHello by responding with a HelloRetryRequest.  A client MUST NOT include the &#8220;early_data&#8221; extension in its followup ClientHello.  The server then ignores early data by skipping all records with external content type of &#8220;application_data&#8221; (indicating that they are encrypted), up to the configured max_early_data_size.</li>
 <li>Return its own &#8220;early_data&#8221; extension in EncryptedExtensions, indicating that it intends to process the early data. It is not possible for the server to accept only a subset of the early data messages.  Even though the server sends a message accepting early data, the actual early data itself may already be in flight by the time the server generates this message.</li>
 </ul>
@@ -2650,7 +2649,7 @@ finished_key =
 <dd style="margin-left: 8">The data being transmitted. This value is transparent and is treated as an independent block to be dealt with by the higher-level protocol specified by the type field.</dd>
 </dl>
 <p id="rfc.section.5.1.p.8">This document describes TLS 1.3, which uses the version 0x0304.  This version value is historical, deriving from the use of 0x0301 for TLS 1.0 and 0x0300 for SSL 3.0. In order to maximize backwards compatibility, records containing an initial ClientHello SHOULD have version 0x0301 and a record containing a second ClientHello or a ServerHello MUST have version 0x0303, reflecting TLS 1.0 and TLS 1.2 respectively.  When negotiating prior versions of TLS, endpoints follow the procedure and requirements in <a href="#backward-compatibility" class="xref">Appendix D</a>.</p>
-<p id="rfc.section.5.1.p.9">When record protection has not yet been engaged, TLSPlaintext structures are written directly onto the wire. Once record protection has started, TLSPlaintext records are protected and sent as described in the following section.</p>
+<p id="rfc.section.5.1.p.9">When record protection has not yet been engaged, TLSPlaintext structures are written directly onto the wire. Once record protection has started, TLSPlaintext records are protected and sent as described in the following section. Note that application data records MUST NOT be written to the wire unprotected (see <a href="#protocol-overview" class="xref">Section 2</a> for details).</p>
 <h2 id="rfc.section.5.2">
 <a href="#rfc.section.5.2">5.2.</a> <a href="#record-payload-protection" id="record-payload-protection">Record Payload Protection</a>
 </h2>
@@ -3206,6 +3205,11 @@ TLS-Exporter(label, context_value, key_length) =
 <a>Bradner, S.</a>, "<a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997.</td>
 </tr>
 <tr>
+<td class="reference"><b id="RFC5116">[RFC5116]</b></td>
+<td class="top">
+<a>McGrew, D.</a>, "<a href="https://tools.ietf.org/html/rfc5116">An Interface and Algorithms for Authenticated Encryption</a>", RFC 5116, DOI 10.17487/RFC5116, January 2008.</td>
+</tr>
+<tr>
 <td class="reference"><b id="RFC5280">[RFC5280]</b></td>
 <td class="top">
 <a>Cooper, D.</a>, <a>Santesson, S.</a>, <a>Farrell, S.</a>, <a>Boeyen, S.</a>, <a>Housley, R.</a> and <a>W. Polk</a>, "<a href="https://tools.ietf.org/html/rfc5280">Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile</a>", RFC 5280, DOI 10.17487/RFC5280, May 2008.</td>
@@ -3543,11 +3547,6 @@ TLS-Exporter(label, context_value, key_length) =
 <td class="reference"><b id="RFC5077">[RFC5077]</b></td>
 <td class="top">
 <a>Salowey, J.</a>, <a>Zhou, H.</a>, <a>Eronen, P.</a> and <a>H. Tschofenig</a>, "<a href="https://tools.ietf.org/html/rfc5077">Transport Layer Security (TLS) Session Resumption without Server-Side State</a>", RFC 5077, DOI 10.17487/RFC5077, January 2008.</td>
-</tr>
-<tr>
-<td class="reference"><b id="RFC5116">[RFC5116]</b></td>
-<td class="top">
-<a>McGrew, D.</a>, "<a href="https://tools.ietf.org/html/rfc5116">An Interface and Algorithms for Authenticated Encryption</a>", RFC 5116, DOI 10.17487/RFC5116, January 2008.</td>
 </tr>
 <tr>
 <td class="reference"><b id="RFC5246">[RFC5246]</b></td>
