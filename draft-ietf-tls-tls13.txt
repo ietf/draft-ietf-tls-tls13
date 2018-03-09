@@ -1081,12 +1081,12 @@ Internet-Draft                     TLS                        March 2018
    connection parameters.  The combination of the ClientHello and the
    ServerHello determines the shared keys.  If (EC)DHE key establishment
    is in use, then the ServerHello contains a "key_share" extension with
-   the server's ephemeral Diffie-Hellman share which MUST be in the same
-   group as one of the client's shares.  If PSK key establishment is in
-   use, then the ServerHello contains a "pre_shared_key" extension
-   indicating which of the client's offered PSKs was selected.  Note
-   that implementations can use (EC)DHE and PSK together, in which case
-   both extensions will be supplied.
+   the server's ephemeral Diffie-Hellman share; the server's share MUST
+   be in the same group as one of the client's shares.  If PSK key
+   establishment is in use, then the ServerHello contains a
+   "pre_shared_key" extension indicating which of the client's offered
+   PSKs was selected.  Note that implementations can use (EC)DHE and PSK
+   together, in which case both extensions will be supplied.
 
    The server then sends two messages to establish the Server
    Parameters:
@@ -2419,10 +2419,11 @@ Internet-Draft                     TLS                        March 2018
    be present as well).
 
    If this extension is not present, servers which are compliant with
-   this specification MUST negotiate TLS 1.2 or prior as specified in
-   [RFC5246], even if ClientHello.legacy_version is 0x0304 or later.
-   Servers MAY abort the handshake upon receiving a ClientHello with
-   legacy_version 0x0304 or later.
+   this specification, and which also support TLS 1.2, MUST negotiate
+   TLS 1.2 or prior as specified in [RFC5246], even if
+   ClientHello.legacy_version is 0x0304 or later.  Servers MAY abort the
+   handshake upon receiving a ClientHello with legacy_version 0x0304 or
+   later.
 
    If this extension is present in the ClientHello, servers MUST NOT use
    the ClientHello.legacy_version value for version negotiation and MUST
@@ -2456,8 +2457,7 @@ Internet-Draft                     TLS                        March 2018
 
    RFC EDITOR: PLEASE REMOVE THIS SECTION
 
-   While the eventual version indicator for the RFC version of TLS 1.3
-   will be 0x0304, implementations of draft versions of this
+
 
 
 
@@ -2466,6 +2466,8 @@ Rescorla               Expires September 10, 2018              [Page 44]
 Internet-Draft                     TLS                        March 2018
 
 
+   While the eventual version indicator for the RFC version of TLS 1.3
+   will be 0x0304, implementations of draft versions of this
    specification SHOULD instead advertise 0x7f00 | draft_version in the
    ServerHello and HelloRetryRequest "supported_versions" extension.
    For instance, draft-17 would be encoded as the 0x7f11.  This allows
@@ -2512,8 +2514,6 @@ Internet-Draft                     TLS                        March 2018
    algorithms may be used in digital signatures.  The
    "signature_algorithms_cert" extension applies to signatures in
    certificates and the "signature_algorithms" extension, which
-   originally appeared in TLS 1.2, applies to signatures in
-   CertificateVerify messages.  The keys found in certificates MUST also
 
 
 
@@ -2522,6 +2522,8 @@ Rescorla               Expires September 10, 2018              [Page 45]
 Internet-Draft                     TLS                        March 2018
 
 
+   originally appeared in TLS 1.2, applies to signatures in
+   CertificateVerify messages.  The keys found in certificates MUST also
    be of appropriate type for the signature algorithms they are used
    with.  This is a particular issue for RSA keys and PSS signatures, as
    described below.  If no "signature_algorithms_cert" extension is
@@ -2542,8 +2544,6 @@ Internet-Draft                     TLS                        March 2018
 
    The "extension_data" field of these extension contains a
    SignatureSchemeList value:
-
-
 
 
 
