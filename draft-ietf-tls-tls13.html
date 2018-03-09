@@ -745,7 +745,7 @@ address {
 </ul>
 <p id="rfc.section.1.p.7">TLS is application protocol independent; higher-level protocols can layer on top of TLS transparently. The TLS standard, however, does not specify how protocols add security with TLS; how to initiate TLS handshaking and how to interpret the authentication certificates exchanged are left to the judgment of the designers and implementors of protocols that run on top of TLS.</p>
 <p id="rfc.section.1.p.8">This document defines TLS version 1.3. While TLS 1.3 is not directly compatible with previous versions, all versions of TLS incorporate a versioning mechanism which allows clients and servers to interoperably negotiate a common version if one is supported by both peers.</p>
-<p id="rfc.section.1.p.9">This document supersedes and obsoletes previous versions of TLS including version 1.2 <a href="#RFC5246" class="xref">[RFC5246]</a>.  It also obsoletes the TLS ticket mechanism defined in <a href="#RFC5077" class="xref">[RFC5077]</a> and replaces it with the mechanism defined in <a href="#resumption-and-psk" class="xref">Section 2.2</a>. <a href="#negotiated-groups" class="xref">Section 4.2.7</a> updates <a href="#RFC4492" class="xref">[RFC4492]</a> by modifying the protocol attributes used to negotiate Elliptic Curves.  Because TLS 1.3 changes the way keys are derived it updates <a href="#RFC5705" class="xref">[RFC5705]</a> as described in <a href="#exporters" class="xref">Section 7.5</a> it also changes how OCSP messages are carried and therefore updates <a href="#RFC6066" class="xref">[RFC6066]</a> and obsoletes <a href="#RFC6961" class="xref">[RFC6961]</a> as described in section <a href="#ocsp-and-sct" class="xref">Section 4.4.2.1</a>.</p>
+<p id="rfc.section.1.p.9">This document supersedes and obsoletes previous versions of TLS including version 1.2 <a href="#RFC5246" class="xref">[RFC5246]</a>.  It also obsoletes the TLS ticket mechanism defined in <a href="#RFC5077" class="xref">[RFC5077]</a> and replaces it with the mechanism defined in <a href="#resumption-and-psk" class="xref">Section 2.2</a>. <a href="#negotiated-groups" class="xref">Section 4.2.7</a> updates <a href="#RFC4492" class="xref">[RFC4492]</a> by modifying the protocol attributes used to negotiate Elliptic Curves.  Because TLS 1.3 changes the way keys are derived, it updates <a href="#RFC5705" class="xref">[RFC5705]</a> as described in <a href="#exporters" class="xref">Section 7.5</a>.  It also changes how OCSP messages are carried and therefore updates <a href="#RFC6066" class="xref">[RFC6066]</a> and obsoletes <a href="#RFC6961" class="xref">[RFC6961]</a> as described in section <a href="#ocsp-and-sct" class="xref">Section 4.4.2.1</a>.</p>
 <h2 id="rfc.section.1.1">
 <a href="#rfc.section.1.1">1.1.</a> <a href="#conventions-and-terminology" id="conventions-and-terminology">Conventions and Terminology</a>
 </h2>
@@ -1053,7 +1053,7 @@ address {
 <li>All handshake messages after the ServerHello are now encrypted. The newly introduced EncryptedExtension message allows various extensions previously sent in clear in the ServerHello to also enjoy confidentiality protection from active attackers.</li>
 <li>The key derivation functions have been re-designed. The new design allows easier analysis by cryptographers due to their improved key separation properties. The HMAC-based Extract-and-Expand Key Derivation Function (HKDF) is used as an underlying primitive.</li>
 <li>The handshake state machine has been significantly restructured to be more consistent and to remove superfluous messages such as ChangeCipherSpec.</li>
-<li>Elliptic curve algorithms are now in the base spec and includes new signature algorithms, such as ed25519 and ed448. TLS 1.3 removed point format negotiation in favor of a single point format for each curve.</li>
+<li>Elliptic curve algorithms are now in the base spec and new signature algorithms, such as ed25519 and ed448, are included. TLS 1.3 removed point format negotiation in favor of a single point format for each curve.</li>
 <li>Other cryptographic improvements including the removal of compression and custom DHE groups, changing the RSA padding to use PSS, and the removal of DSA.</li>
 <li>The TLS 1.2 version negotiation mechanism has been deprecated in favor of a version list in an extension. This increases compatibility with servers which incorrectly implemented version negotiation.</li>
 <li>Session resumption with and without server-side state as well as the PSK-based ciphersuites of earlier TLS versions have been replaced by a single new PSK exchange.</li>
@@ -1347,7 +1347,7 @@ Subsequent Handshake:
    uint8 uint32[4];
    uint8 uint64[8];
 </pre>
-<p id="rfc.section.3.4.p.2">All values, here and elsewhere in the specification, are stored in network byte (big-endian) order; the uint32 represented by the hex bytes 01 02 03 04 is equivalent to the decimal value 16909060.</p>
+<p id="rfc.section.3.4.p.2">All values, here and elsewhere in the specification, are transmitted in network byte (big-endian) order; the uint32 represented by the hex bytes 01 02 03 04 is equivalent to the decimal value 16909060.</p>
 <h2 id="rfc.section.3.5">
 <a href="#rfc.section.3.5">3.5.</a> <a href="#enumerateds" id="enumerateds">Enumerateds</a>
 </h2>
@@ -1802,7 +1802,7 @@ Subsequent Handshake:
 </pre>
 <p id="rfc.section.4.2.1.p.1">The &#8220;supported_versions&#8221; extension is used by the client to indicate which versions of TLS it supports and by the server to indicate which version it is using. The extension contains a list of supported versions in preference order, with the most preferred version first. Implementations of this specification MUST send this extension containing all versions of TLS which they are prepared to negotiate (for this specification, that means minimally 0x0304, but if previous versions of TLS are allowed to be negotiated, they MUST be present as well).</p>
 <p id="rfc.section.4.2.1.p.2">If this extension is not present, servers which are compliant with this specification MUST negotiate TLS 1.2 or prior as specified in <a href="#RFC5246" class="xref">[RFC5246]</a>, even if ClientHello.legacy_version is 0x0304 or later.  Servers MAY abort the handshake upon receiving a ClientHello with legacy_version 0x0304 or later.</p>
-<p id="rfc.section.4.2.1.p.3">If this extension is present, servers MUST ignore the ClientHello.legacy_version value and MUST use only the &#8220;supported_versions&#8221; extension to determine client preferences. Servers MUST only select a version of TLS present in that extension and MUST ignore any unknown versions that are present in that extension. Note that this mechanism makes it possible to negotiate a version prior to TLS 1.2 if one side supports a sparse range. Implementations of TLS 1.3 which choose to support prior versions of TLS SHOULD support TLS 1.2.  Servers should be prepared to receive ClientHellos that include this extension but do not include 0x0304 in the list of versions.</p>
+<p id="rfc.section.4.2.1.p.3">If this extension is present, servers MUST ignore the ClientHello.legacy_version value and MUST use only the &#8220;supported_versions&#8221; extension to determine client preferences. Servers MUST only select a version of TLS present in that extension and MUST ignore any unknown versions that are present in that extension. Note that this mechanism makes it possible to negotiate a version prior to TLS 1.2 if one side supports a sparse range. Implementations of TLS 1.3 which choose to support prior versions of TLS SHOULD support TLS 1.2.  Servers MUST be prepared to receive ClientHellos that include this extension but do not include 0x0304 in the list of versions.</p>
 <p id="rfc.section.4.2.1.p.4">A server which negotiates a version of TLS prior to TLS 1.3 MUST set ServerHello.version and MUST NOT send the &#8220;supported_versions&#8221; extension.  A server which negotiates TLS 1.3 MUST respond by sending a &#8220;supported_versions&#8221; extension containing the selected version value (0x0304). It MUST set the ServerHello.legacy_version field to 0x0303 (TLS 1.2). Clients MUST check for this extension prior to processing the rest of the ServerHello (although they will have to parse the ServerHello in order to read the extension).  If this extension is present, clients MUST ignore the ServerHello.legacy_version value and MUST use only the &#8220;supported_versions&#8221; extension to determine the selected version. If the &#8220;supported_versions&#8221; extension contains a version not offered by the client or contains a version prior to TLS 1.3, the client MUST abort the handshake with an &#8220;illegal_parameter&#8221; alert.</p>
 <h4 id="rfc.section.4.2.1.1">
 <a href="#rfc.section.4.2.1.1">4.2.1.1.</a> <a href="#draft-version-indicator" id="draft-version-indicator">Draft Version Indicator</a>
@@ -1885,7 +1885,7 @@ Subsequent Handshake:
 <dt>EdDSA algorithms</dt>
 <dd style="margin-left: 8">Indicates a signature algorithm using EdDSA as defined in <a href="#RFC8032" class="xref">[RFC8032]</a> or its successors. Note that these correspond to the &#8220;PureEdDSA&#8221; algorithms and not the &#8220;prehash&#8221; variants.</dd>
 <dt>RSASSA-PSS PSS algorithms</dt>
-<dd style="margin-left: 8">Indicates a signature algorithm using RSASSA-PSS <a href="#RFC8017" class="xref">[RFC8017]</a> with mask generation function 1. The digest used in the mask generation function and the digest being signed are both the corresponding hash algorithm as defined in <a href="#SHS" class="xref">[SHS]</a>.  The length of the salt MUST be equal to the length of the digest algorithm. If the public key is carried in an X.509 certificate, it MUST use the RSASSA-PSS OID  <a href="#RFC5756" class="xref">[RFC5756]</a>. When used in certificate signatures, the algorithm parameters MUST be DER encoded. If the corresponding public key&#8217;s parameters present, then the parameters in the signature MUST be identical to those in the public key.</dd>
+<dd style="margin-left: 8">Indicates a signature algorithm using RSASSA-PSS <a href="#RFC8017" class="xref">[RFC8017]</a> with mask generation function 1. The digest used in the mask generation function and the digest being signed are both the corresponding hash algorithm as defined in <a href="#SHS" class="xref">[SHS]</a>.  The length of the salt MUST be equal to the length of the digest algorithm. If the public key is carried in an X.509 certificate, it MUST use the RSASSA-PSS OID  <a href="#RFC5756" class="xref">[RFC5756]</a>. When used in certificate signatures, the algorithm parameters MUST be DER encoded. If the corresponding public key&#8217;s parameters are present, then the parameters in the signature MUST be identical to those in the public key.</dd>
 <dt>Legacy algorithms</dt>
 <dd style="margin-left: 8">Indicates algorithms which are being deprecated because they use algorithms with known weaknesses, specifically SHA-1 which is used in this context with either with RSA using RSASSA-PKCS1-v1_5 or ECDSA.  These values refer solely to signatures which appear in certificates (see <a href="#server-certificate-selection" class="xref">Section 4.4.2.2</a>) and are not defined for use in signed TLS handshake messages, even if they appear in the &#8220;signature_algorithms&#8221; list (this is necessary for backward compatibility with TLS 1.2).  Endpoints SHOULD NOT negotiate these algorithms but are permitted to do so solely for backward compatibility. Clients offering these values MUST list them as the lowest priority (listed after all other algorithms in SignatureSchemeList). TLS 1.3 servers MUST NOT offer a SHA-1 signed certificate unless no valid certificate chain can be produced without it (see <a href="#server-certificate-selection" class="xref">Section 4.4.2.2</a>).</dd>
 </dl>
@@ -1951,7 +1951,7 @@ Subsequent Handshake:
 <h3 id="rfc.section.4.2.6">
 <a href="#rfc.section.4.2.6">4.2.6.</a> <a href="#post_handshake_auth" id="post_handshake_auth">Post-Handshake Client Authentication</a>
 </h3>
-<p id="rfc.section.4.2.6.p.1">The &#8220;post_handshake_auth&#8221; extension is used to indicate that a client is willing to perform post-handshake authentication <a href="#post-handshake-authentication" class="xref">Section 4.6.2</a>. Servers MUST NOT send a post-handshake CertificateRequest to clients which do not offer this extension. Servers MUST NOT send this extension.</p>
+<p id="rfc.section.4.2.6.p.1">The &#8220;post_handshake_auth&#8221; extension is used to indicate that a client is willing to perform post-handshake authentication (<a href="#post-handshake-authentication" class="xref">Section 4.6.2</a>). Servers MUST NOT send a post-handshake CertificateRequest to clients which do not offer this extension. Servers MUST NOT send this extension.</p>
 <pre>
    struct {} PostHandshakeAuth;
 </pre>
@@ -2186,7 +2186,7 @@ Subsequent Handshake:
 <h4 id="rfc.section.4.2.11.1">
 <a href="#rfc.section.4.2.11.1">4.2.11.1.</a> <a href="#ticket-age" id="ticket-age">Ticket Age</a>
 </h4>
-<p id="rfc.section.4.2.11.1.p.1">The client&#8217;s view of the age of a ticket is the time since the receipt of the NewSessionTicket message. Clients MUST NOT attempt to use tickets which have ages greater than the &#8220;ticket_lifetime&#8221; value which was provided with the ticket. The &#8220;obfuscated_ticket_age&#8221; field of each PskIdentity contains an obfuscated version of the ticket age formed by taking the age in milliseconds and adding the &#8220;ticket_age_add&#8221; value that was included with the ticket, see <a href="#NSTMessage" class="xref">Section 4.6.1</a> modulo 2^32.  This addition prevents passive observers from correlating connections unless tickets are reused. Note that the &#8220;ticket_lifetime&#8221; field in the NewSessionTicket message is in seconds but the &#8220;obfuscated_ticket_age&#8221; is in milliseconds. Because ticket lifetimes are restricted to a week, 32 bits is enough to represent any plausible age, even in milliseconds.</p>
+<p id="rfc.section.4.2.11.1.p.1">The client&#8217;s view of the age of a ticket is the time since the receipt of the NewSessionTicket message. Clients MUST NOT attempt to use tickets which have ages greater than the &#8220;ticket_lifetime&#8221; value which was provided with the ticket. The &#8220;obfuscated_ticket_age&#8221; field of each PskIdentity contains an obfuscated version of the ticket age formed by taking the age in milliseconds and adding the &#8220;ticket_age_add&#8221; value that was included with the ticket (see <a href="#NSTMessage" class="xref">Section 4.6.1</a>), modulo 2^32.  This addition prevents passive observers from correlating connections unless tickets are reused. Note that the &#8220;ticket_lifetime&#8221; field in the NewSessionTicket message is in seconds but the &#8220;obfuscated_ticket_age&#8221; is in milliseconds. Because ticket lifetimes are restricted to a week, 32 bits is enough to represent any plausible age, even in milliseconds.</p>
 <h4 id="rfc.section.4.2.11.2">
 <a href="#rfc.section.4.2.11.2">4.2.11.2.</a> <a href="#psk-binder" id="psk-binder">PSK Binder</a>
 </h4>
@@ -2432,7 +2432,7 @@ Subsequent Handshake:
 <li>The content to be signed</li>
 </ul>
 <p id="rfc.section.4.4.3.p.6">This structure is intended to prevent an attack on previous versions of TLS in which the ServerKeyExchange format meant that attackers could obtain a signature of a message with a chosen 32-byte prefix (ClientHello.random). The initial 64-byte pad clears that prefix along with the server-controlled ServerHello.random.</p>
-<p id="rfc.section.4.4.3.p.7">The context string for a server signature is &#8220;TLS 1.3, server CertificateVerify&#8221; and for a client signature is &#8220;TLS 1.3, client CertificateVerify&#8221;.  It is used to provide separation between signatures made in different contexts, helping against potential cross-protocol attacks.</p>
+<p id="rfc.section.4.4.3.p.7">The context string for a server signature is: &#8220;TLS 1.3, server CertificateVerify&#8221; The context string for a client signature is: &#8220;TLS 1.3, client CertificateVerify&#8221; It is used to provide separation between signatures made in different contexts, helping against potential cross-protocol attacks.</p>
 <p id="rfc.section.4.4.3.p.8">For example, if the transcript hash was 32 bytes of 01 (this length would make sense for SHA-256), the content covered by the digital signature for a server CertificateVerify would be:</p>
 <pre>
    2020202020202020202020202020202020202020202020202020202020202020
@@ -3009,7 +3009,7 @@ finished_key =
 <h3 id="rfc.section.7.4.1">
 <a href="#rfc.section.7.4.1">7.4.1.</a> <a href="#finite-field-diffie-hellman" id="finite-field-diffie-hellman">Finite Field Diffie-Hellman</a>
 </h3>
-<p id="rfc.section.7.4.1.p.1">For finite field groups, a conventional Diffie-Hellman computation is performed.  The negotiated key (Z) is converted to a byte string by encoding in big-endian and padded with zeros up to the size of the prime. This byte string is used as the shared secret in the key schedule as specified above.</p>
+<p id="rfc.section.7.4.1.p.1">For finite field groups, a conventional Diffie-Hellman computation is performed.  The negotiated key (Z) is converted to a byte string by encoding in big-endian and left padded with zeros up to the size of the prime. This byte string is used as the shared secret in the key schedule as specified above.</p>
 <p id="rfc.section.7.4.1.p.2">Note that this construction differs from previous versions of TLS which remove leading zeros.</p>
 <h3 id="rfc.section.7.4.2">
 <a href="#rfc.section.7.4.2">7.4.2.</a> <a href="#elliptic-curve-diffie-hellman" id="elliptic-curve-diffie-hellman">Elliptic Curve Diffie-Hellman</a>
@@ -3397,7 +3397,7 @@ TLS-Exporter(label, context_value, key_length) =
 <tr>
 <td class="reference"><b id="DOW92">[DOW92]</b></td>
 <td class="top">
-<a>Diffie, W.</a>, <a>van Oorschot, P.</a> and <a>M. Wiener</a>, "<a>&#8220;Authentication and authenticated key exchanges&#8221;</a>", Designs, Codes and Cryptography , 1992.</td>
+<a>Diffie, W.</a>, <a>van Oorschot, P.</a> and <a>M. Wiener</a>, "<a>Authentication and authenticated key exchanges</a>", Designs, Codes and Cryptography , 1992.</td>
 </tr>
 <tr>
 <td class="reference"><b id="DSS">[DSS]</b></td>
@@ -3737,7 +3737,7 @@ here                  +--------+--------+
 <h1 id="rfc.appendix.B">
 <a href="#rfc.appendix.B">Appendix B.</a> <a href="#protocol-data-structures-and-constant-values" id="protocol-data-structures-and-constant-values">Protocol Data Structures and Constant Values</a>
 </h1>
-<p id="rfc.section.B.p.1">This section describes protocol types and constants. Values listed as _RESERVED were used in previous versions of TLS and are listed here for completeness. TLS 1.3 implementations MUST NOT send them but might receive them from older TLS implementations.</p>
+<p id="rfc.section.B.p.1">This section provides the normative protocol types and constants definitions.  Values listed as _RESERVED were used in previous versions of TLS and are listed here for completeness. TLS 1.3 implementations MUST NOT send them but might receive them from older TLS implementations.</p>
 <h2 id="rfc.appendix.B.1">
 <a href="#rfc.appendix.B.1">B.1.</a> <a href="#record-layer-1" id="record-layer-1">Record Layer</a>
 </h2>
