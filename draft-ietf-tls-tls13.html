@@ -406,7 +406,8 @@ address {
 <link href="#rfc.appendix.E.4" rel="Chapter" title="E.4 Side Channel Attacks">
 <link href="#rfc.appendix.E.5" rel="Chapter" title="E.5 Replay Attacks on 0-RTT">
 <link href="#rfc.appendix.E.5.1" rel="Chapter" title="E.5.1 Replay and Exporters">
-<link href="#rfc.appendix.E.6" rel="Chapter" title="E.6 Attacks on Static RSA">
+<link href="#rfc.appendix.E.6" rel="Chapter" title="E.6 PSK Identity Exposure">
+<link href="#rfc.appendix.E.7" rel="Chapter" title="E.7 Attacks on Static RSA">
 <link href="#rfc.appendix.F" rel="Chapter" title="F Working Group Information">
 <link href="#rfc.appendix.G" rel="Chapter" title="G Contributors">
 <link href="#rfc.authors" rel="Chapter">
@@ -718,7 +719,9 @@ address {
 </li>
 <ul><li>E.5.1.   <a href="#rfc.appendix.E.5.1">Replay and Exporters</a>
 </li>
-</ul><li>E.6.   <a href="#rfc.appendix.E.6">Attacks on Static RSA</a>
+</ul><li>E.6.   <a href="#rfc.appendix.E.6">PSK Identity Exposure</a>
+</li>
+<li>E.7.   <a href="#rfc.appendix.E.7">Attacks on Static RSA</a>
 </li>
 </ul><li>Appendix F.   <a href="#rfc.appendix.F">Working Group Information</a>
 </li>
@@ -4492,9 +4495,13 @@ here                  +--------+--------+
 <p id="rfc.section.E.5.1.p.1">Replays of the ClientHello produce the same early exporter, thus requiring additional care by applications which use these exporters.  In particular, if these exporters are used as an authentication channel binding (e.g., by signing the output of the exporter) an attacker who compromises the PSK can transplant authenticators between connections without compromising the authentication key.</p>
 <p id="rfc.section.E.5.1.p.2">In addition, the early exporter SHOULD NOT be used to generate server-to-client encryption keys because that would entail the reuse of those keys. This parallels the use of the early application traffic keys only in the client-to-server direction.</p>
 <h2 id="rfc.appendix.E.6">
-<a href="#rfc.appendix.E.6">E.6.</a> <a href="#attacks-on-static-rsa" id="attacks-on-static-rsa">Attacks on Static RSA</a>
+<a href="#rfc.appendix.E.6">E.6.</a> <a href="#psk-identity-exposure" id="psk-identity-exposure">PSK Identity Exposure</a>
 </h2>
-<p id="rfc.section.E.6.p.1">Although TLS 1.3 does not use RSA key transport and so is not directly susceptible to Bleichenbacher-type attacks, if TLS 1.3 servers also support static RSA in the context of previous versions of TLS, then it may be possible to impersonate the server for TLS 1.3 connections <a href="#JSS15" class="xref">[JSS15]</a>. TLS 1.3 implementations can prevent this attack by disabling support for static RSA across all versions of TLS. In principle, implementations might also be able to separate certificates with different keyUsage bits for static RSA decryption and RSA signature, but this technique relies on clients refusing to accept signatures using keys in certificates that do not have the digitalSignature bit set, and many clients do not enforce this restriction.</p>
+<p id="rfc.section.E.6.p.1">Because implementations respond to an invalid PSK binder by aborting the handshake, it may be possible for an attacker to verify whether a given PSK identity is valid. Specifically, if a server accepts both external PSK and certificate-based handshakes, a valid PSK identity will result in a failed handshake, whereas an invalid identity will just be skipped and result in a successful certificate handshake.  Servers which solely support PSK handshakes may be able to resist this form of attack by treating the cases where there is no valid PSK identity and where there is an identity but it has an invalid binder identically.</p>
+<h2 id="rfc.appendix.E.7">
+<a href="#rfc.appendix.E.7">E.7.</a> <a href="#attacks-on-static-rsa" id="attacks-on-static-rsa">Attacks on Static RSA</a>
+</h2>
+<p id="rfc.section.E.7.p.1">Although TLS 1.3 does not use RSA key transport and so is not directly susceptible to Bleichenbacher-type attacks, if TLS 1.3 servers also support static RSA in the context of previous versions of TLS, then it may be possible to impersonate the server for TLS 1.3 connections <a href="#JSS15" class="xref">[JSS15]</a>. TLS 1.3 implementations can prevent this attack by disabling support for static RSA across all versions of TLS. In principle, implementations might also be able to separate certificates with different keyUsage bits for static RSA decryption and RSA signature, but this technique relies on clients refusing to accept signatures using keys in certificates that do not have the digitalSignature bit set, and many clients do not enforce this restriction.</p>
 <h1 id="rfc.appendix.F">
 <a href="#rfc.appendix.F">Appendix F.</a> <a href="#working-group-information" id="working-group-information">Working Group Information</a>
 </h1>
