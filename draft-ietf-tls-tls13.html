@@ -418,7 +418,7 @@ address {
 
   <meta name="dct.creator" content="Rescorla, E." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-tls-tls13-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2018-03-18" />
+  <meta name="dct.issued" scheme="ISO8601" content="2018-03-20" />
   <meta name="dct.abstract" content="This document specifies version 1.3 of the Transport Layer Security (TLS) protocol.  TLS allows client/server applications to communicate over the Internet in a way that is designed to prevent eavesdropping, tampering, and message forgery." />
   <meta name="description" content="This document specifies version 1.3 of the Transport Layer Security (TLS) protocol.  TLS allows client/server applications to communicate over the Internet in a way that is designed to prevent eavesdropping, tampering, and message forgery." />
 
@@ -439,7 +439,7 @@ address {
 </tr>
 <tr>
 <td class="left">Obsoletes: 5077, 5246, 6961 (if</td>
-<td class="right">March 18, 2018</td>
+<td class="right">March 20, 2018</td>
 </tr>
 <tr>
 <td class="left">           approved)</td>
@@ -454,7 +454,7 @@ address {
 <td class="right"></td>
 </tr>
 <tr>
-<td class="left">Expires: September 19, 2018</td>
+<td class="left">Expires: September 21, 2018</td>
 <td class="right"></td>
 </tr>
 
@@ -472,7 +472,7 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on September 19, 2018.</p>
+<p>This Internet-Draft will expire on September 21, 2018.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2018 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -2195,7 +2195,7 @@ Subsequent Handshake:
 <p id="rfc.section.4.2.11.p.4">Each PSK is associated with a single Hash algorithm. For PSKs established via the ticket mechanism (<a href="#NSTMessage" class="xref">Section 4.6.1</a>), this is the KDF Hash algorithm on the connection where the ticket was established.  For externally established PSKs, the Hash algorithm MUST be set when the PSK is established, or default to SHA-256 if no such algorithm is defined. The server MUST ensure that it selects a compatible PSK (if any) and cipher suite.</p>
 <p id="rfc.section.4.2.11.p.5">In TLS versions prior to TLS 1.3, the Server Name Identification (SNI) value was intended to be associated with the session (Section 3 of <a href="#RFC6066" class="xref">[RFC6066]</a>), with the server being required to enforce that the SNI value associated with the session matches the one specified in the resumption handshake.  However, in reality the implementations were not consistent on which of two supplied SNI values they would use, leading to the consistency requirement being de-facto enforced by the clients.  In TLS 1.3, the SNI value is always explicitly specified in the resumption handshake, and there is no need for the server to associate an SNI value with the ticket. Clients, however, SHOULD store the SNI with the PSK to fulfill the requirements of <a href="#NSTMessage" class="xref">Section 4.6.1</a>.</p>
 <p id="rfc.section.4.2.11.p.6">Implementor&#8217;s note: when session resumption is the primary use case of PSKs the most straightforward way to implement the PSK/cipher suite matching requirements is to negotiate the cipher suite first and then exclude any incompatible PSKs. Any unknown PSKs (e.g., they are not in the PSK database or are encrypted with an unknown key) SHOULD simply be ignored. If no acceptable PSKs are found, the server SHOULD perform a non-PSK handshake if possible.  If backwards compatibility is important, client provided, externally established PSKs SHOULD influence cipher suite selection.</p>
-<p id="rfc.section.4.2.11.p.7">Prior to accepting PSK key establishment, the server MUST validate the corresponding binder value (see <a href="#psk-binder" class="xref">Section 4.2.11.2</a> below). If this value is not present or does not validate, the server MUST abort the handshake.  Servers SHOULD NOT attempt to validate multiple binders; rather they SHOULD select a single PSK and validate solely the binder that corresponds to that PSK.  See [<a href="#client-hello-recording" class="xref">Section 8.2</a>] for the security rationale for this requirement.  In order to accept PSK key establishment, the server sends a &#8220;pre_shared_key&#8221; extension indicating the selected identity.</p>
+<p id="rfc.section.4.2.11.p.7">Prior to accepting PSK key establishment, the server MUST validate the corresponding binder value (see <a href="#psk-binder" class="xref">Section 4.2.11.2</a> below). If this value is not present or does not validate, the server MUST abort the handshake.  Servers SHOULD NOT attempt to validate multiple binders; rather they SHOULD select a single PSK and validate solely the binder that corresponds to that PSK.  See [<a href="#client-hello-recording" class="xref">Section 8.2</a>] and [<a href="#psk-identity-exposure" class="xref">Appendix E.6</a>] for the security rationale for this requirement.  In order to accept PSK key establishment, the server sends a &#8220;pre_shared_key&#8221; extension indicating the selected identity.</p>
 <p id="rfc.section.4.2.11.p.8">Clients MUST verify that the server&#8217;s selected_identity is within the range supplied by the client, that the server selected a cipher suite indicating a Hash associated with the PSK and that a server &#8220;key_share&#8221; extension is present if required by the ClientHello &#8220;psk_key_exchange_modes&#8221;. If these values are not consistent the client MUST abort the handshake with an &#8220;illegal_parameter&#8221; alert.</p>
 <p id="rfc.section.4.2.11.p.9">If the server supplies an &#8220;early_data&#8221; extension, the client MUST verify that the server&#8217;s selected_identity is 0. If any other value is returned, the client MUST abort the handshake with an &#8220;illegal_parameter&#8221; alert.</p>
 <p id="rfc.section.4.2.11.p.10">The &#8220;pre_shared_key&#8221; extension MUST be the last extension in the ClientHello (this facilitates implementation as described below). Servers MUST check that it is the last extension and otherwise fail the handshake with an &#8220;illegal_parameter&#8221; alert.</p>
